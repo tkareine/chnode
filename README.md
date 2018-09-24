@@ -23,8 +23,13 @@ Bash version >= 3
 
 ## Installation
 
-For now, download the [chnode.sh](./chnode.sh) script or clone the
-repository:
+For now, download the [chnode.sh] script:
+
+``` shell
+curl 'https://raw.githubusercontent.com/tkareine/chnode/master/chnode.sh' > chnode.sh
+```
+
+Or clone the repository:
 
 ``` shell
 git clone git@github.com:tkareine/chnode.git
@@ -46,14 +51,14 @@ the following line to `~/.bash_profile`:
 [[ -r ~/.bashrc ]] && source ~/.bashrc
 ```
 
-## Node.js installations
+## Node.js versions
 
 When shell loads chnode with `source` command, it will auto-detect
 Node.js versions installed in `~/.nodes` directory.
 
 You may override `~/.nodes` directory by setting `CHNODE_NODES_DIR`
 environment variable to point to another directory. Do this before
-executing the `source` command, for example:
+executing the `source` command. For example:
 
 ``` bash
 CHNODE_NODES_DIR=/opt/nodes
@@ -61,10 +66,11 @@ source chnode.sh
 ```
 
 After installing new Node.js versions, you must restart your shell or
-execute the `source` command again in order to chnode to detect them.
+execute the `source` command again in order for chnode to detect them.
 
 For Node.js versions installed in other locations, append their paths to
-the `CHNODE_NODES` environment variable. For example:
+the `CHNODE_NODES` environment variable after the `source` command. For
+example:
 
 ``` bash
 source chnode.sh
@@ -113,7 +119,14 @@ $ echo "$PATH"
 /Users/tkareine/.nodes/node-10.10.0/bin:/usr/local/bin:/usr/bin:…
 ```
 
-Deselect the version, clearing the path that was set in `$PATH`:
+Open the man page of [marked], installed as global npm package:
+
+```
+$ npm install -g marked
+$ man marked
+```
+
+Reset the version, clearing the path that was set in `$PATH`:
 
 ```
 $ chnode reset
@@ -126,13 +139,7 @@ $ echo "$PATH"
 /usr/local/bin:/usr/bin:…
 ```
 
-See the man page of [marked], installed as global npm package:
-
-```
-$ npm i -g marked
-$ man marked
-```
-
+[chnode.sh]: https://raw.githubusercontent.com/tkareine/chnode/master/chnode.sh
 [chruby]: https://github.com/postmodern/chruby
 [marked]: https://github.com/markedjs/marked
 [node-build]: https://github.com/nodenv/node-build
