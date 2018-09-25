@@ -1,16 +1,15 @@
 # -*- sh-shell: bash; -*-
 
-CHNODE_NODES_DIR=$(mktemp -d /tmp/chnode_benchmark.XXXXXX)
+__FIXTURE_DEFAULT_DIR=$(mktemp -d /tmp/chnode_benchmark.XXXXXX)
+export CHNODE_NODES_DIR=$__FIXTURE_DEFAULT_DIR
 
-delete_nodes_dir() {
-    rm -fr "$CHNODE_NODES_DIR"
+fixture_delete_default_dir() {
+    rm -fr "$__FIXTURE_DEFAULT_DIR"
 }
 
-trap delete_nodes_dir EXIT
+trap fixture_delete_default_dir EXIT
 
-export CHNODE_NODES_DIR
-
-make_nodes_dir() {
+fixture_make_nodes_dir() {
     local name
     for name in "$@"; do
         mkdir -p "$CHNODE_NODES_DIR/$name/bin"
@@ -23,7 +22,7 @@ END
     done
 }
 
-make_nodes_dir \
+fixture_make_nodes_dir \
     node-10.11.0 \
     node-9.11.2 \
     node-8.1.0 \

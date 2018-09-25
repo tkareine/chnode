@@ -1,6 +1,8 @@
 SHELL := bash  # required for `help` target
 
-SHELLCHECK_OPTS=
+SHELLCHECK_OPTS=-s bash -e SC1090 -e SC1091
+
+TEST_FILES ?= $(wildcard test/*-test.sh)
 
 BM_FILES ?= $(wildcard benchmark/*-bm.sh)
 
@@ -8,13 +10,17 @@ BM_FILES ?= $(wildcard benchmark/*-bm.sh)
 help:
 	@echo -e '$(subst $(newline),\n,$(usage_text))'
 
-.PHONY: benchmark
-benchmark:
-	$(foreach bm,$(BM_FILES),./$(bm)$(newline))
-
 .PHONY: lint
 lint:
-	shellcheck -s bash chnode.sh
+	shellcheck chnode.sh $(TEST_FILES) $(BM_FILES)
+
+.PHONY: test
+test:
+	./test/runner.sh $(TEST_FILES)
+
+.PHONY: benchmark
+benchmark:
+	./benchmark/runner.sh $(BM_FILES)
 
 define newline
 
@@ -25,6 +31,7 @@ define usage_text
 Targets:
 
   help         Show this guide
-  benchmark    Run benchmarks
-  lint         Run shellcheck on selected sources
+  lint         Run shellcheck on source files
+  test         Run tests (select: TEST_FILES=test/*-test.sh)
+  benchmark    Run benchmarks (select: BM_FILES=benchmark/*-bm.sh)
 endef

@@ -1,31 +1,12 @@
-#!/usr/bin/env bash
+# -*- sh-shell: bash; -*-
 
-set -euo pipefail
+echo "(${r:-1}/$RUNS) chnode"
 
-cd "${0%/*}" || exit 1
-
-source ./bm-fixture.sh
-
-RUNS=${RUNS:-3}
-N=${N:-1000}
-
-echo "Run \`chnode\` $N times sequentally in subshell, with $RUNS separate runs…"
-
-for ((r=0; r < RUNS; r+=1)); do
-    env -i \
-        HOME="$HOME" \
-        CHNODE_NODES_DIR="$CHNODE_NODES_DIR" \
-        r="$r" \
-        N="$N" \
-        bash <<END
-echo "Run #$r"
-
-source "../chnode.sh"
+source chnode.sh
 
 time (
     for ((i=0; i < N; i+=1)); do
+        # shellcheck disable=SC2119
         chnode >/dev/null
     done
 )
-END
-done
