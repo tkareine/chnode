@@ -1,6 +1,6 @@
 # -*- sh-shell: bash; -*-
 
-__FIXTURE_DEFAULT_DIR=$(mktemp -d /tmp/chnode_benchmark.XXXXXX)
+__FIXTURE_DEFAULT_DIR=$(mktemp -d /tmp/chnode-fixture.XXXXXX)
 export CHNODE_NODES_DIR=$__FIXTURE_DEFAULT_DIR
 
 fixture_delete_default_dir() {
