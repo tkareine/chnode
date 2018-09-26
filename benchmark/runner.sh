@@ -11,6 +11,7 @@ source test/fixture.sh
 
 for bm_file in "$@"; do
     for ((r=1; r <= RUNS; r+=1)); do
+        echo
         env -i \
             HOME="$HOME" \
             CHNODE_NODES_DIR="$CHNODE_NODES_DIR" \
