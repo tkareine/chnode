@@ -10,7 +10,7 @@ if [[ -d $CHNODE_NODES_DIR && \
 fi
 
 chnode_reset() {
-    [[ -z $CHNODE_ROOT ]] && return
+    [[ -z ${CHNODE_ROOT:-} ]] && return
 
     local path=:$PATH:
     path=${path//:$CHNODE_ROOT\/bin:/:}
@@ -29,7 +29,7 @@ chnode_use() {
         return 1
     fi
 
-    [[ -n $CHNODE_ROOT ]] && chnode_reset
+    [[ -n ${CHNODE_ROOT:-} ]] && chnode_reset
 
     export CHNODE_ROOT=$root
     export PATH=$CHNODE_ROOT/bin${PATH:+:$PATH}
@@ -53,7 +53,7 @@ chnode() {
             for dir in "${CHNODE_NODES[@]}"; do
                 dir="${dir%/}"
                 node="${dir##*/}"
-                if [[ $dir == "$CHNODE_ROOT" ]]; then
+                if [[ $dir == "${CHNODE_ROOT:-}" ]]; then
                     echo " * ${node}"
                 else
                     echo "   ${node}"
