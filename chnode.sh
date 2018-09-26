@@ -78,7 +78,7 @@ chnode() {
             done
 
             if [[ -z $match ]]; then
-                echo "chnode: unknown Node.js: $given"
+                echo "chnode: unknown Node.js: $given" >&2
                 return 1
             fi
 

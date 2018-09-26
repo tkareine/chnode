@@ -1,10 +1,19 @@
 SHELL := bash  # required for `help` target
 
-SHELLCHECK_OPTS=-s bash -e SC1090 -e SC1091
+SHELLCHECK_OPTS := -s bash -e SC1090 -e SC1091
 
 TEST_FILES ?= $(wildcard test/*-test.sh)
 
 BM_FILES ?= $(wildcard benchmark/*-bm.sh)
+
+LINT_FILES := \
+    chnode.sh \
+    benchmark/runner.sh \
+    test/fixture.sh \
+    test/helper.sh \
+    test/runner.sh \
+    $(TEST_FILES) \
+    $(BM_FILES)
 
 .PHONY: help
 help:
@@ -12,7 +21,7 @@ help:
 
 .PHONY: lint
 lint:
-	shellcheck chnode.sh $(TEST_FILES) $(BM_FILES)
+	shellcheck $(LINT_FILES)
 
 .PHONY: test
 test:
