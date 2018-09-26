@@ -158,6 +158,11 @@ $ source contrib/set-prompt.sh
 $
 ```
 
+## License
+
+MIT. See [LICENSE.txt].
+
+[LICENSE.txt]: https://raw.githubusercontent.com/tkareine/chnode/master/LICENSE.txt
 [chnode.sh]: https://raw.githubusercontent.com/tkareine/chnode/master/chnode.sh
 [chruby]: https://github.com/postmodern/chruby
 [marked]: https://github.com/markedjs/marked
