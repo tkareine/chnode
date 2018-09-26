@@ -8,14 +8,20 @@ Caution: work in progress.
 
 ## Features
 
-* Updates `$PATH`
+* Updates `$PATH`.
 * Avoids executable shims, hooking to `cd`, and all the problems
-  associated with those
+  associated with those.
 * The man pages of Node.js and npm packages for the selected Node.js are
-  available
-* Calls `hash -r` to clear the command-lookup hash-table
-* Fuzzy matching of Node.js installations by name
-* Small and fast
+  available.
+* Calls `hash -r` to clear the hash table for program locations.
+* Best candidate matching of Node.js installations by name.
+* The path to current Node.js version is available in `$CHNODE_ROOT`.
+  This makes it easy to display in shell prompt.
+* Locate your Node.js versions in `~/.nodes` directory. Set custom
+  directory with `$CHNODE_NODES_DIR`.
+* Add additional Node.js versions by adding to `$CHNODE_NODES` array
+  environment variable.
+* Small and fast.
 
 ## Requirements
 
@@ -26,7 +32,7 @@ Bash version >= 3
 For now, download the [chnode.sh] script:
 
 ``` shell
-curl 'https://raw.githubusercontent.com/tkareine/chnode/master/chnode.sh' > chnode.sh
+curl -L 'https://raw.githubusercontent.com/tkareine/chnode/master/chnode.sh' > chnode.sh
 ```
 
 Or clone the repository:
@@ -53,7 +59,7 @@ the following line to `~/.bash_profile`:
 
 ## Node.js versions
 
-When shell loads chnode with `source` command, it will auto-detect
+When shell loads chnode with `source` command, the script auto-detects
 Node.js versions installed in `~/.nodes` directory.
 
 You may override `~/.nodes` directory by setting `CHNODE_NODES_DIR`
@@ -68,9 +74,9 @@ source chnode.sh
 After installing new Node.js versions, you must restart your shell or
 execute the `source` command again in order for chnode to detect them.
 
-For Node.js versions installed in other locations, append their paths to
-the `CHNODE_NODES` environment variable after the `source` command. For
-example:
+For Node.js versions installed in other locations, add their paths to
+the `CHNODE_NODES` array environment variable after the `source`
+command. For example:
 
 ``` bash
 source chnode.sh
