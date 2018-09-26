@@ -139,7 +139,21 @@ $ echo "$PATH"
 /usr/local/bin:/usr/bin:…
 ```
 
+## Display current Node.js in shell prompt
+
+You can pick up the currently selected Node.js version from
+`$CHNODE_ROOT` environment variable. An example script to customize
+shell prompt is in [set-prompt.sh]. Usage:
+
+```
+$ source chruby.sh
+$ source contrib/set-prompt.sh
+[tkareine@sky] [~/Projects/chnode] (node:10.10.0)
+$
+```
+
 [chnode.sh]: https://raw.githubusercontent.com/tkareine/chnode/master/chnode.sh
 [chruby]: https://github.com/postmodern/chruby
 [marked]: https://github.com/markedjs/marked
 [node-build]: https://github.com/nodenv/node-build
+[set-prompt.sh]: https://raw.githubusercontent.com/tkareine/chnode/master/contrib/set-prompt.sh
