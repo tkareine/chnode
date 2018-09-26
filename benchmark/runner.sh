@@ -6,8 +6,8 @@ set -euo pipefail
 
 source test/fixture.sh
 
-RUNS=${RUNS:-3}
-N=${N:-1000}
+: "${RUNS:=3}"
+: "${N:=1000}"
 
 for bm_file in "$@"; do
     for ((r=1; r <= RUNS; r+=1)); do

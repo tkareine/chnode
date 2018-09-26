@@ -2,7 +2,7 @@
 
 CHNODE_VERSION=0.0.1
 CHNODE_NODES=()
-CHNODE_NODES_DIR=${CHNODE_NODES_DIR-$HOME/.nodes}
+: "${CHNODE_NODES_DIR=$HOME/.nodes}"
 
 if [[ -d $CHNODE_NODES_DIR && \
           -z "$(\find "$CHNODE_NODES_DIR" -maxdepth 0 -type d -empty 2>/dev/null)" ]]; then
