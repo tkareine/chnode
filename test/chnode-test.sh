@@ -32,6 +32,7 @@ test_chnode_use_and_reset() {
     assertEquals 0 $?
     assertEquals "$CHNODE_NODES_DIR/node-8.1.0/bin" "$(get_first_path_component)"
     assertEquals "$CHNODE_NODES_DIR/node-8.1.0" "$CHNODE_ROOT"
+    assertEquals "use: node-8.1.0" "$(node)"
 
     local expected_output
     expected_output=$(cat <<END

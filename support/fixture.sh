@@ -21,7 +21,7 @@ fixture_make_nodes_dir() {
         cat > "$dir/$name/bin/node" <<END
 #!/usr/bin/env bash
 
-echo "I'm $name"
+echo "use: $name"
 END
         chmod 755 "$dir/$name/bin/node"
     done
