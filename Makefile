@@ -1,4 +1,4 @@
-SHELL := bash  # required for `help` target
+SHELL ?= bash
 
 SHELLCHECK_OPTS := -s bash -e SC1090 -e SC1091
 
@@ -28,23 +28,27 @@ lint:
 
 .PHONY: test
 test:
-	./test/runner.sh $(TEST_FILES)
+	$(SHELL) test/runner.sh $(TEST_FILES)
 
 .PHONY: test-docker
-test-docker: $(DOCKER_TEST_BASHES)
+test-docker: test-docker-bashes test-docker-zshes
+
+.PHONY: test-docker-bashes
+test-docker-bashes: $(DOCKER_TEST_BASHES)
 
 .PHONY: $(DOCKER_TEST_BASHES)
 $(DOCKER_TEST_BASHES):
 	docker run \
 	    -it \
 	    -v "$(CURDIR):/chnode" \
+	    -w /chnode \
 	    -e SHELL=/usr/local/bin/bash \
 	    $(subst -,:,$@) \
-	    bash -c 'cd /chnode && ./test/runner.sh $(TEST_FILES)'
+	    bash test/runner.sh $(TEST_FILES)
 
 .PHONY: benchmark
 benchmark:
-	./benchmark/runner.sh $(BM_FILES)
+	$(SHELL) benchmark/runner.sh $(BM_FILES)
 
 define newline
 

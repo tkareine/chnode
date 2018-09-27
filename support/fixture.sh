@@ -19,7 +19,7 @@ fixture_make_nodes_dir() {
     for name in "$@"; do
         mkdir -p "$dir/$name/bin"
         cat > "$dir/$name/bin/node" <<END
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
 echo "use: $name"
 END
