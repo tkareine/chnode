@@ -1,4 +1,4 @@
-SHELL ?= bash
+export SHELL
 
 SHELLCHECK_OPTS := -s bash -e SC1090 -e SC1091
 
@@ -20,7 +20,7 @@ LINT_FILES := \
 
 .PHONY: help
 help:
-	@echo -e '$(subst $(newline),\n,$(usage_text))'
+	@bash -c 'echo -e "$(subst $(newline),\n,$(usage_text))"'
 
 .PHONY: lint
 lint:
