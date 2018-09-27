@@ -2,7 +2,9 @@
 
 set -euo pipefail
 
-echo "Using SHELL=$SHELL"
+source support/shell-info.sh
+
+echo "Using $(print_shell_info)"
 
 error=0
 

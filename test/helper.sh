@@ -2,7 +2,7 @@
 
 : "${SHUNIT2:=test/shunit2/shunit2}"
 
-source test/fixture.sh
+source support/fixture.sh
 
 source chnode.sh
 

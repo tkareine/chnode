@@ -1,16 +1,18 @@
 #!/usr/bin/env bash
 
-echo "Using SHELL=$SHELL"
-
 set -euo pipefail
 
-source test/fixture.sh
+source support/shell-info.sh
+
+echo "Using $(print_shell_info)"
+
+source support/fixture.sh
 
 : "${RUNS:=3}"
 : "${N:=1000}"
 
 for bm_file in "$@"; do
-    for ((r=1; r <= RUNS; r+=1)); do
+    for (( r=1; r <= RUNS; r+=1 )); do
         echo
         env -i \
             HOME="$HOME" \

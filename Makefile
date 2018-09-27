@@ -10,8 +10,9 @@ DOCKER_TEST_BASHES ?= bash-4.4 bash-3.2
 
 LINT_FILES := \
     chnode.sh \
+    support/fixture.sh \
+    support/shell-info.sh \
     benchmark/runner.sh \
-    test/fixture.sh \
     test/helper.sh \
     test/runner.sh \
     $(TEST_FILES) \
