@@ -22,16 +22,16 @@ chnode_reset() {
 }
 
 chnode_use() {
-    local root=$1
+    local new_root=$1
 
-    if [[ ! -x "$root/bin/node" ]]; then
-        echo "chnode: $root/bin/node not executable" >&2
+    if [[ ! -x "$new_root/bin/node" ]]; then
+        echo "chnode: $new_root/bin/node not executable" >&2
         return 1
     fi
 
     [[ -n ${CHNODE_ROOT:-} ]] && chnode_reset
 
-    export CHNODE_ROOT=$root
+    export CHNODE_ROOT=$new_root
     export PATH=$CHNODE_ROOT/bin${PATH:+:$PATH}
 
     hash -r
