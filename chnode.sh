@@ -12,11 +12,11 @@ fi
 chnode_reset() {
     [[ -z ${CHNODE_ROOT:-} ]] && return
 
-    local path=:$PATH:
-    path=${path//:$CHNODE_ROOT\/bin:/:}
-    path=${path#:}
-    path=${path%:}
-    PATH=$path
+    local new_path=:$PATH:
+    new_path=${new_path//:$CHNODE_ROOT\/bin:/:}
+    new_path=${new_path#:}
+    new_path=${new_path%:}
+    PATH=$new_path
     unset CHNODE_ROOT
     hash -r
 }
