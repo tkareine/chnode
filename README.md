@@ -8,19 +8,19 @@ Caution: work in progress.
 
 ## Features
 
-* Updates `$PATH`.
+* Updates `PATH` environment variable.
 * Avoids executable shims, hooking to `cd`, and all the problems
   associated with those.
 * The man pages of Node.js and npm packages for the selected Node.js are
   available.
 * Calls `hash -r` to clear the hash table for program locations.
 * Best candidate matching of Node.js installations by name.
-* The path to current Node.js version is available in `$CHNODE_ROOT`.
-  This makes it easy to display in shell prompt.
+* The path to current Node.js version is available in `CHNODE_ROOT`
+  environment variable. This makes it easy to display in shell prompt.
 * Locate your Node.js versions in `~/.nodes` directory. Set custom
-  directory with `$CHNODE_NODES_DIR`.
-* Add additional Node.js versions by adding to `$CHNODE_NODES` array
-  environment variable.
+  directory with `CHNODE_NODES_DIR` shell variable.
+* Add additional Node.js versions by adding to `CHNODE_NODES` array
+  shell variable.
 * Small and fast.
 
 ## Requirements
@@ -63,8 +63,8 @@ When shell loads chnode with `source` command, the script auto-detects
 Node.js versions installed in `~/.nodes` directory.
 
 You may override `~/.nodes` directory by setting `CHNODE_NODES_DIR`
-environment variable to point to another directory. Do this before
-executing the `source` command. For example:
+shell variable to point to another directory. Do this before executing
+the `source` command. For example:
 
 ``` bash
 CHNODE_NODES_DIR=/opt/nodes
@@ -75,8 +75,8 @@ After installing new Node.js versions, you must restart your shell or
 execute the `source` command again in order for chnode to detect them.
 
 For Node.js versions installed in other locations, add their paths to
-the `CHNODE_NODES` array environment variable after the `source`
-command. For example:
+the `CHNODE_NODES` shell array variable after the `source` command. For
+example:
 
 ``` bash
 source chnode.sh
@@ -148,8 +148,8 @@ $ echo "$PATH"
 ## Display current Node.js in shell prompt
 
 You can pick up the currently selected Node.js version from
-`$CHNODE_ROOT` environment variable. An example script to customize
-shell prompt is in [set-prompt.sh]. Usage:
+`CHNODE_ROOT` environment variable. An example script to customize shell
+prompt is in [set-prompt.sh]. Usage:
 
 ```
 $ source chruby.sh
