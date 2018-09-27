@@ -111,14 +111,28 @@ test_reset_clears_hash() {
     populate_hash
     chnode reset
 
-    assertEquals "hash: hash table empty" "$(hash)"
+    local expected_output
+    if [[ -n ${ZSH_VERSION:-} ]]; then
+        expected_output=
+    else
+        expected_output='hash: hash table empty'
+    fi
+
+    assertEquals "$expected_output" "$(hash)"
 }
 
 test_use_clears_hash() {
     populate_hash
     chnode node-8
 
-    assertEquals "hash: hash table empty" "$(hash)"
+    local expected_output
+    if [[ -n ${ZSH_VERSION:-} ]]; then
+        expected_output=
+    else
+        expected_output='hash: hash table empty'
+    fi
+
+    assertEquals "$expected_output" "$(hash)"
 }
 
 get_first_path_component() {
@@ -131,4 +145,4 @@ populate_hash() {
     uname >/dev/null
 }
 
-source "$SHUNIT2"
+SHUNIT_PARENT=$0 source "$SHUNIT2"

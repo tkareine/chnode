@@ -25,7 +25,7 @@ Caution: work in progress.
 
 ## Requirements
 
-Bash version >= 3
+[GNU Bash] version >= 3.2 or [Zsh] version >= 5.3
 
 ## Installation
 
@@ -162,7 +162,9 @@ $
 
 MIT. See [LICENSE.txt].
 
+[GNU Bash]: https://www.gnu.org/software/bash/
 [LICENSE.txt]: https://raw.githubusercontent.com/tkareine/chnode/master/LICENSE.txt
+[Zsh]: https://www.zsh.org/
 [chnode.sh]: https://raw.githubusercontent.com/tkareine/chnode/master/chnode.sh
 [chruby]: https://github.com/postmodern/chruby
 [marked]: https://github.com/markedjs/marked

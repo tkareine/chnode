@@ -39,4 +39,4 @@ with_shell() {
         "$SHELL"
 }
 
-source "$SHUNIT2"
+SHUNIT_PARENT=$0 source "$SHUNIT2"

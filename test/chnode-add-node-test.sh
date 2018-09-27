@@ -32,4 +32,4 @@ END
     assertEquals "$__test_nodes_dir/node-6.0.0" "$CHNODE_ROOT"
 }
 
-source "$SHUNIT2"
+SHUNIT_PARENT=$0 source "$SHUNIT2"
