@@ -6,6 +6,8 @@ TEST_FILES ?= $(wildcard test/*-test.sh)
 
 BM_FILES ?= $(wildcard benchmark/*-bm.sh)
 
+DOCKER_TEST_BASHES ?= bash-4.4 bash-3.2
+
 LINT_FILES := \
     chnode.sh \
     benchmark/runner.sh \
@@ -27,6 +29,18 @@ lint:
 test:
 	./test/runner.sh $(TEST_FILES)
 
+.PHONY: test-docker
+test-docker: $(DOCKER_TEST_BASHES)
+
+.PHONY: $(DOCKER_TEST_BASHES)
+$(DOCKER_TEST_BASHES):
+	docker run \
+	    -it \
+	    -v "$(CURDIR):/chnode" \
+	    -e SHELL=/usr/local/bin/bash \
+	    $(subst -,:,$@) \
+	    bash -c 'cd /chnode && ./test/runner.sh $(TEST_FILES)'
+
 .PHONY: benchmark
 benchmark:
 	./benchmark/runner.sh $(BM_FILES)
@@ -42,5 +56,6 @@ Targets:
   help         Show this guide
   lint         Run shellcheck on source files
   test         Run tests (select: TEST_FILES=test/*-test.sh)
+  test-docker  Run tests with various shells in Docker container (select: TEST_FILES=test/*-test.sh)
   benchmark    Run benchmarks (select: BM_FILES=benchmark/*-bm.sh)
 endef
