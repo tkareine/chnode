@@ -38,7 +38,7 @@ chnode_use() {
 }
 
 chnode() {
-    case "${1:-}" in
+    case ${1:-} in
         -h|--help)
             echo "Usage: chnode [NODE_VERSION|reset]"
             ;;
@@ -66,7 +66,7 @@ chnode() {
             for dir in "${CHNODE_NODES[@]}"; do
                 dir="${dir%%/}"
                 node="${dir##*/}"
-                case "$node" in
+                case $node in
                     "$given")
                         match=$dir
                         break

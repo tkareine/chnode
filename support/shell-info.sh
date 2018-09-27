@@ -2,7 +2,7 @@
 
 print_shell_info() {
     local version
-    case "${SHELL##*/}" in
+    case ${SHELL##*/} in
         bash)
             version=$BASH_VERSION
             ;;
