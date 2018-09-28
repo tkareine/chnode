@@ -9,6 +9,7 @@ echo "Using $(shell_info)"
 error=0
 
 for test_file in "$@"; do
+    echo
     env -i \
         TERM="$TERM" \
         HOME="$HOME" \
