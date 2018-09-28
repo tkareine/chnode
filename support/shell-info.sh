@@ -1,6 +1,6 @@
 # -*- sh-shell: bash; -*-
 
-print_shell_info() {
+shell_info() {
     local version
     case ${SHELL##*/} in
         bash)

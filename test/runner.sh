@@ -4,7 +4,7 @@ set -euo pipefail
 
 source support/shell-info.sh
 
-echo "Using $(print_shell_info)"
+echo "Using $(shell_info)"
 
 error=0
 

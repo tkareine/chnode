@@ -30,7 +30,7 @@ test_chnode_use_and_reset() {
     chnode node-8
 
     assertEquals 0 $?
-    assertEquals "$CHNODE_NODES_DIR/node-8.1.0/bin" "$(get_first_path_component)"
+    assertEquals "$CHNODE_NODES_DIR/node-8.1.0/bin" "$(__get_first_path_component)"
     assertEquals "$CHNODE_NODES_DIR/node-8.1.0" "$CHNODE_ROOT"
     assertEquals "use: node-8.1.0" "$(node)"
 
@@ -108,7 +108,7 @@ test_use_exports_chnode_root_and_path() {
 
 test_reset_clears_hash() {
     chnode node-8
-    populate_hash
+    __populate_hash
     chnode reset
 
     local expected_output
@@ -122,7 +122,7 @@ test_reset_clears_hash() {
 }
 
 test_use_clears_hash() {
-    populate_hash
+    __populate_hash
     chnode node-8
 
     local expected_output
@@ -135,13 +135,13 @@ test_use_clears_hash() {
     assertEquals "$expected_output" "$(hash)"
 }
 
-get_first_path_component() {
+__get_first_path_component() {
     local path_comp
     read -r -d : path_comp <<<"$PATH"
     echo "$path_comp"
 }
 
-populate_hash() {
+__populate_hash() {
     uname >/dev/null
 }
 
