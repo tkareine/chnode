@@ -30,6 +30,7 @@ END
 
     assertEquals "$expected_output" "$(chnode)"
     assertEquals "$__test_nodes_dir/node-6.0.0" "$CHNODE_ROOT"
+    assertEquals "use: node-6.0.0" "$(node)"
 }
 
 SHUNIT_PARENT=$0 source "$SHUNIT2"
