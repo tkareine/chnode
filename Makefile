@@ -35,6 +35,7 @@ test-docker-zshes: $(DOCKER_TEST_ZSHES)
 .PHONY: $(DOCKER_TEST_BASHES)
 $(DOCKER_TEST_BASHES):
 	docker run \
+	    --rm \
 	    -it \
 	    -v "$(CURDIR):/chnode" \
 	    -w /chnode \
@@ -45,6 +46,7 @@ $(DOCKER_TEST_BASHES):
 .PHONY: $(DOCKER_TEST_ZSHES)
 $(DOCKER_TEST_ZSHES):
 	docker run \
+	    --rm \
 	    -it \
 	    -v "$(CURDIR):/chnode" \
 	    -w /chnode \
