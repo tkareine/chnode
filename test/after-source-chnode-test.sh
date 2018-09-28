@@ -30,6 +30,7 @@ END
 )
 
     local actual_output
+    # shellcheck disable=SC2119
     actual_output=$(chnode)
 
     assertEquals 0 $?

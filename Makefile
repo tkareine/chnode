@@ -9,15 +9,7 @@ BM_FILES ?= $(wildcard benchmark/*-bm.sh)
 DOCKER_TEST_BASHES ?= bash-4.4 bash-3.2
 DOCKER_TEST_ZSHES ?= zshusers/zsh-5.6.2 zshusers/zsh-5.3
 
-LINT_FILES := \
-    chnode.sh \
-    support/fixture.sh \
-    support/shell-info.sh \
-    benchmark/runner.sh \
-    test/helper.sh \
-    test/runner.sh \
-    $(TEST_FILES) \
-    $(BM_FILES)
+LINT_FILES := chnode.sh $(wildcard benchmark/*.sh support/*.sh test/*.sh)
 
 .PHONY: help
 help:
