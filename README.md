@@ -1,5 +1,7 @@
 # chnode
 
+[![Build status](https://travis-ci.org/tkareine/chnode.svg?branch=master)][chnode-build]
+
 Changes shell's current Node.js by updating `$PATH`.
 
 Inspired by [chruby], which is awesome.
@@ -165,6 +167,7 @@ MIT. See [LICENSE.txt].
 [GNU Bash]: https://www.gnu.org/software/bash/
 [LICENSE.txt]: https://raw.githubusercontent.com/tkareine/chnode/master/LICENSE.txt
 [Zsh]: https://www.zsh.org/
+[chnode-build]: https://travis-ci.org/tkareine/chnode
 [chnode.sh]: https://raw.githubusercontent.com/tkareine/chnode/master/chnode.sh
 [chruby]: https://github.com/postmodern/chruby
 [marked]: https://github.com/markedjs/marked
