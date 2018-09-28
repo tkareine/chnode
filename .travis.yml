@@ -6,9 +6,8 @@ services:
 language: minimal
 
 before_install:
-  - shellcheck --version
   - docker --version
 
 script:
-  - make lint
+  - make lint-docker
   - make test-docker

@@ -19,6 +19,16 @@ help:
 lint:
 	shellcheck $(LINT_FILES)
 
+.PHONY: lint-docker
+lint-docker:
+	docker run \
+	    --rm \
+	    -v "$(CURDIR):/chnode" \
+	    -w /chnode \
+	    -e SHELLCHECK_OPTS="$(SHELLCHECK_OPTS)" \
+	    koalaman/shellcheck:stable \
+	    $(LINT_FILES)
+
 .PHONY: test
 test:
 	$(SHELL) test/runner.sh $(TEST_FILES)
@@ -68,6 +78,7 @@ Targets:
 
   help                Show this guide
   lint                Run shellcheck on source files
+  lint-docker         Run shellcheck on source files in Docker container
   test                Run tests with SHELL you choose (usage: \`make test SHELL=bash\`) (select: TEST_FILES=test/*-test.sh)
   test-docker         Run tests with various bash and zsh versions in Docker container
   test-docker-bash    Run tests with various bash versions in Docker container
