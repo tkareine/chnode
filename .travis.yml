@@ -3,5 +3,12 @@ sudo: required
 services:
   - docker
 
+language: minimal
+
+before_install:
+  - shellcheck --version
+  - docker --version
+
 script:
+  - make lint
   - make test-docker
