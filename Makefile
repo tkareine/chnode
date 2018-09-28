@@ -23,6 +23,7 @@ lint:
 lint-docker:
 	docker run \
 	    --rm \
+	    -t \
 	    -v "$(CURDIR):/chnode" \
 	    -w /chnode \
 	    -e SHELLCHECK_OPTS="$(SHELLCHECK_OPTS)" \
@@ -46,7 +47,7 @@ test-docker-zshes: $(DOCKER_TEST_ZSHES)
 $(DOCKER_TEST_BASHES):
 	docker run \
 	    --rm \
-	    -it \
+	    -t \
 	    -v "$(CURDIR):/chnode" \
 	    -w /chnode \
 	    -e SHELL=/usr/local/bin/bash \
@@ -57,7 +58,7 @@ $(DOCKER_TEST_BASHES):
 $(DOCKER_TEST_ZSHES):
 	docker run \
 	    --rm \
-	    -it \
+	    -t \
 	    -v "$(CURDIR):/chnode" \
 	    -w /chnode \
 	    -e SHELL=/usr/bin/zsh \
