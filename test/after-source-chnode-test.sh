@@ -1,6 +1,7 @@
 # -*- sh-shell: bash; -*-
 
-source test/helper.sh
+source test/setup-shunit2.sh
+source test/setup-default-chnode.sh
 
 test_populates_nodes_var() {
     local expected_paths=(

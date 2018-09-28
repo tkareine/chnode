@@ -1,10 +1,8 @@
 # -*- sh-shell: bash; -*-
 
-: "${SHUNIT2:=test/shunit2/shunit2}"
-
-[[ -n ${ZSH_VERSION:-} ]] && setopt shwordsplit
-
 source support/fixture.sh
+
+fixture_make_default_nodes
 
 source chnode.sh
 

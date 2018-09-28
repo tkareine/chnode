@@ -1,9 +1,9 @@
 # -*- sh-shell: bash; -*-
 
-source test/helper.sh
+source test/setup-shunit2.sh
+source test/setup-default-chnode.sh
 
 setUp() {
-    CHNODE_NODES=("${__ORG_CHNODE_NODES[@]}")
     __test_nodes_dir=$(mktemp -d /tmp/chnode-add-node.XXXXXX)
 }
 

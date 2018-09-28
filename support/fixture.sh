@@ -1,7 +1,6 @@
 # -*- sh-shell: bash; -*-
 
 __FIXTURE_DEFAULT_DIR=$(mktemp -d /tmp/chnode-fixture.XXXXXX)
-export CHNODE_NODES_DIR=$__FIXTURE_DEFAULT_DIR
 
 fixture_delete_default_dir() {
     rm -fr "$__FIXTURE_DEFAULT_DIR"
@@ -27,9 +26,13 @@ END
     done
 }
 
-fixture_make_nodes_dir "$__FIXTURE_DEFAULT_DIR" \
-    node-10.11.0 \
-    node-9.11.2 \
-    node-9.11.2-rc1 \
-    node-8.1.0 \
-    iojs-3.3.1
+fixture_make_default_nodes() {
+  fixture_make_nodes_dir "$__FIXTURE_DEFAULT_DIR" \
+      node-10.11.0 \
+      node-9.11.2 \
+      node-9.11.2-rc1 \
+      node-8.1.0 \
+      iojs-3.3.1
+
+  export CHNODE_NODES_DIR=$__FIXTURE_DEFAULT_DIR
+}

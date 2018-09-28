@@ -8,6 +8,8 @@ echo "Using $(shell_info)"
 
 source support/fixture.sh
 
+fixture_make_default_nodes
+
 : "${RUNS:=3}"
 : "${N:=1000}"
 
