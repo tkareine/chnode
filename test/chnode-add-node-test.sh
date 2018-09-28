@@ -11,7 +11,7 @@ tearDown() {
     rm -fr "$__test_nodes_dir"
 }
 
-test_use_node_added_to_nodes() {
+test_use_node_added_to_nodes_var() {
     fixture_make_nodes_dir "$__test_nodes_dir" node-6.0.0
     CHNODE_NODES+=("$__test_nodes_dir/node-6.0.0")
 
