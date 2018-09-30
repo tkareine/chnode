@@ -1,6 +1,6 @@
 # -*- sh-shell: bash; -*-
 
-CHNODE_VERSION=0.0.1
+CHNODE_VERSION=0.1.0
 CHNODE_NODES=()
 : "${CHNODE_NODES_DIR=$HOME/.nodes}"
 

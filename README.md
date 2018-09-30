@@ -6,8 +6,6 @@ Changes shell's current Node.js by updating `$PATH`.
 
 Inspired by [chruby], which is awesome.
 
-Caution: work in progress.
-
 ## Features
 
 * Updates `PATH` environment variable.
