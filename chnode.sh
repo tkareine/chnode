@@ -60,6 +60,37 @@ chnode_use() {
     hash -r
 }
 
+chnode_match() {
+    local dir node given=$1
+    shift
+    for dir in "${CHNODE_NODES[@]}"; do
+        dir="${dir%%/}"
+        node="${dir##*/}"
+        case $node in
+            "$given")
+                match_output=$dir
+                break
+                ;;
+            *"$given"*)
+                match_output=$dir
+                ;;
+        esac
+    done
+}
+
+chnode_list() {
+    local dir node
+    for dir in "${CHNODE_NODES[@]}"; do
+        dir="${dir%/}"
+        node="${dir##*/}"
+        if [[ $dir == "${CHNODE_ROOT:-}" ]]; then
+            echo " * ${node}"
+        else
+            echo "   ${node}"
+        fi
+    done
+}
+
 chnode() {
     case ${1:-} in
         -h|--help)
@@ -75,40 +106,18 @@ chnode() {
             echo "chnode: $CHNODE_VERSION"
             ;;
         "")
-            local dir node
-            for dir in "${CHNODE_NODES[@]}"; do
-                dir="${dir%/}"
-                node="${dir##*/}"
-                if [[ $dir == "${CHNODE_ROOT:-}" ]]; then
-                    echo " * ${node}"
-                else
-                    echo "   ${node}"
-                fi
-            done
+            chnode_list
             ;;
         *)
-            local dir node given=$1 match
-            shift
-            for dir in "${CHNODE_NODES[@]}"; do
-                dir="${dir%%/}"
-                node="${dir##*/}"
-                case $node in
-                    "$given")
-                        match=$dir
-                        break
-                        ;;
-                    *"$given"*)
-                        match=$dir
-                        ;;
-                esac
-            done
+            local match_output
+            chnode_match "$1"
 
-            if [[ -z $match ]]; then
-                echo "chnode: unknown Node.js: $given" >&2
+            if [[ -z $match_output ]]; then
+                echo "chnode: unknown Node.js: $1" >&2
                 return 1
             fi
 
-            chnode_use "$match"
+            chnode_use "$match_output"
             ;;
     esac
 }
