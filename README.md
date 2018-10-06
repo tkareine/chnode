@@ -16,7 +16,8 @@ Inspired by [chruby], which is awesome.
 * Calls `hash -r` to clear the hash table for program locations.
 * Best candidate matching of Node.js installations by name.
 * The path to current Node.js version is available in `CHNODE_ROOT`
-  environment variable. This makes it easy to display in shell prompt.
+  environment variable. This makes it easy to display it in shell
+  prompt.
 * Locate your Node.js versions in `~/.nodes` directory. Set custom
   directory with `CHNODE_NODES_DIR` shell variable.
 * Add additional Node.js versions by adding to `CHNODE_NODES` array
@@ -71,16 +72,19 @@ CHNODE_NODES_DIR=/opt/nodes
 source chnode.sh
 ```
 
-After installing new Node.js versions, you must restart your shell or
-execute the `source` command again in order for chnode to detect them.
+Sourcing `chnode.sh` populates `CHNODE_NODES` shell array variable with
+paths to subdirectories in `CHNODE_NODES_DIR`. `CHNODE_NODES` contains
+the Node.js versions you can select with `chnode NODE_VERSION` command.
+
+After installing new Node.js versions or removing them, run `chnode -R`
+to populate `CHNODE_NODES` again.
 
 For Node.js versions installed in other locations, add their paths to
-the `CHNODE_NODES` shell array variable after the `source` command. For
-example:
+`CHNODE_NODES` after the `source` or `chnode -R` commands. For example:
 
 ``` bash
 source chnode.sh
-CHNODE_NODES+=(/opt/node-10.10.0)
+CHNODE_NODES+=(/opt/node-10.11.0)
 ```
 
 ### node-build
@@ -90,12 +94,13 @@ You can use [node-build] to install Node.js versions.
 Installing to `~/.nodes`:
 
 ``` shell
-node-build 10.10.0 ~/.nodes/node-10.10.0
+node-build 10.11.0 ~/.nodes/node-10.11.0
 ```
 
 ### Default Node.js version
 
-Choose the default Node.js version in your shell's init script:
+Choose the default Node.js version in your shell's init script, here a
+10.x series:
 
 ``` bash
 source chnode.sh
@@ -108,7 +113,7 @@ List available Node.js versions:
 
 ```
 $ chnode
-   node-10.10.0
+   node-10.11.0
    node-8.11.4
 ```
 
@@ -118,31 +123,64 @@ Select a Node.js version, here a 10.x series:
 $ chnode node-10
 
 $ chnode
- * node-10.10.0
+ * node-10.11.0
    node-8.11.4
 
 $ echo "$PATH"
-/Users/tkareine/.nodes/node-10.10.0/bin:/usr/local/bin:/usr/bin:…
+/Users/tkareine/.nodes/node-10.11.0/bin:/usr/local/bin:/usr/bin:…
+
+$ echo "$CHNODE_ROOT"
+/Users/tkareine/.nodes/node-10.11.0
 ```
 
 Open the man page of [marked], installed as global npm package:
 
 ```
 $ npm install -g marked
+
+$ man -w marked
+/Users/tkareine/.nodes/node-10.11.0/share/man/man1/marked.1
+
 $ man marked
 ```
 
-Reset the version, clearing the path that was set in `$PATH`:
+While in the shell, install another Node.js and reload chnode (`chnode
+-R`):
+
+```
+$ node-build 8.9.4 ~/.nodes/node-8.9.4
+
+$ chnode
+ * node-10.11.0
+   node-8.11.4
+
+$ chnode -R
+
+$ chnode
+ * node-10.11.0
+   node-8.11.4
+   node-8.9.4
+```
+
+Reset the version (`chnode -r`), clearing the path that was set in
+`$PATH`:
 
 ```
 $ chnode -r
 
 $ chnode
-   node-10.10.0
+   node-10.11.0
    node-8.11.4
+   node-8.9.4
 
 $ echo "$PATH"
 /usr/local/bin:/usr/bin:…
+```
+
+Show usage:
+
+```
+$ chnode -h
 ```
 
 ## Display current Node.js in shell prompt
@@ -154,7 +192,7 @@ prompt is in [set-prompt.sh]. Usage:
 ```
 $ source chruby.sh
 $ source contrib/set-prompt.sh
-[tkareine@sky] [~/Projects/chnode] (node:10.10.0)
+[tkareine@sky] [~/Projects/chnode] (node:10.11.0)
 $
 ```
 
