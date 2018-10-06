@@ -2,7 +2,6 @@
 
 fixture_make_default_dir() {
     __FIXTURE_DEFAULT_DIR=$(mktemp -d /tmp/chnode-fixture.XXXXXX)
-    trap fixture_delete_default_dir EXIT
 }
 
 fixture_delete_default_dir() {

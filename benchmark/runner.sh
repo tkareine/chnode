@@ -9,6 +9,7 @@ echo "Using $(shell_info)"
 source support/fixture.sh
 
 fixture_make_default_dir
+trap fixture_delete_default_dir EXIT
 CHNODE_NODES_DIR=$__FIXTURE_DEFAULT_DIR
 fixture_make_default_nodes "$CHNODE_NODES_DIR"
 
