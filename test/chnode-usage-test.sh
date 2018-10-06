@@ -68,7 +68,6 @@ test_error_when_selecting_unknown_node() {
 
     assertEquals 1 $?
     assertEquals "chnode: unknown Node.js: nosuch" "$message"
-    assertNull "\$CHNODE_ROOT must be null" "$CHNODE_ROOT"
 }
 
 test_error_when_selecting_node_without_executable() {
@@ -79,7 +78,6 @@ test_error_when_selecting_node_without_executable() {
 
     assertEquals 1 $?
     assertEquals "chnode: $CHNODE_NODES_DIR/nosuchdir/bin/node not executable" "$message"
-    assertNull "\$CHNODE_ROOT must be null" "$CHNODE_ROOT"
 }
 
 test_use_exports_chnode_root_and_path_vars() {
