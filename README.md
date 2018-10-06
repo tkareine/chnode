@@ -135,7 +135,7 @@ $ man marked
 Reset the version, clearing the path that was set in `$PATH`:
 
 ```
-$ chnode reset
+$ chnode -r
 
 $ chnode
    node-10.10.0

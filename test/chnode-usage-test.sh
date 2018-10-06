@@ -5,7 +5,7 @@ source test/setup-default-chnode.sh
 
 setUp() {
     CHNODE_NODES=("${__ORG_CHNODE_NODES[@]}")
-    chnode reset
+    chnode -r
 }
 
 test_chnode_use_and_reset() {
@@ -33,7 +33,7 @@ END
     assertEquals "$expected_output" "$actual_output"
     assertEquals "$CHNODE_NODES_DIR/node-8.1.0" "$CHNODE_ROOT"
 
-    chnode reset
+    chnode -r
 
     assertEquals 0 $?
 
@@ -89,7 +89,7 @@ test_use_exports_chnode_root_and_path_vars() {
 test_reset_clears_hash() {
     chnode node-8
     __populate_hash
-    chnode reset
+    chnode -r
 
     local expected_output
     if [[ -n ${ZSH_VERSION:-} ]]; then

@@ -63,16 +63,16 @@ chnode_use() {
 chnode() {
     case ${1:-} in
         -h|--help)
-            echo "Usage: chnode [-h|-V|-R|NODE_VERSION|reset]"
+            echo "Usage: chnode [-h|-r|-R|-V|NODE_VERSION]"
+            ;;
+        -r|--reset)
+            chnode_reset
             ;;
         -R|--reload)
             chnode_reload
             ;;
         -V|--version)
             echo "chnode: $CHNODE_VERSION"
-            ;;
-        reset)
-            chnode_reset
             ;;
         "")
             local dir node
