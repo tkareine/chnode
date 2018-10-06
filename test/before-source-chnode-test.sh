@@ -3,7 +3,14 @@
 source test/setup-shunit2.sh
 source support/fixture.sh
 
-CHNODE_NODES_DIR=$__FIXTURE_DEFAULT_DIR
+setUp() {
+    fixture_make_default_dir
+    CHNODE_NODES_DIR=$__FIXTURE_DEFAULT_DIR
+}
+
+tearDown() {
+    fixture_delete_default_dir
+}
 
 test_empty_nodes_var_when_empty_nodes_dir() {
     local num_nodes

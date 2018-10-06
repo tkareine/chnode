@@ -1,12 +1,13 @@
 # -*- sh-shell: bash; -*-
 
-__FIXTURE_DEFAULT_DIR=$(mktemp -d /tmp/chnode-fixture.XXXXXX)
-
-fixture_delete_default_dir() {
-    rm -fr "$__FIXTURE_DEFAULT_DIR"
+fixture_make_default_dir() {
+    __FIXTURE_DEFAULT_DIR=$(mktemp -d /tmp/chnode-fixture.XXXXXX)
+    trap fixture_delete_default_dir EXIT
 }
 
-trap fixture_delete_default_dir EXIT
+fixture_delete_default_dir() {
+    [[ -n ${__FIXTURE_DEFAULT_DIR:-} ]] && rm -rf "$__FIXTURE_DEFAULT_DIR"
+}
 
 fixture_make_nodes_dir() {
     [[ -z $1 ]] && echo "fixture_make_nodes_dir(): expects dir as first parameter" && return 1
@@ -27,12 +28,12 @@ END
 }
 
 fixture_make_default_nodes() {
-  fixture_make_nodes_dir "$__FIXTURE_DEFAULT_DIR" \
-      node-10.11.0 \
-      node-9.11.2 \
-      node-9.11.2-rc1 \
-      node-8.1.0 \
-      iojs-3.3.1
+    [[ -z $1 ]] && echo "fixture_make_default_nodes(): expects dir as first parameter" && return 1
 
-  export CHNODE_NODES_DIR=$__FIXTURE_DEFAULT_DIR
+    fixture_make_nodes_dir "$1" \
+                           node-10.11.0 \
+                           node-9.11.2 \
+                           node-9.11.2-rc1 \
+                           node-8.1.0 \
+                           iojs-3.3.1
 }

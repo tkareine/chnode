@@ -8,7 +8,7 @@ setUp() {
 }
 
 tearDown() {
-    rm -fr "$__test_nodes_dir"
+    rm -rf "$__test_nodes_dir"
 }
 
 test_use_node_added_to_nodes_var() {
