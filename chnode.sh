@@ -1,22 +1,46 @@
 # -*- sh-shell: bash; -*-
 
 CHNODE_VERSION=0.1.0
-CHNODE_NODES=()
 : "${CHNODE_NODES_DIR=$HOME/.nodes}"
 
-if [[ -d $CHNODE_NODES_DIR && -n "$(\ls -A "$CHNODE_NODES_DIR")" ]]; then
+chnode_reload() {
+    local last_root=${CHNODE_ROOT:-}
+
+    [[ -n $last_root ]] && chnode_reset
+
+    CHNODE_NODES=()
+
+    [[ ! (-d $CHNODE_NODES_DIR && -n "$(\ls -A "$CHNODE_NODES_DIR")") ]] && return
+
     CHNODE_NODES+=("$CHNODE_NODES_DIR"/*)
-fi
+
+    [[ -z $last_root ]] && return
+
+    local dir
+    for dir in "${CHNODE_NODES[@]}"; do
+        if [[ $dir == "$last_root" ]]; then
+            if chnode_use "$dir"; then
+                return
+            else
+                return 1
+            fi
+        fi
+    done
+}
 
 chnode_reset() {
-    [[ -z ${CHNODE_ROOT:-} ]] && return
+    local last_root=${CHNODE_ROOT:-}
+
+    unset CHNODE_ROOT
+
+    [[ -z $last_root ]] && return
 
     local new_path=:$PATH:
-    new_path=${new_path//:$CHNODE_ROOT\/bin:/:}
+    new_path=${new_path//:$last_root\/bin:/:}
     new_path=${new_path#:}
     new_path=${new_path%:}
     PATH=$new_path
-    unset CHNODE_ROOT
+
     hash -r
 }
 
@@ -39,7 +63,10 @@ chnode_use() {
 chnode() {
     case ${1:-} in
         -h|--help)
-            echo "Usage: chnode [NODE_VERSION|reset]"
+            echo "Usage: chnode [-h|-V|-R|NODE_VERSION|reset]"
+            ;;
+        -R|--reload)
+            chnode_reload
             ;;
         -V|--version)
             echo "chnode: $CHNODE_VERSION"
@@ -85,3 +112,5 @@ chnode() {
             ;;
     esac
 }
+
+chnode_reload

@@ -31,6 +31,16 @@ END
     assertEquals 0 $?
 }
 
+test_reload_in_shell_strict_mode() {
+    __with_shell >/dev/null <<END
+set -euo pipefail
+source chnode.sh
+chnode node-8
+chnode -R
+END
+    assertEquals 0 $?
+}
+
 __with_shell() {
     env -i \
         TERM="$TERM" \
