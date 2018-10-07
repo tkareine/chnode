@@ -30,17 +30,41 @@ Inspired by [chruby], which is awesome.
 
 ## Installation
 
-For now, download the [chnode.sh] script:
+### Manual
+
+The manual method just downloads the latest revision of [chnode.sh]
+script:
 
 ``` shell
 curl -L 'https://raw.githubusercontent.com/tkareine/chnode/master/chnode.sh' > chnode.sh
 ```
 
-Or clone the repository:
+It's up to you to download the script again to update.
+
+### Homebrew tap
+
+[Homebrew] [tap][Homebrew-tap-chnode] is available for macOS users:
+
+``` shell
+brew tap tkareine/chnode
+brew install tkareine/chnode/chnode
+```
+
+This is the easy way to install just the script and related
+documentation, and to keep the script up-to-date.
+
+### Git clone
+
+Alternatively, clone the repository:
 
 ``` shell
 git clone git@github.com:tkareine/chnode.git
 ```
+
+The downside of cloning is that you'll download all the non-essential
+project files.
+
+### Post-installation
 
 Execute `source` command to load chnode functions:
 
@@ -201,6 +225,8 @@ $
 MIT. See [LICENSE.txt].
 
 [GNU Bash]: https://www.gnu.org/software/bash/
+[Homebrew-tap-chnode]: https://github.com/tkareine/homebrew-chnode
+[Homebrew]: https://brew.sh/
 [LICENSE.txt]: https://raw.githubusercontent.com/tkareine/chnode/master/LICENSE.txt
 [Zsh]: https://www.zsh.org/
 [chnode-build]: https://travis-ci.org/tkareine/chnode
