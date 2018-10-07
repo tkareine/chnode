@@ -28,7 +28,7 @@ Inspired by [chruby], which is awesome.
 
 [GNU Bash] version >= 3.2 or [Zsh] version >= 5.3
 
-## Installation
+## Install
 
 ### Manual
 
@@ -41,7 +41,7 @@ curl -L 'https://raw.githubusercontent.com/tkareine/chnode/master/chnode.sh' > c
 
 It's up to you to download the script again to update.
 
-### Homebrew tap
+### Homebrew
 
 [Homebrew] [tap][Homebrew-tap-chnode] is available for macOS users:
 
@@ -55,7 +55,7 @@ documentation, and to keep the script up-to-date.
 
 ### Git clone
 
-Alternatively, clone the repository:
+Alternatively, clone the git repository:
 
 ``` shell
 git clone git@github.com:tkareine/chnode.git
