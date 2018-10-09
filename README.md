@@ -22,6 +22,7 @@ Inspired by [chruby], which is awesome.
   directory with `CHNODE_NODES_DIR` shell variable.
 * Add additional Node.js versions by adding to `CHNODE_NODES` array
   shell variable.
+* Good test coverage.
 * Small and fast.
 
 ## Requirements
