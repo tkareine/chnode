@@ -96,16 +96,17 @@ source chnode.sh
 You may append the command above into your bash init script,
 `~/.bashrc`.
 
-macOS does not execute `~/.bashrc` automatically. You might want to add
-the following line to `~/.bash_profile`:
+macOS does not execute `~/.bashrc` automatically when opening a
+terminal. You might want to add the following line to `~/.bash_profile`
+to fix it:
 
 ``` bash
 [[ -r ~/.bashrc ]] && source ~/.bashrc
 ```
 
-## Node.js versions
+## Available Node.js versions
 
-When shell loads chnode with `source` command, the script auto-detects
+When shell loads `chnode` with `source` command, the script auto-detects
 Node.js versions installed in `~/.nodes` directory.
 
 You may override `~/.nodes` directory by setting `CHNODE_NODES_DIR`
@@ -132,14 +133,22 @@ source chnode.sh
 CHNODE_NODES+=(/opt/node-10.11.0)
 ```
 
-### node-build
+### Installing Node.js versions
 
-You can use [node-build] to install Node.js versions.
+You can use [node-build] to install Node.js binaries.
 
 Installing to `~/.nodes`:
 
 ``` shell
 node-build 10.11.0 ~/.nodes/node-10.11.0
+```
+
+Alternatively, download binaries from Node.js [download
+page][nodejs-download] and extract them to `~/.nodes`:
+
+``` shell
+mkdir -p ~/.nodes/node-10.12.0 \
+    && tar xzvf ~/Downloads/node-v10.12.0-darwin-x64.tar.gz --strip-components 1 -C ~/.nodes/node-10.12.0
 ```
 
 ### Default Node.js version
@@ -154,7 +163,7 @@ chnode node-10
 
 ## Usage
 
-List available Node.js versions:
+**List** available Node.js versions:
 
 ```
 $ chnode
@@ -162,7 +171,7 @@ $ chnode
    node-8.11.4
 ```
 
-Select a Node.js version, here a 10.x series:
+**Select** a Node.js version, here a 10.x series:
 
 ```
 $ chnode node-10
@@ -178,19 +187,8 @@ $ echo "$CHNODE_ROOT"
 /Users/tkareine/.nodes/node-10.11.0
 ```
 
-Open the man page of [marked], installed as global npm package:
-
-```
-$ npm install -g marked
-
-$ man -w marked
-/Users/tkareine/.nodes/node-10.11.0/share/man/man1/marked.1
-
-$ man marked
-```
-
-While in the shell, install another Node.js and reload chnode (`chnode
--R`):
+While in the shell, install another Node.js version and **reload**
+chnode (`chnode -R`):
 
 ```
 $ node-build 8.9.4 ~/.nodes/node-8.9.4
@@ -199,7 +197,7 @@ $ chnode
  * node-10.11.0
    node-8.11.4
 
-$ chnode -R
+$ chnode -R  # or --reload
 
 $ chnode
  * node-10.11.0
@@ -207,11 +205,11 @@ $ chnode
    node-8.9.4
 ```
 
-Reset the version (`chnode -r`), clearing the path that was set in
-`$PATH`:
+**Reset** the version (`chnode -r`), clearing the path that was set in
+the `PATH` environment variable:
 
 ```
-$ chnode -r
+$ chnode -r  # or --reset
 
 $ chnode
    node-10.11.0
@@ -222,17 +220,23 @@ $ echo "$PATH"
 /usr/local/bin:/usr/bin:…
 ```
 
-Show usage:
+Show **usage**:
 
 ```
-$ chnode -h
+$ chnode -h  # or --help
+```
+
+Show **version**:
+
+```
+$ chnode -V  # or --version
 ```
 
 ## Display current Node.js in shell prompt
 
-You can pick up the currently selected Node.js version from
-`CHNODE_ROOT` environment variable. An example script to customize shell
-prompt is in [set-prompt.sh]. Usage:
+You can pick up the selected Node.js version from `CHNODE_ROOT`
+environment variable. An example script to customize shell prompt is in
+[set-prompt.sh]. Usage:
 
 ```
 $ source chruby.sh
@@ -253,8 +257,8 @@ MIT. See [LICENSE.txt].
 [chnode-build]: https://travis-ci.org/tkareine/chnode
 [chnode.sh]: https://raw.githubusercontent.com/tkareine/chnode/master/chnode.sh
 [chruby]: https://github.com/postmodern/chruby
-[marked]: https://github.com/markedjs/marked
 [node-build]: https://github.com/nodenv/node-build
+[nodejs-download]: https://nodejs.org/en/download/current/
 [nodenv]: https://github.com/nodenv/nodenv
 [nvm]: https://github.com/creationix/nvm
 [set-prompt.sh]: https://raw.githubusercontent.com/tkareine/chnode/master/contrib/set-prompt.sh
