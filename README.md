@@ -2,28 +2,48 @@
 
 [![Build status](https://travis-ci.org/tkareine/chnode.svg?branch=master)][chnode-build]
 
-Changes shell's current Node.js by updating `$PATH`.
+Changes shell's current Node.js version by updating `$PATH`.
 
-Inspired by [chruby], which is awesome.
+`chnode` is a lightweight Node.js version switcher that selects a
+Node.js version for a shell session. The mechanism to do this is by
+updating the `PATH` environment variable. Confining version switching to
+a shell session allows you to run different Node.js versions in many
+shell sessions simultaneously.
+
+The lightweight design and small feature set makes `chnode` very fast to
+load, having minimal negative effect on your shell's init script.
+
+`chnode` expects that Node.js versions are already installed on your
+system. It cannot download them for you. Instead, download Node.js
+binaries manually or use another tool, such as [node-build], for the
+job.
+
+To read more about the design rationale and a comparison to [nvm] and
+[nodenv], look [here][tkareine-lightweight-nodejs-version-switching].
+
+`chnode` is inspired by [chruby], which is awesome.
 
 ## Features
 
-* Updates `PATH` environment variable.
-* Avoids executable shims, hooking to `cd`, and all the problems
-  associated with those.
-* The man pages of Node.js and npm packages for the selected Node.js are
-  available.
-* Calls `hash -r` to clear the hash table for program locations.
-* Best candidate matching of Node.js installations by name.
-* The path to current Node.js version is available in `CHNODE_ROOT`
-  environment variable. This makes it easy to display it in shell
-  prompt.
-* Locate your Node.js versions in `~/.nodes` directory. Set custom
-  directory with `CHNODE_NODES_DIR` shell variable.
-* Add additional Node.js versions by adding to `CHNODE_NODES` array
+* Selects Node.js version for a shell session by updating the `PATH`
+  environment variable. Version switching is independent per shell
+  session.
+* Small feature set by design, making the tool very fast to load.
+* Each Node.js version has its own set of global npm packages.
+* Allows accessing man pages for the selected Node.js version and its
+  global npm packages.
+* After switching Node.js version, calls `hash -r` to clear the hash
+  table for program locations.
+* Best candidate ("fuzzy") matching of Node.js versions at switching.
+* The path to the selected Node.js version is available in `CHNODE_ROOT`
+  environment variable. This makes it easy to display the selected
+  version in shell prompt.
+* Locates installed Node.js versions in `~/.nodes` directory, or from a
+  custom directory read from `CHNODE_NODES_DIR` shell variable.
+* Add additional Node.js versions by appending to `CHNODE_NODES` array
   shell variable.
+* Works with Bash's `set -euo pipefail` shell options ("strict mode").
 * Good test coverage.
-* Small and fast.
 
 ## Requirements
 
@@ -235,4 +255,7 @@ MIT. See [LICENSE.txt].
 [chruby]: https://github.com/postmodern/chruby
 [marked]: https://github.com/markedjs/marked
 [node-build]: https://github.com/nodenv/node-build
+[nodenv]: https://github.com/nodenv/nodenv
+[nvm]: https://github.com/creationix/nvm
 [set-prompt.sh]: https://raw.githubusercontent.com/tkareine/chnode/master/contrib/set-prompt.sh
+[tkareine-lightweight-nodejs-version-switching]: https://tkareine.org/articles/lightweight-nodejs-version-switching.html
