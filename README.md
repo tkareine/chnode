@@ -79,7 +79,7 @@ documentation, and to keep the script up-to-date.
 Alternatively, clone the git repository:
 
 ``` shell
-git clone git@github.com:tkareine/chnode.git
+git clone --depth 1 git@github.com:tkareine/chnode.git
 ```
 
 The downside of cloning is that you'll download all the non-essential
