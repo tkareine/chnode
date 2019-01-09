@@ -105,8 +105,8 @@ Targets:
 
   test                Run tests with SHELL you choose (usage: \`make test SHELL=bash\`) (select: TEST_FILES=test/*-test.sh)
   test-docker         Run tests with various bash and zsh versions in Docker container
-  test-docker-bash    Run tests with various bash versions in Docker container
-  test-docker-zsh     Run tests with various zsh versions in Docker container
+  test-docker-bashes  Run tests with various bash versions in Docker container
+  test-docker-zshes   Run tests with various zsh versions in Docker container
 
   benchmark           Run benchmarks with SHELL you choose (usage: \`make benchmark SHELL=bash\`) (select: BM_FILES=benchmark/*-bm.sh)
 
