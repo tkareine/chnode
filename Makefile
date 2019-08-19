@@ -6,7 +6,7 @@ TEST_FILES ?= $(wildcard test/*-test.sh)
 
 BM_FILES ?= $(wildcard benchmark/*-bm.sh)
 
-DOCKER_TEST_BASHES ?= bash-4.4 bash-3.2
+DOCKER_TEST_BASHES ?= bash!5 bash!4.4 bash!3.2
 DOCKER_TEST_ZSHES ?= zshusers/zsh-5.6.2 zshusers/zsh-5.3
 
 LINT_FILES := chnode.sh $(wildcard benchmark/*.sh support/*.sh test/*.sh)
@@ -58,7 +58,7 @@ $(DOCKER_TEST_BASHES):
 	    -v "$(CURDIR):/chnode" \
 	    -w /chnode \
 	    -e SHELL=/usr/local/bin/bash \
-	    $(subst -,:,$@) \
+	    $(subst !,:,$@) \
 	    bash test/runner.sh $(TEST_FILES)
 
 .PHONY: $(DOCKER_TEST_ZSHES)
@@ -105,8 +105,8 @@ Targets:
 
   test                Run tests with SHELL you choose (usage: \`make test SHELL=bash\`) (select: TEST_FILES=test/*-test.sh)
   test-docker         Run tests with various bash and zsh versions in Docker container
-  test-docker-bash    Run tests with various bash versions in Docker container
-  test-docker-zsh     Run tests with various zsh versions in Docker container
+  test-docker-bashes  Run tests with various bash versions in Docker container
+  test-docker-zshes   Run tests with various zsh versions in Docker container
 
   benchmark           Run benchmarks with SHELL you choose (usage: \`make benchmark SHELL=bash\`) (select: BM_FILES=benchmark/*-bm.sh)
 
