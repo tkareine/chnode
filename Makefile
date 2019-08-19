@@ -15,6 +15,7 @@ PREFIX ?= /usr/local
 SHARE_DIR := $(PREFIX)/share
 CHNODE_SHARE_DIR := $(SHARE_DIR)/chnode
 CHNODE_SHARE_SOURCES := chnode.sh
+CHNODE_SHARE_AUTO_SOURCES := auto.sh
 CHNODE_DOC_DIR := $(SHARE_DIR)/doc/chnode
 CHNODE_DOC_SOURCES := CHANGELOG.md LICENSE.txt README.md
 
@@ -80,6 +81,7 @@ benchmark:
 install:
 	mkdir -p "$(DESTDIR)$(CHNODE_SHARE_DIR)"
 	cp $(CHNODE_SHARE_SOURCES) "$(DESTDIR)$(CHNODE_SHARE_DIR)/"
+	cp $(CHNODE_SHARE_AUTO_SOURCES) "$(DESTDIR)$(CHNODE_SHARE_DIR)/"
 	mkdir -p "$(DESTDIR)$(CHNODE_DOC_DIR)"
 	cp $(CHNODE_DOC_SOURCES) "$(DESTDIR)$(CHNODE_DOC_DIR)/"
 
@@ -110,6 +112,6 @@ Targets:
 
   benchmark           Run benchmarks with SHELL you choose (usage: \`make benchmark SHELL=bash\`) (select: BM_FILES=benchmark/*-bm.sh)
 
-  install             Copy chnode.sh and its documentation to PREFIX directory
-  uninstall           Remove chnode.sh and its documentation from PREFIX directory
+  install             Copy chnode.sh and auto.sh and its documentation to PREFIX directory
+  uninstall           Remove chnode.sh and auto.sh and its documentation from PREFIX directory
 endef
