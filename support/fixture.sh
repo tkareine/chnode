@@ -46,7 +46,7 @@ fixture_make_default_auto_test_dirs() {
                            sub_dir\
                            modified_version\
                            bad\
-                           sub_versioned\
+                           sub_versioned
 }
 
 fixture_make_auto_test_dirs() {
