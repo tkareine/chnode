@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
 set_prompt() {
-    local user_and_host='[\u@\h] '
-    local cwd='[\w] '
+    local user_and_host='\u@\h '
+    local cwd='\w '
 
     local end
     if [[ $(whoami) == "root" ]]; then

@@ -241,7 +241,7 @@ environment variable. An example script to customize shell prompt is in
 ```
 $ source chruby.sh
 $ source contrib/set-prompt.sh
-[tkareine@sky] [~/Projects/chnode] (node:10.11.0)
+tkareine@sky ~/Projects/chnode (node:10.11.0)
 $
 ```
 
