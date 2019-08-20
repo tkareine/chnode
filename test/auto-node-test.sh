@@ -1,5 +1,6 @@
 source test/setup-shunit2.sh
 source test/setup-default-chnode.sh
+source test/setup-default-auto.sh
 
 function setUp()
 {

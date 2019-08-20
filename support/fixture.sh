@@ -2,11 +2,17 @@
 
 fixture_make_default_dir() {
     __FIXTURE_DEFAULT_DIR=$(mktemp -d /tmp/chnode-fixture.XXXXXX)
+}
+
+fixture_make_default_auto_dir() {
     __FIXTURE_DEFAULT_AUTO_DIR=$(mktemp -d /tmp/chnode-auto-fixture.XXXXXX)
 }
 
 fixture_delete_default_dir() {
     [[ -n ${__FIXTURE_DEFAULT_DIR:-} ]] && rm -rf "$__FIXTURE_DEFAULT_DIR"
+}
+
+fixture_delete_default_auto_dir() {
     [[ -n ${__FIXTURE_DEFAULT_AUTO_DIR:-} ]] && rm -rf "$__FIXTURE_DEFAULT_AUTO_DIR"
 }
 
