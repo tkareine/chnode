@@ -28,6 +28,7 @@ To read more about the design rationale and a comparison to [nvm] and
 * Selects Node.js version for a shell session by updating the `PATH`
   environment variable. Version switching is independent per shell
   session.
+* Optional automatic version switching based on a `.node-version` file in your project directory.
 * Small feature set by design, making the tool very fast to load.
 * Each Node.js version has its own set of global npm packages.
 * Allows accessing man pages for the selected Node.js version and its
@@ -91,6 +92,11 @@ Execute `source` command to load chnode functions:
 
 ``` bash
 source chnode.sh
+```
+
+For automatic version switching:
+``` bash
+source auto.sh
 ```
 
 You may append the command above into your bash init script,
