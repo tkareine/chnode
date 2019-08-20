@@ -22,11 +22,11 @@ function test_chnode_auto_loaded_in_bash()
 {
 	[[ -n "$BASH_VERSION" ]] || return
 
-	local command=". $PWD/share/chnode/auto.sh && trap -p DEBUG"
+	local command=". ./auto.sh && trap -p DEBUG"
 	local output="$("$SHELL" -c "$command")"
 
 	assertTrue "did not add a trap hook for chnode_auto" \
-		   '[[ "$output" == *chnode_auto* ]]'
+		   "[[ "$output" == *chnode_auto* ]]"
 }
 
 function test_chnode_auto_loaded_twice_in_zsh()
