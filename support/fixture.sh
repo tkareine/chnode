@@ -32,7 +32,6 @@ fixture_make_default_nodes() {
     [[ -z $1 ]] && echo "fixture_make_default_nodes(): expects dir as first parameter" && return 1
 
     fixture_make_nodes_dir "$1" \
-                           node-11.5.0 \
                            node-10.11.0 \
                            node-9.11.2 \
                            node-9.11.2-rc1 \

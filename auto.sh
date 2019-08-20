@@ -1,4 +1,4 @@
-unset NODE_AUTO_VERSION
+unset CHNODE_AUTO_VERSION
 
 function chnode_auto() {
 	local dir="$PWD/" version
@@ -9,18 +9,18 @@ function chnode_auto() {
 		if { read -r version <"$dir/.node-version"; } 2>/dev/null || [[ -n "$version" ]]; then
 			version="${version%%[[:space:]]}"
 
-			if [[ "$version" == "$NODE_AUTO_VERSION" ]]; then return
+			if [[ "$version" == "$CHNODE_AUTO_VERSION" ]]; then return
 			else
-				NODE_AUTO_VERSION="$version"
+				CHNODE_AUTO_VERSION="$version"
 				chnode "$version"
 				return $?
 			fi
 		fi
 	done
 
-	if [[ -n "$NODE_AUTO_VERSION" ]]; then
+	if [[ -n "$CHNODE_AUTO_VERSION" ]]; then
 		chnode_reset
-		unset NODE_AUTO_VERSION
+		unset CHNODE_AUTO_VERSION
 	fi
 }
 

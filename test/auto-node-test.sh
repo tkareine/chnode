@@ -4,7 +4,7 @@ source test/setup-default-chnode.sh
 function setUp()
 {
 	chnode_reset
-	unset NODE_AUTO_VERSION
+	unset CHNODE_AUTO_VERSION
 }
 
 function test_chnode_auto_loaded_in_zsh()
@@ -44,12 +44,12 @@ function test_chnode_auto_loaded_twice_in_zsh()
 
 function test_chnode_auto_loaded_twice()
 {
-	NODE_AUTO_VERSION="dirty"
+	CHNODE_AUTO_VERSION="dirty"
 	PROMPT_COMMAND="chruby_auto"
 
 	. ./auto.sh
 
-	assertNull "NODE_AUTO_VERSION was not unset" "$NODE_AUTO_VERSION"
+	assertNull "CHNODE_AUTO_VERSION was not unset" "$CHNODE_AUTO_VERSION"
 }
 
 function test_chnode_auto_enter_project_dir()
@@ -85,7 +85,7 @@ function test_chnode_auto_enter_subdir()
 
 function test_chnode_auto_modified_node_version()
 {
-  cd "$CHNODE_NODES_AUTO_DIR/modified_version" && echo "node-11.5.0" > .node-version
+  cd "$CHNODE_NODES_AUTO_DIR/modified_version" && echo "node-10.11.0" > .node-version
 	cd "$CHNODE_NODES_AUTO_DIR/modified_version" && chnode_auto
 	echo "node-8.1.0" > .node-version            && chnode_auto
 
@@ -125,8 +125,8 @@ function test_chnode_auto_invalid_ruby_version()
 
 	assertEquals "did not keep the current Node when loading an unknown version" \
 		     "$test_node_root" "$CHNODE_ROOT"
-	assertEquals "did not set NODE_AUTO_VERSION" \
-		     "$expected_auto_version" "$NODE_AUTO_VERSION"
+	assertEquals "did not set CHNODE_AUTO_VERSION" \
+		     "$expected_auto_version" "$CHNODE_AUTO_VERSION"
 }
 
 SHUNIT_PARENT=$0 source "$SHUNIT2"
