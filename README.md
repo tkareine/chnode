@@ -94,10 +94,20 @@ Execute `source` command to load chnode functions:
 source chnode.sh
 ```
 
-For automatic version switching:
+For automatic version switching also source the auto script:
+
 ``` bash
 source auto.sh
 ```
+
+To set a default node version for a project, add your `.node-version` file to the root directory.
+
+```bash
+cd awesome-node-project/
+echo "node-8.1.0" > .node-version
+```
+
+You can set a default for your whole system by adding `.node-version` to your home directory.
 
 You may append the command above into your bash init script,
 `~/.bashrc`.
