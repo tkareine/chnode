@@ -14,7 +14,7 @@ source auto.sh
 # shellcheck disable=SC2034
 __ORG_CHNODE_NODES=("${CHNODE_NODES[@]}")
 
-test_node_root="$CHNODE_NODES_DIR/node-8.1.0"
+export test_node_root="$CHNODE_NODES_DIR/node-8.1.0"
 
 oneTimeTearDown() {
     fixture_delete_default_dir

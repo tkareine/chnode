@@ -11,6 +11,7 @@ function test_chnode_auto_loaded_in_zsh()
 {
 	[[ -n "$ZSH_VERSION" ]] || return
 
+  # shellcheck disable=SC2154
 	assertEquals "did not add chnode_auto to preexec_functions" \
 		     "chnode_auto" \
 		     "$preexec_functions"
@@ -21,8 +22,11 @@ function test_chnode_auto_loaded_in_bash()
 	[[ -n "$BASH_VERSION" ]] || return
 
 	local command=". $PWD/auto.sh && trap -p DEBUG"
-	local output="$("bash" -c "$command")"
+	local output
+  # shellcheck disable=SC2034
+  output="$("bash" -c "$command")"
 
+  # shellcheck disable=SC2016
 	assertTrue "did not add a trap hook for chnode_auto" \
 		   '[[ "$output" == *chnode_auto* ]]'
 }
@@ -113,7 +117,8 @@ function test_chnode_auto_invalid_ruby_version()
 {
   cd "$CHNODE_NODES_AUTO_DIR" && echo "node-8.1.0" > .node-version
   cd "$CHNODE_NODES_AUTO_DIR/bad" && echo "foo" > .node-version
-	local expected_auto_version="$(cat $CHNODE_NODES_AUTO_DIR/bad/.node-version)"
+	local expected_auto_version
+  expected_auto_version="$(cat "$CHNODE_NODES_AUTO_DIR"/bad/.node-version)"
 
 	cd "$CHNODE_NODES_AUTO_DIR" && chnode_auto
 	cd bad/                     && chnode_auto 2>/dev/null
