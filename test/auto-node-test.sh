@@ -16,18 +16,16 @@ function test_chnode_auto_loaded_in_zsh()
 		     "$preexec_functions"
 }
 
-# function test_chnode_auto_loaded_in_bash()
-# {
-# 	[[ -n "$BASH_VERSION" ]] || return
+function test_chnode_auto_loaded_in_bash()
+{
+	[[ -n "$BASH_VERSION" ]] || return
 
-# 	local command=". ./auto.sh && trap -p DEBUG"
-# 	local output="$("bash" -c "$command")"
-#   echo $output
-#   echo $("*chnode_auto*")
-#   echo "[[ $output == *chruby_auto* ]]"
-# 	assertTrue "did not add a trap hook for chruby_auto" \
-# 		   "[[ $output == "*chruby_auto*" ]]"
-# }
+	local command=". $PWD/auto.sh && trap -p DEBUG"
+	local output="$("bash" -c "$command")"
+
+	assertTrue "did not add a trap hook for chnode_auto" \
+		   '[[ "$output" == *chnode_auto* ]]'
+}
 
 function test_chnode_auto_loaded_twice_in_zsh()
 {
