@@ -118,7 +118,7 @@ function test_chnode_auto_invalid_node_version()
 
 	cd "$CHNODE_NODES_AUTO_DIR/bad/" && chnode_auto 2>/dev/null
 
-  local expected_auto_version="$(cat $CHNODE_NODES_AUTO_DIR/bad/.node-version)"
+  local expected_auto_version="$(cat "$CHNODE_NODES_AUTO_DIR"/bad/.node-version)"
 
 	assertEquals "did not keep the current node when loading an unknown version" \
 		     "$test_node_root" "$NODE_ROOT"
@@ -126,9 +126,4 @@ function test_chnode_auto_invalid_node_version()
 		     "$expected_auto_version" "$NODE_AUTO_VERSION"
 }
 
-function tearDown()
-{
-	cd "$PWD"
-}
-
-SHUNIT_PARENT=$0 . $SHUNIT2
+SHUNIT_PARENT=$0 source "$SHUNIT2"
