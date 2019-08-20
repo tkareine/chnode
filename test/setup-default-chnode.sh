@@ -6,7 +6,6 @@ fixture_make_default_dir
 CHNODE_NODES_DIR=$__FIXTURE_DEFAULT_DIR
 fixture_make_default_nodes "$CHNODE_NODES_DIR"
 
-
 source chnode.sh
 
 # shellcheck disable=SC2034
