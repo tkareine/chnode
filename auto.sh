@@ -9,9 +9,9 @@ function chnode_auto() {
 		if { read -r version <"$dir/.node-version"; } 2>/dev/null || [[ -n "$version" ]]; then
 			version="${version%%[[:space:]]}"
 
-			if [[ "$version" == "$node_AUTO_VERSION" ]]; then return
+			if [[ "$version" == "$NODE_AUTO_VERSION" ]]; then return
 			else
-				node_AUTO_VERSION="$version"
+				NODE_AUTO_VERSION="$version"
 				chnode "$version"
 				return $?
 			fi
