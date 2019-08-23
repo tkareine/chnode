@@ -9,7 +9,7 @@ BM_FILES ?= $(wildcard benchmark/*-bm.sh)
 DOCKER_TEST_BASHES ?= bash!5 bash!4.4 bash!3.2
 DOCKER_TEST_ZSHES ?= zshusers/zsh-5.6.2 zshusers/zsh-5.3
 
-LINT_FILES := chnode.sh $(wildcard benchmark/*.sh support/*.sh test/*.sh)
+LINT_FILES := chnode.sh auto.sh $(wildcard benchmark/*.sh support/*.sh test/*.sh)
 
 PREFIX ?= /usr/local
 SHARE_DIR := $(PREFIX)/share

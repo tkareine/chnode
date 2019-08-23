@@ -47,15 +47,16 @@ fixture_make_default_nodes() {
 
 fixture_make_default_auto_test_dirs() {
     [[ -z $1 ]] && echo "fixture_make_default_auto_test_dirs(): expects dir as first parameter" && return 1
+
     fixture_make_auto_test_dirs "$1" \
-                           sub_dir\
-                           modified_version\
-                           bad\
-                           sub_versioned
+                                sub_dir \
+                                modified_version \
+                                bad \
+                                sub_versioned
 }
 
 fixture_make_auto_test_dirs() {
-  [[ -z $1 ]] && echo "fixture_make_auto_test_dir(): expects dir as first parameter" && return 1
+    [[ -z $1 ]] && echo "fixture_make_auto_test_dir(): expects dir as first parameter" && return 1
 
     local dir=$1
     shift

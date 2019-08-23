@@ -41,6 +41,16 @@ END
     assertEquals 0 $?
 }
 
+test_auto_in_shell_strict_mode() {
+    __with_shell >/dev/null <<END
+set -euo pipefail
+source chnode.sh
+source auto.sh
+chnode_auto
+END
+    assertEquals 0 $?
+}
+
 __with_shell() {
     env -i \
         TERM="$TERM" \
