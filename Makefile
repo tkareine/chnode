@@ -14,8 +14,7 @@ LINT_FILES := chnode.sh $(wildcard benchmark/*.sh support/*.sh test/*.sh)
 PREFIX ?= /usr/local
 SHARE_DIR := $(PREFIX)/share
 CHNODE_SHARE_DIR := $(SHARE_DIR)/chnode
-CHNODE_SHARE_SOURCES := chnode.sh
-CHNODE_SHARE_AUTO_SOURCES := auto.sh
+CHNODE_SHARE_SOURCES := chnode.sh auto.sh
 CHNODE_DOC_DIR := $(SHARE_DIR)/doc/chnode
 CHNODE_DOC_SOURCES := CHANGELOG.md LICENSE.txt README.md
 
@@ -81,7 +80,6 @@ benchmark:
 install:
 	mkdir -p "$(DESTDIR)$(CHNODE_SHARE_DIR)"
 	cp $(CHNODE_SHARE_SOURCES) "$(DESTDIR)$(CHNODE_SHARE_DIR)/"
-	cp $(CHNODE_SHARE_AUTO_SOURCES) "$(DESTDIR)$(CHNODE_SHARE_DIR)/"
 	mkdir -p "$(DESTDIR)$(CHNODE_DOC_DIR)"
 	cp $(CHNODE_DOC_SOURCES) "$(DESTDIR)$(CHNODE_DOC_DIR)/"
 
