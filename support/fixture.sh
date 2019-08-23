@@ -44,26 +44,3 @@ fixture_make_default_nodes() {
                            node-8.1.0 \
                            iojs-3.3.1
 }
-
-fixture_make_default_auto_test_dirs() {
-    [[ -z $1 ]] && echo "fixture_make_default_auto_test_dirs(): expects dir as first parameter" && return 1
-
-    fixture_make_auto_test_dirs "$1" \
-                                sub_dir \
-                                modified_version \
-                                bad \
-                                sub_versioned
-}
-
-fixture_make_auto_test_dirs() {
-    [[ -z $1 ]] && echo "fixture_make_auto_test_dir(): expects dir as first parameter" && return 1
-
-    local dir=$1
-    shift
-
-    local name
-    for name in "$@"; do
-        mkdir -p "$dir/$name"
-        chmod 755 "$dir/$name"
-    done
-}

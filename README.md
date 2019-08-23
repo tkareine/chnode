@@ -28,7 +28,8 @@ To read more about the design rationale and a comparison to [nvm] and
 * Selects Node.js version for a shell session by updating the `PATH`
   environment variable. Version switching is independent per shell
   session.
-* Optional automatic version switching based on a `.node-version` file in your project directory.
+* Optional automatic Node.js version switching based on a
+  `.node-version` file in your project directory.
 * Small feature set by design, making the tool very fast to load.
 * Each Node.js version has its own set of global npm packages.
 * Allows accessing man pages for the selected Node.js version and its
@@ -94,23 +95,13 @@ Execute `source` command to load chnode functions:
 source chnode.sh
 ```
 
-For automatic version switching also source the auto script:
+You may append the command above into your Bash init script,
+`~/.bashrc`, to load chnode for your interactive shell usage.
 
-``` bash
-source auto.sh
-```
+Automatic Node.js version switching requires additional setup, read
+below for more.
 
-To set a default node version for a project, add your `.node-version` file to the root directory.
-
-```bash
-cd awesome-node-project/
-echo "node-8.1.0" > .node-version
-```
-
-You can set a default for your whole system by adding `.node-version` to your home directory.
-
-You may append the command above into your bash init script,
-`~/.bashrc`.
+### Sourcing .bashrc on macOS
 
 macOS does not execute `~/.bashrc` automatically when opening a
 terminal. You might want to add the following line to `~/.bash_profile`
@@ -167,7 +158,7 @@ mkdir -p ~/.nodes/node-10.12.0 \
     && tar xzvf ~/Downloads/node-v10.12.0-darwin-x64.tar.gz --strip-components 1 -C ~/.nodes/node-10.12.0
 ```
 
-### Default Node.js version
+### Default Node.js version (without auto switching)
 
 Choose the default Node.js version in your shell's init script, here a
 10.x series:
@@ -247,6 +238,77 @@ Show **version**:
 ```
 $ chnode -V  # or --version
 ```
+
+## Automatic version switching
+
+Automatic Node.js version switching is included in `auto.sh` script as
+an optional add-on on top of `chnode.sh`. The feature detects a
+`.node-version` file in your current working directory (or in a parent
+directory), and switches the current Node.js version to the version
+specified in the file. You'll need to have the specified version
+installed for the switching to happen.
+
+To use the feature, source `chnode.sh` and `auto.sh` (in this order) in
+your shell's init script, and include `chnode_auto` function to be
+called automatically in `PROMPT_COMMAND` (for Bash) or
+`preexec_functions` (for Zsh):
+
+``` bash
+source chnode.sh
+source auto.sh
+
+PROMPT_COMMAND=chnode_auto        # if using Bash
+preexec_functions+=(chnode_auto)  # if using Zsh
+```
+
+Note that you might already have commands to be evaluated in
+`PROMPT_COMMAND` in Bash. In that case, you have options:
+
+1. Wrap all the commands in a function, including `chnode_auto`, and make the function the `PROMPT_COMMAND`:
+
+   ``` bash
+   my_prompt_function() {
+     # do somehing, like set PS1
+
+     chnode_auto  # call last
+   }
+
+   PROMPT_COMMAND=my_prompt_function
+   ```
+
+2. Append `chnode_auto` to be called last in `PROMPT_COMMAND`:
+
+   ``` bash
+   PROMPT_COMMAND="$PROMPT_COMMAND; chnode_auto"
+   ```
+
+We don't recommend to evaluate `chnode_auto` via shell's DEBUG trap,
+because it triggers calling the function too often (for example, for
+each command in a command group). In addition, the trap might be used by
+other shell functionality. To demonstrate the problem with command
+groups:
+
+``` bash
+# WARNING: don't install chnode_auto like this, triggers likely too often for you
+trap '[[ $BASH_COMMAND != "${PROMPT_COMMAND:-}" ]] && echo CALLED && chnode_auto' DEBUG
+
+# enter in your shell:
+$ { echo lol; echo bal; }  # calls the trap twice
+CALLED
+lol
+CALLED
+bal
+```
+
+To set a default node version for a project, create a `.node-version`
+file in the root directory of the project:
+
+``` bash
+echo node-8.1.0 > node-project/.node-version
+```
+
+You can set a default for your whole system by adding `.node-version` to
+your home directory.
 
 ## Display current Node.js in shell prompt
 
