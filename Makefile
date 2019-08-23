@@ -7,7 +7,7 @@ TEST_FILES ?= $(wildcard test/*-test.sh)
 BM_FILES ?= $(wildcard benchmark/*-bm.sh)
 
 DOCKER_TEST_BASHES ?= bash!5 bash!4.4 bash!3.2
-DOCKER_TEST_ZSHES ?= zshusers/zsh-5.6.2 zshusers/zsh-5.3
+DOCKER_TEST_ZSHES ?= zshusers/zsh!5.7.1 zshusers/zsh!5.6.2 zshusers/zsh!5.3
 
 LINT_FILES := chnode.sh auto.sh $(wildcard benchmark/*.sh support/*.sh test/*.sh)
 
@@ -69,7 +69,7 @@ $(DOCKER_TEST_ZSHES):
 	    -v "$(CURDIR):/chnode" \
 	    -w /chnode \
 	    -e SHELL=/usr/bin/zsh \
-	    $@ \
+	    $(subst !,:,$@) \
 	    zsh test/runner.sh $(TEST_FILES)
 
 .PHONY: benchmark

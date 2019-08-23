@@ -317,9 +317,9 @@ environment variable. An example script to customize shell prompt is in
 [set-prompt.sh]. Usage:
 
 ```
-$ source chruby.sh
+$ source chnode.sh
 $ source contrib/set-prompt.sh
-[tkareine@sky] [~/Projects/chnode] (node:10.11.0)
+tkareine@sky ~/Projects/chnode (node:10.11.0)
 $
 ```
 
