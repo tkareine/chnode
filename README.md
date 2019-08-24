@@ -243,57 +243,60 @@ $ chnode -V  # or --version
 
 Automatic Node.js version switching is included in `auto.sh` script as
 an optional add-on on top of `chnode.sh`. The feature detects a
-`.node-version` file in your current working directory (or in a parent
+`.node-version` file in the current working directory (or in a parent
 directory), and switches the current Node.js version to the version
 specified in the file. You'll need to have the specified version
-installed for the switching to happen.
+installed for switching to happen.
 
 To use the feature, source `chnode.sh` and `auto.sh` (in this order) in
-your shell's init script, and include `chnode_auto` function to be
-called automatically in `PROMPT_COMMAND` (for Bash) or
-`preexec_functions` (for Zsh):
+your shell's init script, followed by configuring `chnode_auto` function
+to be called in [PROMPT_COMMAND][Bash Controlling the Prompt] (for Bash)
+or [precmd_functions][Zsh Hook Functions] (for Zsh) hook:
 
 ``` bash
 source chnode.sh
 source auto.sh
 
-PROMPT_COMMAND=chnode_auto        # if using Bash
-preexec_functions+=(chnode_auto)  # if using Zsh
+PROMPT_COMMAND=chnode_auto       # if using Bash
+precmd_functions+=(chnode_auto)  # if using Zsh
 ```
 
 Note that you might already have commands to be evaluated in
-`PROMPT_COMMAND` in Bash. In that case, you have options:
+`PROMPT_COMMAND` in Bash. In that case, you can choose to:
 
-1. Wrap all the commands in a function, including `chnode_auto`, and make the function the `PROMPT_COMMAND`:
+1. Wrap all the commands in a single function, calling `chnode_auto`
+   from inside the function, and set the value of `PROMPT_COMMAND` to be
+   the name of the function:
 
    ``` bash
    my_prompt_function() {
-     # do somehing, like set PS1
+       chnode_auto
 
-     chnode_auto  # call last
+       # do something else, like set PS1
    }
 
    PROMPT_COMMAND=my_prompt_function
    ```
 
-2. Append `chnode_auto` to be called last in `PROMPT_COMMAND`:
+2. Include `chnode_auto` to be called in `PROMPT_COMMAND`, separating
+   other commands with a semicolon:
 
    ``` bash
-   PROMPT_COMMAND="$PROMPT_COMMAND; chnode_auto"
+   PROMPT_COMMAND="chnode_auto; $PROMPT_COMMAND"
    ```
 
-We don't recommend to evaluate `chnode_auto` via shell's DEBUG trap,
-because it triggers calling the function too often (for example, for
-each command in a command group). In addition, the trap might be used by
-other shell functionality. To demonstrate the problem with command
-groups:
+We don't recommend to call `chnode_auto` via shell's DEBUG trap, because
+it makes the shell to call the function too often. For example, Bash
+executes the DEBUG trap for each command in a command group. In
+addition, the trap might already be utilized by other shell
+extensions. To demonstrate the problem with command groups:
 
 ``` bash
-# WARNING: don't install chnode_auto like this, triggers likely too often for you
+# WARNING: Don't install chnode_auto like this, because the function gets called too often
 trap '[[ $BASH_COMMAND != "${PROMPT_COMMAND:-}" ]] && echo CALLED && chnode_auto' DEBUG
 
-# enter in your shell:
-$ { echo lol; echo bal; }  # calls the trap twice
+# Execute a command group
+{ echo lol; echo bal; }
 CALLED
 lol
 CALLED
@@ -327,10 +330,12 @@ $
 
 MIT. See [LICENSE.txt].
 
+[Bash Controlling the Prompt]: https://www.gnu.org/software/bash/manual/html_node/Controlling-the-Prompt.html
 [GNU Bash]: https://www.gnu.org/software/bash/
 [Homebrew-tap-chnode]: https://github.com/tkareine/homebrew-chnode
 [Homebrew]: https://brew.sh/
 [LICENSE.txt]: https://raw.githubusercontent.com/tkareine/chnode/master/LICENSE.txt
+[Zsh Hook Functions]: http://zsh.sourceforge.net/Doc/Release/Functions.html#Hook-Functions
 [Zsh]: https://www.zsh.org/
 [chnode-build]: https://travis-ci.org/tkareine/chnode
 [chnode.sh]: https://raw.githubusercontent.com/tkareine/chnode/master/chnode.sh
