@@ -20,6 +20,8 @@ test_reload_changed_nodes() {
 
     chnode -R
 
+    assertEquals 0 $?
+
     local expected_output
     expected_output=$(cat <<END
    iojs-3.3.1
@@ -40,9 +42,13 @@ END
 test_reloading_keeps_selected_node() {
     chnode node-8
 
+    assertEquals 0 $?
+
     rm -rf "$CHNODE_NODES_DIR/node-10.11.0"
 
     chnode -R
+
+    assertEquals 0 $?
 
     local expected_output
     expected_output=$(cat <<END
@@ -64,9 +70,13 @@ END
 test_reloading_forgets_selection_for_deleted_node() {
     chnode node-8
 
+    assertEquals 0 $?
+
     rm -rf "$CHNODE_NODES_DIR/node-8.1.0"
 
     chnode -R
+
+    assertEquals 0 $?
 
     local expected_output
     expected_output=$(cat <<END
@@ -87,6 +97,8 @@ END
 
 test_error_when_reloading_node_and_selected_node_is_not_executable() {
     chnode node-8
+
+    assertEquals 0 $?
 
     chmod a-x "$CHNODE_NODES_DIR/node-8.1.0/bin/node"
 

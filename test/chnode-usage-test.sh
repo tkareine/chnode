@@ -48,17 +48,24 @@ END
 END
 )
 
-    assertEquals "$expected_output" "$(chnode)"
+    actual_output=$(chnode)
+
+    assertEquals 0 $?
+    assertEquals "$expected_output" "$actual_output"
     assertNull "\$CHNODE_ROOT must be null" "$CHNODE_ROOT"
 }
 
 test_use_selects_last_match_when_many_candidates() {
     chnode 11
+
+    assertEquals 0 $?
     assertEquals "$CHNODE_NODES_DIR/node-9.11.2-rc1" "$CHNODE_ROOT"
 }
 
 test_use_prefers_exact_match() {
     chnode node-9.11.2
+
+    assertEquals 0 $?
     assertEquals "$CHNODE_NODES_DIR/node-9.11.2" "$CHNODE_ROOT"
 }
 
@@ -82,14 +89,22 @@ test_error_when_selecting_node_without_executable() {
 
 test_use_exports_chnode_root_and_path_vars() {
     chnode node-8
+
+    assertEquals 0 $?
     assertEquals "$CHNODE_NODES_DIR/node-8.1.0" "$(printenv CHNODE_ROOT)"
     [[ $(printenv PATH) == *node-8* ]] || fail "\$PATH should contain node-8"
 }
 
 test_reset_clears_hash() {
     chnode node-8
+
+    assertEquals 0 $?
+
     __populate_hash
+
     chnode -r
+
+    assertEquals 0 $?
 
     local expected_output
     if [[ -n ${ZSH_VERSION:-} ]]; then
@@ -103,7 +118,10 @@ test_reset_clears_hash() {
 
 test_use_clears_hash() {
     __populate_hash
+
     chnode node-8
+
+    assertEquals 0 $?
 
     local expected_output
     if [[ -n ${ZSH_VERSION:-} ]]; then

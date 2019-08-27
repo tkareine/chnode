@@ -17,6 +17,8 @@ test_use_node_added_to_nodes_var() {
 
     chnode node-6
 
+    assertEquals 0 $?
+
     local expected_output
     expected_output=$(cat <<END
    iojs-3.3.1
@@ -28,7 +30,11 @@ test_use_node_added_to_nodes_var() {
 END
 )
 
-    assertEquals "$expected_output" "$(chnode)"
+    local actual_output
+    actual_output=$(chnode)
+
+    assertEquals 0 $?
+    assertEquals "$expected_output" "$actual_output"
     assertEquals "$__test_nodes_dir/node-6.0.0" "$CHNODE_ROOT"
     assertEquals "use: node-6.0.0" "$(node)"
 }
