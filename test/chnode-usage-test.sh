@@ -92,7 +92,7 @@ test_use_exports_chnode_root_and_path_vars() {
 
     assertEquals 0 $?
     assertEquals "$CHNODE_NODES_DIR/node-8.1.0" "$(printenv CHNODE_ROOT)"
-    [[ $(printenv PATH) == *node-8* ]] || fail "\$PATH should contain node-8"
+    [[ $(printenv PATH) == "$CHNODE_ROOT"/bin* ]] || fail "\$PATH should start with \$CHNODE_ROOT/bin, \$PATH=$PATH"
 }
 
 test_reset_clears_hash() {
