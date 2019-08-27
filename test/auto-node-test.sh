@@ -2,9 +2,7 @@
 
 source test/setup-shunit2.sh
 source test/setup-default-chnode.sh
-
 source auto.sh
-export __FIXTURE_DEFAULT_AUTO_DIR
 
 setUp() {
     chnode -r
