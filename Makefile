@@ -108,7 +108,7 @@ Targets:
   test-docker-bashes  Run tests with various bash versions in Docker container
   test-docker-zshes   Run tests with various zsh versions in Docker container
 
-  benchmark           Run benchmarks with SHELL you choose (usage: \`make benchmark SHELL=bash\`) (select: BM_FILES=benchmark/*-bm.sh)
+  benchmark           Run benchmarks with SHELL you choose (usage: \`make benchmark SHELL=bash\`) (select: BM_FILES=benchmark/*-bm.sh; iterations: N=1000; runs: RUNS=3)
 
   install             Copy chnode.sh and auto.sh and its documentation to PREFIX directory
   uninstall           Remove chnode.sh and auto.sh and its documentation from PREFIX directory
