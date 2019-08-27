@@ -6,17 +6,17 @@ source auto.sh
 
 setUp() {
     chnode -r
-    fixture_make_default_auto_dir
+    fixture_make_auto_dir
 }
 
 tearDown() {
-    fixture_delete_default_auto_dir
+    fixture_delete_auto_dir
 }
 
 test_chnode_auto_cd_dirs() {
     local actual_roots
     actual_roots=$(
-        cd "$__FIXTURE_DEFAULT_AUTO_DIR" || exit
+        cd "$__FIXTURE_AUTO_DIR" || exit
         chnode_auto
         echo "0,$PWD,$?,$CHNODE_ROOT"
 
@@ -31,7 +31,7 @@ test_chnode_auto_cd_dirs() {
         chnode_auto
         echo "2,$PWD,$?,$CHNODE_ROOT"
 
-        cd "$__FIXTURE_DEFAULT_AUTO_DIR" || exit
+        cd "$__FIXTURE_AUTO_DIR" || exit
         mkdir sub3
         echo node-10.11.0 >sub3/.node-version
         cd sub3 || exit
@@ -45,11 +45,11 @@ test_chnode_auto_cd_dirs() {
 
     local expected_roots
     expected_roots=$(cat <<END
-0,$__FIXTURE_DEFAULT_AUTO_DIR,0,
-1,$__FIXTURE_DEFAULT_AUTO_DIR/sub1,0,$CHNODE_NODES_DIR/node-8.1.0
-2,$__FIXTURE_DEFAULT_AUTO_DIR/sub1/sub2,0,$CHNODE_NODES_DIR/node-8.1.0
-3,$__FIXTURE_DEFAULT_AUTO_DIR/sub3,0,$CHNODE_NODES_DIR/node-10.11.0
-4,$__FIXTURE_DEFAULT_AUTO_DIR,0,
+0,$__FIXTURE_AUTO_DIR,0,
+1,$__FIXTURE_AUTO_DIR/sub1,0,$CHNODE_NODES_DIR/node-8.1.0
+2,$__FIXTURE_AUTO_DIR/sub1/sub2,0,$CHNODE_NODES_DIR/node-8.1.0
+3,$__FIXTURE_AUTO_DIR/sub3,0,$CHNODE_NODES_DIR/node-10.11.0
+4,$__FIXTURE_AUTO_DIR,0,
 END
 )
 
@@ -59,7 +59,7 @@ END
 test_chnode_auto_modify_node_version_file() {
     local actual_roots
     actual_roots=$(
-        cd "$__FIXTURE_DEFAULT_AUTO_DIR" || exit
+        cd "$__FIXTURE_AUTO_DIR" || exit
         chnode_auto
         echo "0,$PWD,$?,$CHNODE_ROOT"
 
@@ -78,10 +78,10 @@ test_chnode_auto_modify_node_version_file() {
 
     local expected_roots
     expected_roots=$(cat <<END
-0,$__FIXTURE_DEFAULT_AUTO_DIR,0,
-1,$__FIXTURE_DEFAULT_AUTO_DIR,0,$CHNODE_NODES_DIR/node-8.1.0
-2,$__FIXTURE_DEFAULT_AUTO_DIR,1,$CHNODE_NODES_DIR/node-8.1.0
-3,$__FIXTURE_DEFAULT_AUTO_DIR,0,
+0,$__FIXTURE_AUTO_DIR,0,
+1,$__FIXTURE_AUTO_DIR,0,$CHNODE_NODES_DIR/node-8.1.0
+2,$__FIXTURE_AUTO_DIR,1,$CHNODE_NODES_DIR/node-8.1.0
+3,$__FIXTURE_AUTO_DIR,0,
 END
 )
 
@@ -91,7 +91,7 @@ END
 test_chnode_auto_ignore_trailing_whitespace_in_node_version_file() {
     local actual
     actual=$(
-        cd "$__FIXTURE_DEFAULT_AUTO_DIR" || exit
+        cd "$__FIXTURE_AUTO_DIR" || exit
         echo -e "node-8.1.0\t " >.node-version
         chnode_auto
         echo "$?,$CHNODE_ROOT"
@@ -109,7 +109,7 @@ END
 test_chnode_auto_resets_chnode() {
     local actual
     actual=$(
-        cd "$__FIXTURE_DEFAULT_AUTO_DIR" || exit
+        cd "$__FIXTURE_AUTO_DIR" || exit
         chnode node-10.11.0
         echo "0,$?,$CHNODE_ROOT"
 

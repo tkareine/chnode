@@ -4,18 +4,18 @@ source test/setup-shunit2.sh
 source support/fixture.sh
 
 setUp() {
-    fixture_make_default_dir
-    CHNODE_NODES_DIR=$__FIXTURE_DEFAULT_DIR
+    fixture_make_nodes_dir
+    CHNODE_NODES_DIR=$__FIXTURE_NODES_DIR
     fixture_make_default_nodes "$CHNODE_NODES_DIR"
     source chnode.sh
 }
 
 tearDown() {
-    fixture_delete_default_dir
+    fixture_delete_nodes_dir
 }
 
 test_reload_changed_nodes() {
-    fixture_make_nodes_dir "$CHNODE_NODES_DIR" node-6.0.0
+    fixture_make_nodes "$CHNODE_NODES_DIR" node-6.0.0
     rm -rf "$CHNODE_NODES_DIR/node-10.11.0"
 
     chnode -R

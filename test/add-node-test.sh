@@ -12,7 +12,7 @@ tearDown() {
 }
 
 test_use_node_added_to_nodes_var() {
-    fixture_make_nodes_dir "$__test_nodes_dir" node-6.0.0
+    fixture_make_nodes "$__test_nodes_dir" node-6.0.0
     CHNODE_NODES+=("$__test_nodes_dir/node-6.0.0")
 
     chnode node-6
