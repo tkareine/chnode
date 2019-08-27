@@ -6,11 +6,11 @@ source auto.sh
 
 setUp() {
     chnode -r
-    __FIXTURE_DEFAULT_AUTO_DIR=$(mktemp -d /tmp/chnode-auto-fixture.XXXXXX)
+    fixture_make_default_auto_dir
 }
 
 tearDown() {
-    rm -rf "$__FIXTURE_DEFAULT_AUTO_DIR"
+    fixture_delete_default_auto_dir
 }
 
 test_chnode_auto_cd_dirs() {
