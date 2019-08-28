@@ -1,6 +1,6 @@
 # -*- sh-shell: bash; -*-
 
-CHNODE_VERSION=0.2.0
+CHNODE_VERSION=0.3.0
 : "${CHNODE_NODES_DIR=$HOME/.nodes}"
 
 chnode_reload() {

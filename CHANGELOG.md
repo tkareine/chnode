@@ -1,3 +1,11 @@
+## 0.3.0 / 2019-08-28
+
+* Add support for automatic Node.js version switching by detecting
+  `.node-version` file and switching to the version specified in the
+  file automatically. Implemented as an optional add-on by sourcing
+  `auto.sh` and installing a hook into shell. Pull Request #2 by James
+  Buckley (@donquxiote).
+
 ## 0.2.0 / 2018-10-07
 
 * Breaking change: rename `chnode reset` to `chnode -r`. Rationale:

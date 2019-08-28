@@ -28,7 +28,7 @@
     ``` shell
     git diff
     git add -p
-    git commit -m 'Release $version'
+    git commit -m 'Release version $version'
     git tag v$version
     git push origin master --tags
     ```
