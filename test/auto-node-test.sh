@@ -88,11 +88,29 @@ END
     assertEquals "$expected_roots" "$actual_roots"
 }
 
-test_chnode_auto_ignore_trailing_whitespace_in_node_version_file() {
+test_chnode_auto_selects_by_first_line_in_node_version_file() {
     local actual
     actual=$(
         cd "$__FIXTURE_AUTO_DIR" || exit
-        echo -e "node-8.1.0\t " >.node-version
+        echo -e "\t node-8.1.0\t \nnode-10.11.0" >.node-version
+        chnode_auto
+        echo "$?,$CHNODE_ROOT"
+    )
+
+    local expected
+    expected=$(cat <<END
+0,$CHNODE_NODES_DIR/node-8.1.0
+END
+)
+
+    assertEquals "$expected" "$actual"
+}
+
+test_chnode_auto_supports_fuzzy_matching_in_node_version_file() {
+    local actual
+    actual=$(
+        cd "$__FIXTURE_AUTO_DIR" || exit
+        echo -e "node-8" >.node-version
         chnode_auto
         echo "$?,$CHNODE_ROOT"
     )
@@ -114,7 +132,7 @@ test_chnode_auto_resets_chnode() {
         echo "0,$?,$CHNODE_ROOT"
 
         mkdir sub1
-        echo node-8.1. >sub1/.node-version
+        echo node-8.1.0 >sub1/.node-version
         cd sub1 || exit
         chnode_auto
         echo "1,$?,$CHNODE_ROOT"
