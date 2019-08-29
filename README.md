@@ -330,6 +330,9 @@ $
 
 MIT. See [LICENSE.txt].
 
+[shUnit2] located in `test/shunit2`: Copyright 2008-2018 Kate
+Ward. Released under the Apache 2.0 license.
+
 [Bash Controlling the Prompt]: https://www.gnu.org/software/bash/manual/html_node/Controlling-the-Prompt.html
 [GNU Bash]: https://www.gnu.org/software/bash/
 [Homebrew-tap-chnode]: https://github.com/tkareine/homebrew-chnode
@@ -345,4 +348,5 @@ MIT. See [LICENSE.txt].
 [nodenv]: https://github.com/nodenv/nodenv
 [nvm]: https://github.com/creationix/nvm
 [set-prompt.sh]: https://raw.githubusercontent.com/tkareine/chnode/master/contrib/set-prompt.sh
+[shUnit2]: https://github.com/kward/shunit2
 [tkareine-lightweight-nodejs-version-switching]: https://tkareine.org/articles/lightweight-nodejs-version-switching.html
