@@ -1,3 +1,8 @@
+## 0.3.1 / 2019-11-10
+
+* Ensure using external utility for `ls` when checking the non-emptiness
+  of `CHNODE_NODES_DIR` (avoid calling function or alias for `ls`).
+
 ## 0.3.0 / 2019-08-28
 
 * Add support for automatic Node.js version switching by detecting
