@@ -10,7 +10,7 @@ chnode_reload() {
 
     CHNODE_NODES=()
 
-    [[ ! (-d $CHNODE_NODES_DIR && -n "$(\ls -A "$CHNODE_NODES_DIR")") ]] && return
+    [[ ! (-d $CHNODE_NODES_DIR && -n "$(command ls -A "$CHNODE_NODES_DIR")") ]] && return
 
     CHNODE_NODES+=("$CHNODE_NODES_DIR"/*)
 
