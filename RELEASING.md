@@ -1,6 +1,6 @@
 # Releasing
 
-1. Check that Travis [build][Travis-build] is green.
+1. Check that [CI] is green.
 
 2. Double check that code linter and tests pass:
 
@@ -33,4 +33,7 @@
     git push origin master --tags
     ```
 
-[Travis-build]: https://travis-ci.org/tkareine/chnode
+6. Update [Homebrew tap][Homebrew-tap-chnode].
+
+[CI]: https://travis-ci.org/tkareine/chnode
+[Homebrew-tap-chnode]: https://github.com/tkareine/homebrew-chnode
