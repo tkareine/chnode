@@ -1,0 +1,17 @@
+name: CI
+
+on: [push]
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout git repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
+      - name: Run linter
+        run: make lint-docker
+      - name: Run tests
+        run: make test-docker

@@ -1,6 +1,6 @@
 # chnode
 
-[![Build status](https://travis-ci.org/tkareine/chnode.svg?branch=master)][chnode-build]
+[![CI](https://github.com/tkareine/chnode/workflows/CI/badge.svg)][chnode-CI]
 
 Changes shell's current Node.js version by updating `$PATH`.
 
@@ -340,7 +340,7 @@ Ward. Released under the Apache 2.0 license.
 [LICENSE.txt]: https://raw.githubusercontent.com/tkareine/chnode/master/LICENSE.txt
 [Zsh Hook Functions]: http://zsh.sourceforge.net/Doc/Release/Functions.html#Hook-Functions
 [Zsh]: https://www.zsh.org/
-[chnode-build]: https://travis-ci.org/tkareine/chnode
+[chnode-CI]: https://github.com/tkareine/chnode/actions?workflow=CI
 [chnode.sh]: https://raw.githubusercontent.com/tkareine/chnode/master/chnode.sh
 [chruby]: https://github.com/postmodern/chruby
 [node-build]: https://github.com/nodenv/node-build

@@ -35,5 +35,5 @@
 
 6. Update [Homebrew tap][Homebrew-tap-chnode].
 
-[CI]: https://travis-ci.org/tkareine/chnode
+[CI]: https://github.com/tkareine/chnode/actions?workflow=CI
 [Homebrew-tap-chnode]: https://github.com/tkareine/homebrew-chnode
