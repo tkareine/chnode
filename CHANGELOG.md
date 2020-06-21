@@ -1,9 +1,9 @@
-## 0.3.1 / 2019-11-10
+## v0.3.1 / 2019-11-10
 
 * Ensure using external utility for `ls` when checking the non-emptiness
   of `CHNODE_NODES_DIR` (avoid calling function or alias for `ls`).
 
-## 0.3.0 / 2019-08-28
+## v0.3.0 / 2019-08-28
 
 * Add support for automatic Node.js version switching by detecting
   `.node-version` file and switching to the version specified in the
@@ -11,7 +11,7 @@
   `auto.sh` and installing a hook into shell. Pull Request #2 by James
   Buckley (@donquxiote).
 
-## 0.2.0 / 2018-10-07
+## v0.2.0 / 2018-10-07
 
 * Breaking change: rename `chnode reset` to `chnode -r`. Rationale:
   disallow word commands in order to avoid clashes with Node.js
@@ -20,6 +20,6 @@
   Node.js versions in `CHNODE_NODES_DIR`.
 * Code refactor.
 
-## 0.1.0 / 2018-09-30
+## v0.1.0 / 2018-09-30
 
 * First release.
