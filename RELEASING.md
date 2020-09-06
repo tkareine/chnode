@@ -30,7 +30,7 @@
     git add -p
     git commit -m 'Release version $version'
     git tag v$version
-    git push origin master --tags
+    git push origin master v$version
     ```
 
 6. Update [Homebrew tap][Homebrew-tap-chnode].
