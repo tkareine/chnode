@@ -19,8 +19,9 @@ CHNODE_DOC_DIR := $(SHARE_DIR)/doc/chnode
 CHNODE_DOC_SOURCES := CHANGELOG.md LICENSE.txt README.md
 
 .PHONY: help
+help: SHELL := bash
 help:
-	@bash -c 'echo -e "$(subst $(newline),\n,$(usage_text))"'
+	@echo -e "$(subst $(newline),\n,$(usage_text))"
 
 .PHONY: lint
 lint:
