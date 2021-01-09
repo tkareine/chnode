@@ -285,6 +285,14 @@ Note that you might already have commands to be evaluated in
    PROMPT_COMMAND="chnode_auto; $PROMPT_COMMAND"
    ```
 
+3. Use [Bash-Preexec] or a similar tool to simulate `precmd_functions`
+   of Zsh in Bash. For example, with Bash-Preexec:
+
+   ``` shell
+   source bash-preexec.sh
+   precmd_functions+=(chnode_auto)
+   ```
+
 We don't recommend to call `chnode_auto` via shell's DEBUG trap, because
 it makes the shell to call the function too often. For example, Bash
 executes the DEBUG trap for each command in a command group. In
@@ -334,6 +342,7 @@ MIT. See [LICENSE.txt].
 Ward. Released under the Apache 2.0 license.
 
 [Bash Controlling the Prompt]: https://www.gnu.org/software/bash/manual/html_node/Controlling-the-Prompt.html
+[Bash-Preexec]: https://github.com/rcaloras/bash-preexec
 [GNU Bash]: https://www.gnu.org/software/bash/
 [Homebrew-tap-chnode]: https://github.com/tkareine/homebrew-chnode
 [Homebrew]: https://brew.sh/
