@@ -5,7 +5,7 @@ set_prompt() {
     local cwd='\w '
 
     local end
-    if [[ $(whoami) == "root" ]]; then
+    if [[ $UID == "0" ]]; then
         end="# "
     else
         end="$ "
