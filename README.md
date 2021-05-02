@@ -28,8 +28,8 @@ To read more about the design rationale and a comparison to [nvm] and
 * Selects Node.js version for a shell session by updating the `PATH`
   environment variable. Version switching is independent per shell
   session.
-* Optional automatic Node.js version switching based on a
-  `.node-version` file in your project directory.
+* Optional automatic Node.js version switching based on the contents of
+  the `.node-version` file in your project directory.
 * Small feature set by design, making the tool very fast to load.
 * Each Node.js version has its own set of global npm packages.
 * Allows accessing man pages for the selected Node.js version and its
@@ -40,8 +40,8 @@ To read more about the design rationale and a comparison to [nvm] and
 * The path to the selected Node.js version is available in `CHNODE_ROOT`
   environment variable. This makes it easy to display the selected
   version in shell prompt.
-* Locates installed Node.js versions in `~/.nodes` directory, or from a
-  custom directory read from `CHNODE_NODES_DIR` shell variable.
+* Locates installed Node.js versions in the `~/.nodes` directory, or
+  from a custom directory read from `CHNODE_NODES_DIR` shell variable.
 * Add additional Node.js versions by appending to `CHNODE_NODES` array
   shell variable.
 * Works with Bash's `set -euo pipefail` shell options ("strict mode").
@@ -89,7 +89,7 @@ project files.
 
 ### Post-installation
 
-Execute `source` command to load chnode functions:
+Execute the `source` command to load chnode functions:
 
 ``` bash
 source chnode.sh
@@ -113,21 +113,22 @@ to fix it:
 
 ## Available Node.js versions
 
-When shell loads `chnode` with `source` command, the script auto-detects
-Node.js versions installed in `~/.nodes` directory.
+When shell loads `chnode` with the `source` command, the script
+auto-detects Node.js versions installed in the `~/.nodes` directory.
 
-You may override `~/.nodes` directory by setting `CHNODE_NODES_DIR`
-shell variable to point to another directory. Do this before executing
-the `source` command. For example:
+You may override the `~/.nodes` directory by setting the
+`CHNODE_NODES_DIR` shell variable to point to another directory. Do this
+before executing the `source` command. For example:
 
 ``` bash
 CHNODE_NODES_DIR=/opt/nodes
 source chnode.sh
 ```
 
-Sourcing `chnode.sh` populates `CHNODE_NODES` shell array variable with
-paths to subdirectories in `CHNODE_NODES_DIR`. `CHNODE_NODES` contains
-the Node.js versions you can select with `chnode NODE_VERSION` command.
+Sourcing `chnode.sh` populates the `CHNODE_NODES` shell array variable
+with paths to subdirectories in `CHNODE_NODES_DIR`. `CHNODE_NODES`
+contains the Node.js versions you can select with the `chnode
+NODE_VERSION` command.
 
 After installing new Node.js versions or removing them, run `chnode -R`
 to populate `CHNODE_NODES` again.
@@ -178,7 +179,8 @@ $ chnode
    node-8.11.4
 ```
 
-**Select** a Node.js version, here a 10.x series:
+**Select** a Node.js version, here using fuzzy matching to switch to
+10.x series:
 
 ```
 $ chnode node-10
@@ -189,6 +191,20 @@ $ chnode
 
 $ echo "$PATH"
 /Users/tkareine/.nodes/node-10.11.0/bin:/usr/local/bin:/usr/bin:…
+
+$ echo "$CHNODE_ROOT"
+/Users/tkareine/.nodes/node-10.11.0
+```
+
+`chnode` stores the path of the selected version in the `CHNODE_ROOT`
+environment variable.
+
+If no version matches, `chnode` prints error and preserves the previous
+selection. Continuing the example above:
+
+```
+$ chnode nosuch
+chnode: unknown Node.js: nosuch
 
 $ echo "$CHNODE_ROOT"
 /Users/tkareine/.nodes/node-10.11.0
@@ -241,17 +257,19 @@ $ chnode -V  # or --version
 
 ## Automatic version switching
 
-Automatic Node.js version switching is included in `auto.sh` script as
-an optional add-on on top of `chnode.sh`. The feature detects a
+Automatic Node.js version switching is included in the [auto.sh] script
+as an optional add-on on top of `chnode.sh`. The feature detects a
 `.node-version` file in the current working directory (or in a parent
-directory), and switches the current Node.js version to the version
-specified in the file. You'll need to have the specified version
-installed for switching to happen.
+directory, up to the system root directory), and switches the current
+Node.js version to the version specified in the file. You'll need to
+have the specified version installed for switching to happen, otherwise
+you'll get an error.
 
 To use the feature, source `chnode.sh` and `auto.sh` (in this order) in
-your shell's init script, followed by configuring `chnode_auto` function
-to be called in [PROMPT_COMMAND][Bash Controlling the Prompt] (for Bash)
-or [precmd_functions][Zsh Hook Functions] (for Zsh) hook:
+your shell's init script, followed by configuring the `chnode_auto`
+function to be called in [PROMPT_COMMAND][Bash Controlling the Prompt]
+(for Bash) or in the [precmd_functions][Zsh Hook Functions] hook (for
+Zsh):
 
 ``` bash
 source chnode.sh
@@ -318,12 +336,28 @@ file in the root directory of the project:
 echo node-8.1.0 > node-project/.node-version
 ```
 
-You can set a default for your whole system by adding `.node-version` to
-your home directory.
+The first line of the `.node-version` file should contain a version
+string that the `chnode_auto` function uses to select a Node.js
+version. The function invokes `chnode $version`, where `$version` is the
+first line from the file. This means that fuzzy matching is
+supported. If no version matches, an error is reported.
+
+Detailed specifications for the `.node-version` file:
+
+1. The version string must be in the first line. The line may have
+   leading and trailing whitespace, which get trimmed out (you're
+   discouraged to have them).
+2. The lines following the first are ignored.
+3. The file may be empty, in which case the file is ignored.
+
+You can set the default node version by adding a `.node-version` file to
+the root of your home directory. The version you specify in the file
+will be used unless any of your Node.js projects, located somewhere
+under your home directory, has their own `.node-version` file.
 
 ## Display current Node.js in shell prompt
 
-You can pick up the selected Node.js version from `CHNODE_ROOT`
+You can pick up the selected Node.js version from the `CHNODE_ROOT`
 environment variable. An example script to customize shell prompt is in
 [set-prompt.sh]. Usage:
 
@@ -338,8 +372,8 @@ $
 
 MIT. See [LICENSE.txt].
 
-[shUnit2] located as a git submodule in `test/shunit2`: Copyright
-2008-2018 Kate Ward. Released under the Apache 2.0 license.
+[shUnit2], located as a git submodule in the `test/shunit2` directory:
+Copyright 2008-2018 Kate Ward. Released under the Apache 2.0 license.
 
 [Bash Controlling the Prompt]: https://www.gnu.org/software/bash/manual/html_node/Controlling-the-Prompt.html
 [Bash-Preexec]: https://github.com/rcaloras/bash-preexec
@@ -349,13 +383,14 @@ MIT. See [LICENSE.txt].
 [LICENSE.txt]: https://raw.githubusercontent.com/tkareine/chnode/master/LICENSE.txt
 [Zsh Hook Functions]: http://zsh.sourceforge.net/Doc/Release/Functions.html#Hook-Functions
 [Zsh]: https://www.zsh.org/
+[auto.sh]: https://raw.githubusercontent.com/tkareine/chnode/master/auto.sh
 [chnode-CI]: https://github.com/tkareine/chnode/actions?workflow=CI
 [chnode.sh]: https://raw.githubusercontent.com/tkareine/chnode/master/chnode.sh
 [chruby]: https://github.com/postmodern/chruby
 [node-build]: https://github.com/nodenv/node-build
 [nodejs-download]: https://nodejs.org/en/download/current/
 [nodenv]: https://github.com/nodenv/nodenv
-[nvm]: https://github.com/creationix/nvm
+[nvm]: https://github.com/nvm-sh/nvm
 [set-prompt.sh]: https://raw.githubusercontent.com/tkareine/chnode/master/contrib/set-prompt.sh
 [shUnit2]: https://github.com/kward/shunit2
 [tkareine-lightweight-nodejs-version-switching]: https://tkareine.org/articles/lightweight-nodejs-version-switching.html
