@@ -38,12 +38,8 @@ lint-docker:
 	    koalaman/shellcheck:stable \
 	    $(LINT_FILES)
 
-.PHONY: git-submodules
-git-submodules:
-	git submodule init
-	git submodule update
-
-test/shunit2/shunit2: git-submodules
+test/shunit2/shunit2:
+	$(git-submodule-reset)
 
 .PHONY: test
 test: test/shunit2/shunit2
@@ -121,3 +117,5 @@ Targets:
   install             Copy chnode.sh and auto.sh and its documentation to PREFIX directory
   uninstall           Remove chnode.sh and auto.sh and its documentation from PREFIX directory
 endef
+
+git-submodule-reset := git submodule init; git submodule update
