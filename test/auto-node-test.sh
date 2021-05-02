@@ -60,28 +60,29 @@ test_chnode_auto_modify_node_version_file() {
     local actual_roots
     actual_roots=$(
         cd "$__FIXTURE_AUTO_DIR" || exit
+
         chnode_auto
-        echo "0,$PWD,$?,$CHNODE_ROOT"
+        echo "0,$?,$CHNODE_ROOT"
 
         echo node-8.1.0 >.node-version
         chnode_auto
-        echo "1,$PWD,$?,$CHNODE_ROOT"
+        echo "1,$?,$CHNODE_ROOT"
 
         echo nosuch >.node-version
         chnode_auto 2>/dev/null
-        echo "2,$PWD,$?,$CHNODE_ROOT"
+        echo "2,$?,$CHNODE_ROOT"
 
         rm .node-version
         chnode_auto
-        echo "3,$PWD,$?,$CHNODE_ROOT"
+        echo "3,$?,$CHNODE_ROOT"
     )
 
     local expected_roots
     expected_roots=$(cat <<END
-0,$__FIXTURE_AUTO_DIR,0,
-1,$__FIXTURE_AUTO_DIR,0,$CHNODE_NODES_DIR/node-8.1.0
-2,$__FIXTURE_AUTO_DIR,1,$CHNODE_NODES_DIR/node-8.1.0
-3,$__FIXTURE_AUTO_DIR,0,
+0,0,
+1,0,$CHNODE_NODES_DIR/node-8.1.0
+2,1,$CHNODE_NODES_DIR/node-8.1.0
+3,0,
 END
 )
 
@@ -147,6 +148,31 @@ test_chnode_auto_resets_chnode() {
 0,0,$CHNODE_NODES_DIR/node-10.11.0
 1,0,$CHNODE_NODES_DIR/node-8.1.0
 2,0,
+END
+)
+
+    assertEquals "$expected" "$actual"
+}
+
+test_chnode_auto_errors_once_when_unknown_node_version() {
+    local actual
+    actual=$(
+        cd "$__FIXTURE_AUTO_DIR" || exit
+        echo nosuch >.node-version
+
+        chnode_auto 2>&1
+        printf "0,%d,%s\n\n" $? "$CHNODE_ROOT"
+
+        chnode_auto 2>&1
+        printf "1,%d,%s\n\n" $? "$CHNODE_ROOT"
+    )
+
+    local expected
+    expected=$(cat <<END
+chnode: unknown Node.js: nosuch
+0,1,
+
+1,0,
 END
 )
 
