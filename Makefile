@@ -38,8 +38,15 @@ lint-docker:
 	    koalaman/shellcheck:stable \
 	    $(LINT_FILES)
 
+.PHONY: git-submodules
+git-submodules:
+	git submodule init
+	git submodule update
+
+test/shunit2/shunit2: git-submodules
+
 .PHONY: test
-test:
+test: test/shunit2/shunit2
 	$(SHELL) test/runner.sh $(TEST_FILES)
 
 .PHONY: test-docker
@@ -52,7 +59,7 @@ test-docker-bashes: $(DOCKER_TEST_BASHES)
 test-docker-zshes: $(DOCKER_TEST_ZSHES)
 
 .PHONY: $(DOCKER_TEST_BASHES)
-$(DOCKER_TEST_BASHES):
+$(DOCKER_TEST_BASHES): test/shunit2/shunit2
 	docker run \
 	    --rm \
 	    -t \
@@ -63,7 +70,7 @@ $(DOCKER_TEST_BASHES):
 	    bash test/runner.sh $(TEST_FILES)
 
 .PHONY: $(DOCKER_TEST_ZSHES)
-$(DOCKER_TEST_ZSHES):
+$(DOCKER_TEST_ZSHES): test/shunit2/shunit2
 	docker run \
 	    --rm \
 	    -t \
