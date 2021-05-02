@@ -1,6 +1,6 @@
 export SHELL
 
-SHELLCHECK_OPTS := -s bash -e SC1090 -e SC1091
+SHELLCHECK_OPTS := -s bash -e SC1090
 
 TEST_FILES ?= $(wildcard test/*-test.sh)
 
