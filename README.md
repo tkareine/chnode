@@ -359,11 +359,14 @@ supported. If no version matches, an error is reported.
 
 Detailed specifications for the `.node-version` file:
 
-1. The version string must be in the first line. The line may have
-   leading and trailing whitespace, which get trimmed out (you're
-   discouraged to have them).
+1. The version string must be in the first line. The line must end with
+   the newline character (`\n`). The line may have leading and trailing
+   whitespace, which get trimmed out.
+
 2. The lines following the first are ignored.
-3. The file may be empty, in which case the file is ignored.
+
+3. If rule 1 is not satisfied, the file is ignored. No error is
+   reported.
 
 You can set the default node version by adding a `.node-version` file to
 the root of your home directory. The version you specify in the file

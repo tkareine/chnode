@@ -72,9 +72,13 @@ test_chnode_auto_modify_node_version_file() {
         chnode_auto 2>/dev/null
         echo "2,$?,$CHNODE_ROOT"
 
+        echo -n >.node-version
+        chnode_auto 2>/dev/null
+        echo "3,$?,$CHNODE_ROOT"
+
         rm .node-version
         chnode_auto
-        echo "3,$?,$CHNODE_ROOT"
+        echo "4,$?,$CHNODE_ROOT"
     )
 
     local expected_roots
@@ -83,6 +87,7 @@ test_chnode_auto_modify_node_version_file() {
 1,0,$CHNODE_NODES_DIR/node-8.1.0
 2,1,$CHNODE_NODES_DIR/node-8.1.0
 3,0,
+4,0,
 END
 )
 
@@ -119,6 +124,50 @@ test_chnode_auto_supports_fuzzy_matching_in_node_version_file() {
     local expected
     expected=$(cat <<END
 0,$CHNODE_NODES_DIR/node-8.1.0
+END
+)
+
+    assertEquals "$expected" "$actual"
+}
+
+test_chnode_auto_ignores_version_file_with_empty_first_line() {
+    local actual
+    actual=$(
+        cd "$__FIXTURE_AUTO_DIR" || exit
+
+        touch .node-version
+        chnode_auto
+        echo "0,$?,$CHNODE_ROOT"
+
+        echo >.node-version
+        chnode_auto
+        echo "1,$?,$CHNODE_ROOT"
+
+        printf '  \t ' >.node-version
+        chnode_auto
+        echo "2,$?,$CHNODE_ROOT"
+
+        printf '  \t \n' >.node-version
+        chnode_auto
+        echo "3,$?,$CHNODE_ROOT"
+
+        printf 'node-8' >.node-version
+        chnode_auto
+        echo "4,$?,$CHNODE_ROOT"
+
+        printf '\nnode-8\n' >.node-version
+        chnode_auto
+        echo "5,$?,$CHNODE_ROOT"
+    )
+
+    local expected
+    expected=$(cat <<END
+0,0,
+1,0,
+2,0,
+3,0,
+4,0,
+5,0,
 END
 )
 
