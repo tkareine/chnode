@@ -179,4 +179,24 @@ END
     assertEquals "$expected" "$actual"
 }
 
+test_chnode_auto_use_custom_node_version_filename() {
+    local actual
+    actual=$(
+        cd "$__FIXTURE_AUTO_DIR" || exit
+        echo "node-8.1.0" >.nvmrc
+        # shellcheck disable=SC2034
+        CHNODE_AUTO_VERSION_FILENAME=.nvmrc
+        chnode_auto
+        echo "$?,$CHNODE_ROOT"
+    )
+
+    local expected
+    expected=$(cat <<END
+0,$CHNODE_NODES_DIR/node-8.1.0
+END
+)
+
+    assertEquals "$expected" "$actual"
+}
+
 SHUNIT_PARENT=$0 source "$SHUNIT2"

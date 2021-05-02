@@ -29,7 +29,8 @@ To read more about the design rationale and a comparison to [nvm] and
   environment variable. Version switching is independent per shell
   session.
 * Optional automatic Node.js version switching based on the contents of
-  the `.node-version` file in your project directory.
+  the `.node-version` file in your project directory, or from another
+  file, specified in the `CHNODE_AUTO_VERSION_FILENAME` shell variable.
 * Small feature set by design, making the tool very fast to load.
 * Each Node.js version has its own set of global npm packages.
 * Allows accessing man pages for the selected Node.js version and its
@@ -265,15 +266,29 @@ Node.js version to the version specified in the file. You'll need to
 have the specified version installed for switching to happen, otherwise
 you'll get an error.
 
-To use the feature, source `chnode.sh` and `auto.sh` (in this order) in
-your shell's init script, followed by configuring the `chnode_auto`
-function to be called in [PROMPT_COMMAND][Bash Controlling the Prompt]
-(for Bash) or in the [precmd_functions][Zsh Hook Functions] hook (for
-Zsh):
+To use the feature, edit your shell's init script:
+
+1. Source `chnode.sh` and `auto.sh` (in this order).
+
+2. Optionally set the `CHNODE_AUTO_VERSION_FILENAME` shell variable to
+   name the files used in detecting automatic version switching. The
+   default value of the variable is `.node-version`. If this is ok, you
+   don't need to set the variable explicitly. To use the `.nvmrc` files
+   of [nvm][nvmrc], set `CHNODE_AUTO_VERSION_FILENAME=.nvmrc`.
+
+3. Configure the `chnode_auto` function to be called in
+   [PROMPT_COMMAND][Bash Controlling the Prompt] (for Bash) or in the
+   [precmd_functions][Zsh Hook Functions] hook (for Zsh)
+
+For example:
 
 ``` bash
 source chnode.sh
 source auto.sh
+
+# Uncomment to set the filename for the version files for something else
+# than `.node-version`.
+#CHNODE_AUTO_VERSION_FILENAME=.nvmrc
 
 PROMPT_COMMAND=chnode_auto       # if using Bash
 precmd_functions+=(chnode_auto)  # if using Zsh
@@ -391,6 +406,7 @@ Copyright 2008-2018 Kate Ward. Released under the Apache 2.0 license.
 [nodejs-download]: https://nodejs.org/en/download/current/
 [nodenv]: https://github.com/nodenv/nodenv
 [nvm]: https://github.com/nvm-sh/nvm
+[nvmrc]: https://github.com/nvm-sh/nvm#nvmrc
 [set-prompt.sh]: https://raw.githubusercontent.com/tkareine/chnode/master/contrib/set-prompt.sh
 [shUnit2]: https://github.com/kward/shunit2
 [tkareine-lightweight-nodejs-version-switching]: https://tkareine.org/articles/lightweight-nodejs-version-switching.html
