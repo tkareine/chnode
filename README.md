@@ -278,7 +278,7 @@ To use the feature, edit your shell's init script:
 
 3. Configure the `chnode_auto` function to be called in
    [PROMPT_COMMAND][Bash Controlling the Prompt] (for Bash) or in the
-   [precmd_functions][Zsh Hook Functions] hook (for Zsh)
+   [precmd_functions][Zsh Hook Functions] hook (for Zsh).
 
 For example:
 
