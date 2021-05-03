@@ -4,6 +4,19 @@ This project adheres to [Semantic Versioning].
 
 ## [Unreleased]
 
+## [v0.4.0] - 2021-05-03
+
+### Added
+
+* Introduce the `CHNODE_AUTO_VERSION_FILENAME` shell variable to change
+  the name the files used in detecting automatic version switching. The
+  default value of the variable is `.node-version`.
+
+### Changed
+
+* Fix ignoring a `.node-version` file containing just a
+  newline. Document file format specification in the readme.
+
 ## [v0.3.1] - 2019-11-10
 
 ### Changed
@@ -42,7 +55,8 @@ This project adheres to [Semantic Versioning].
 * First release.
 
 [Semantic Versioning]: https://semver.org/spec/v2.0.0.html
-[Unreleased]: https://github.com/tkareine/chnode/compare/v0.3.1...HEAD
+[Unreleased]: https://github.com/tkareine/chnode/compare/v0.4.0...HEAD
+[v0.4.0]: https://github.com/tkareine/chnode/compare/v0.3.1...v0.4.0
 [v0.3.1]: https://github.com/tkareine/chnode/compare/v0.3.0...v0.3.1
 [v0.3.0]: https://github.com/tkareine/chnode/compare/v0.2.0...v0.3.0
 [v0.2.0]: https://github.com/tkareine/chnode/compare/v0.1.0...v0.2.0
