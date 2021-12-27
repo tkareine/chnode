@@ -1,14 +1,14 @@
 export SHELL
 
 SHELLCHECK_OPTS := -s bash -e SC1090
-SHELLCHECK_DOCKER_IMAGE ?= koalaman/shellcheck:stable
+SHELLCHECK_DOCKER_IMAGE := koalaman/shellcheck:stable
 
-TEST_RUNNER ?= test/support/runner.sh
-TEST_FILES ?= $(wildcard test/*-test.sh)
-TEST_DOCKER_BASH_IMAGES ?= bash!5 bash!4.4 bash!3.2
-TEST_DOCKER_ZSH_IMAGES ?= zshusers/zsh!5.8 zshusers/zsh!5.6.2 zshusers/zsh!5.3
+TEST_RUNNER := test/support/runner.sh
+TEST_FILES := $(wildcard test/*-test.sh)
+TEST_DOCKER_BASH_IMAGES := bash!5 bash!4.4 bash!3.2
+TEST_DOCKER_ZSH_IMAGES := zshusers/zsh!5.8 zshusers/zsh!5.6.2 zshusers/zsh!5.3
 
-BM_FILES ?= $(wildcard benchmark/*-bm.sh)
+BM_FILES := $(wildcard benchmark/*-bm.sh)
 
 PREFIX ?= /usr/local
 SHARE_DIR := $(PREFIX)/share
