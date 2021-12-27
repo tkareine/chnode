@@ -1,0 +1,5 @@
+*.sh
+benchmark/*.sh
+support/*.sh
+test/*.sh
+test/support/*.sh

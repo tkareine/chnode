@@ -1,15 +1,14 @@
 export SHELL
 
 SHELLCHECK_OPTS := -s bash -e SC1090
+SHELLCHECK_DOCKER_IMAGE ?= koalaman/shellcheck:stable
 
+TEST_RUNNER ?= test/support/runner.sh
 TEST_FILES ?= $(wildcard test/*-test.sh)
+TEST_DOCKER_BASH_IMAGES ?= bash!5 bash!4.4 bash!3.2
+TEST_DOCKER_ZSH_IMAGES ?= zshusers/zsh!5.8 zshusers/zsh!5.6.2 zshusers/zsh!5.3
 
 BM_FILES ?= $(wildcard benchmark/*-bm.sh)
-
-DOCKER_TEST_BASHES ?= bash!5 bash!4.4 bash!3.2
-DOCKER_TEST_ZSHES ?= zshusers/zsh!5.8 zshusers/zsh!5.6.2 zshusers/zsh!5.3
-
-LINT_FILES := chnode.sh auto.sh $(wildcard benchmark/*.sh support/*.sh test/*.sh)
 
 PREFIX ?= /usr/local
 SHARE_DIR := $(PREFIX)/share
@@ -24,10 +23,12 @@ help:
 	@echo -e "$(subst $(newline),\n,$(usage_text))"
 
 .PHONY: lint
+lint: SHELL := bash
 lint:
-	shellcheck $(LINT_FILES)
+	shellcheck $$(< .shellcheck-files)
 
 .PHONY: lint-docker
+lint-docker: SHELL := bash
 lint-docker:
 	docker run \
 	    --rm \
@@ -35,27 +36,27 @@ lint-docker:
 	    -v "$(CURDIR):/chnode" \
 	    -w /chnode \
 	    -e SHELLCHECK_OPTS="$(SHELLCHECK_OPTS)" \
-	    koalaman/shellcheck:stable \
-	    $(LINT_FILES)
+	    $(SHELLCHECK_DOCKER_IMAGE) \
+	    $$(< .shellcheck-files)
 
 test/shunit2/shunit2:
 	$(git-submodule-reset)
 
 .PHONY: test
 test: test/shunit2/shunit2
-	$(SHELL) test/runner.sh $(TEST_FILES)
+	$(SHELL) $(TEST_RUNNER) $(TEST_FILES)
 
 .PHONY: test-docker
 test-docker: test-docker-bashes test-docker-zshes
 
 .PHONY: test-docker-bashes
-test-docker-bashes: $(DOCKER_TEST_BASHES)
+test-docker-bashes: $(TEST_DOCKER_BASH_IMAGES)
 
 .PHONY: test-docker-zshes
-test-docker-zshes: $(DOCKER_TEST_ZSHES)
+test-docker-zshes: $(TEST_DOCKER_ZSH_IMAGES)
 
-.PHONY: $(DOCKER_TEST_BASHES)
-$(DOCKER_TEST_BASHES): test/shunit2/shunit2
+.PHONY: $(TEST_DOCKER_BASH_IMAGES)
+$(TEST_DOCKER_BASH_IMAGES): test/shunit2/shunit2
 	docker run \
 	    --rm \
 	    -t \
@@ -63,10 +64,10 @@ $(DOCKER_TEST_BASHES): test/shunit2/shunit2
 	    -w /chnode \
 	    -e SHELL=/usr/local/bin/bash \
 	    $(subst !,:,$@) \
-	    bash test/runner.sh $(TEST_FILES)
+	    bash $(TEST_RUNNER) $(TEST_FILES)
 
 .PHONY: $(DOCKER_TEST_ZSHES)
-$(DOCKER_TEST_ZSHES): test/shunit2/shunit2
+$(TEST_DOCKER_ZSH_IMAGES): test/shunit2/shunit2
 	docker run \
 	    --rm \
 	    -t \
@@ -74,7 +75,7 @@ $(DOCKER_TEST_ZSHES): test/shunit2/shunit2
 	    -w /chnode \
 	    -e SHELL=/usr/bin/zsh \
 	    $(subst !,:,$@) \
-	    zsh test/runner.sh $(TEST_FILES)
+	    zsh $(TEST_RUNNER) $(TEST_FILES)
 
 .PHONY: benchmark
 benchmark:
@@ -104,13 +105,13 @@ Targets:
 
   help                Show this guide
 
-  lint                Run shellcheck on source files
-  lint-docker         Run shellcheck on source files in Docker container
+  lint                Run ShellCheck on source files
+  lint-docker         Run ShellCheck on source files in a Docker container
 
   test                Run tests with SHELL you choose (usage: \`make test SHELL=bash\`) (select: TEST_FILES=test/*-test.sh)
-  test-docker         Run tests with various bash and zsh versions in Docker container
-  test-docker-bashes  Run tests with various bash versions in Docker container
-  test-docker-zshes   Run tests with various zsh versions in Docker container
+  test-docker         Run tests with various Bash and Zsh versions in Docker containers
+  test-docker-bashes  Run tests with various Bash versions in Docker containers
+  test-docker-zshes   Run tests with various Zsh versions in Docker containers
 
   benchmark           Run benchmarks with SHELL you choose (usage: \`make benchmark SHELL=bash\`) (select: BM_FILES=benchmark/*-bm.sh; iterations: N=1000; runs: RUNS=3)
 

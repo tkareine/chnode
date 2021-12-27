@@ -1,7 +1,7 @@
 # -*- sh-shell: bash; -*-
 
-source test/setup-shunit2.sh
-source test/setup-default-chnode.sh
+source test/support/setup-shunit2.sh
+source test/support/setup-default-chnode.sh
 
 setUp() {
     CHNODE_NODES=("${__ORG_CHNODE_NODES[@]}")

@@ -1,7 +1,7 @@
 # -*- sh-shell: bash; -*-
 
-source test/setup-shunit2.sh
-source test/setup-default-chnode.sh
+source test/support/setup-shunit2.sh
+source test/support/setup-default-chnode.sh
 
 test_list_in_shell_strict_mode() {
     __with_shell >/dev/null <<END

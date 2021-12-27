@@ -1,6 +1,6 @@
 # -*- sh-shell: bash; -*-
 
-source test/setup-shunit2.sh
+source test/support/setup-shunit2.sh
 source support/fixture.sh
 
 setUp() {
