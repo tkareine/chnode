@@ -5,8 +5,8 @@ SHELLCHECK_DOCKER_IMAGE := koalaman/shellcheck:stable
 
 TEST_RUNNER := test/support/runner.sh
 TEST_FILES := $(wildcard test/*-test.sh)
-TEST_DOCKER_BASH_IMAGES := bash!5 bash!4.4 bash!3.2
-TEST_DOCKER_ZSH_IMAGES := zshusers/zsh!5.8 zshusers/zsh!5.6.2 zshusers/zsh!5.3
+TEST_BASH_DOCKER_IMAGES := bash!5 bash!4.4 bash!3.2
+TEST_ZSH_DOCKER_IMAGES := zshusers/zsh!5.8 zshusers/zsh!5.6.2 zshusers/zsh!5.3
 
 BM_FILES := $(wildcard benchmark/*-bm.sh)
 
@@ -33,7 +33,7 @@ lint-docker:
 	docker run \
 	    --rm \
 	    -t \
-	    -v "$(CURDIR):/chnode" \
+	    -v "$(CURDIR):/chnode:ro" \
 	    -w /chnode \
 	    -e SHELLCHECK_OPTS="$(SHELLCHECK_OPTS)" \
 	    $(SHELLCHECK_DOCKER_IMAGE) \
@@ -47,31 +47,31 @@ test: test/shunit2/shunit2
 	$(SHELL) $(TEST_RUNNER) $(TEST_FILES)
 
 .PHONY: test-docker
-test-docker: test-docker-bashes test-docker-zshes
+test-docker: test-bash-docker test-zsh-docker
 
-.PHONY: test-docker-bashes
-test-docker-bashes: $(TEST_DOCKER_BASH_IMAGES)
+.PHONY: test-bash-docker
+test-bash-docker: $(TEST_BASH_DOCKER_IMAGES)
 
-.PHONY: test-docker-zshes
-test-docker-zshes: $(TEST_DOCKER_ZSH_IMAGES)
+.PHONY: test-zsh-docker
+test-zsh-docker: $(TEST_ZSH_DOCKER_IMAGES)
 
-.PHONY: $(TEST_DOCKER_BASH_IMAGES)
-$(TEST_DOCKER_BASH_IMAGES): test/shunit2/shunit2
+.PHONY: $(TEST_BASH_DOCKER_IMAGES)
+$(TEST_BASH_DOCKER_IMAGES): test/shunit2/shunit2
 	docker run \
 	    --rm \
 	    -t \
-	    -v "$(CURDIR):/chnode" \
+	    -v "$(CURDIR):/chnode:ro" \
 	    -w /chnode \
 	    -e SHELL=/usr/local/bin/bash \
 	    $(subst !,:,$@) \
 	    bash $(TEST_RUNNER) $(TEST_FILES)
 
-.PHONY: $(DOCKER_TEST_ZSHES)
-$(TEST_DOCKER_ZSH_IMAGES): test/shunit2/shunit2
+.PHONY: $(TEST_ZSH_DOCKER_IMAGES)
+$(TEST_ZSH_DOCKER_IMAGES): test/shunit2/shunit2
 	docker run \
 	    --rm \
 	    -t \
-	    -v "$(CURDIR):/chnode" \
+	    -v "$(CURDIR):/chnode:ro" \
 	    -w /chnode \
 	    -e SHELL=/usr/bin/zsh \
 	    $(subst !,:,$@) \
@@ -103,20 +103,20 @@ endef
 define usage_text
 Targets:
 
-  help                Show this guide
+  help              Show this guide
 
-  lint                Run ShellCheck on source files
-  lint-docker         Run ShellCheck on source files in a Docker container
+  lint              Run ShellCheck on source files
+  lint-docker       Run ShellCheck on source files in a Docker container
 
-  test                Run tests with SHELL you choose (usage: \`make test SHELL=bash\`) (select: TEST_FILES=test/*-test.sh)
-  test-docker         Run tests with various Bash and Zsh versions in Docker containers
-  test-docker-bashes  Run tests with various Bash versions in Docker containers
-  test-docker-zshes   Run tests with various Zsh versions in Docker containers
+  test              Run tests with SHELL you choose (usage: \`make test SHELL=bash\`) (select: TEST_FILES=test/*-test.sh)
+  test-docker       Run tests with various Bash and Zsh versions in Docker containers
+  test-bash-docker  Run tests with various Bash versions in Docker containers
+  test-zsh-docker   Run tests with various Zsh versions in Docker containers
 
-  benchmark           Run benchmarks with SHELL you choose (usage: \`make benchmark SHELL=bash\`) (select: BM_FILES=benchmark/*-bm.sh; iterations: N=1000; runs: RUNS=3)
+  benchmark         Run benchmarks with SHELL you choose (usage: \`make benchmark SHELL=bash\`) (select: BM_FILES=benchmark/*-bm.sh; iterations: N=1000; runs: RUNS=3)
 
-  install             Copy chnode.sh and auto.sh and its documentation to PREFIX directory
-  uninstall           Remove chnode.sh and auto.sh and its documentation from PREFIX directory
+  install           Copy chnode.sh and auto.sh and its documentation to PREFIX directory
+  uninstall         Remove chnode.sh and auto.sh and its documentation from PREFIX directory
 endef
 
 git-submodule-reset := git submodule init; git submodule update
