@@ -13,7 +13,7 @@ tearDown() {
     fixture_delete_auto_dir
 }
 
-test_chnode_auto_cd_dirs() {
+test_auto_cd_dirs() {
     local actual_roots
     actual_roots=$(
         cd "$__FIXTURE_AUTO_DIR" || exit
@@ -56,7 +56,7 @@ END
     assertEquals "$expected_roots" "$actual_roots"
 }
 
-test_chnode_auto_modify_node_version_file() {
+test_auto_when_modifying_node_version_file() {
     local actual_roots
     actual_roots=$(
         cd "$__FIXTURE_AUTO_DIR" || exit
@@ -130,7 +130,7 @@ END
     assertEquals "$expected" "$actual"
 }
 
-test_chnode_auto_ignores_version_file_with_empty_first_line() {
+test_auto_ignore_version_file_when_first_line_cannot_be_parsed() {
     local actual
     actual=$(
         cd "$__FIXTURE_AUTO_DIR" || exit
@@ -174,7 +174,7 @@ END
     assertEquals "$expected" "$actual"
 }
 
-test_chnode_auto_resets_chnode() {
+test_auto_reset_when_chnode_is_called_before_chnode_auto() {
     local actual
     actual=$(
         cd "$__FIXTURE_AUTO_DIR" || exit
@@ -203,7 +203,7 @@ END
     assertEquals "$expected" "$actual"
 }
 
-test_chnode_auto_errors_once_when_unknown_node_version() {
+test_auto_print_error_once_when_unknown_node_version() {
     local actual
     actual=$(
         cd "$__FIXTURE_AUTO_DIR" || exit
@@ -228,7 +228,7 @@ END
     assertEquals "$expected" "$actual"
 }
 
-test_chnode_auto_use_custom_node_version_filename() {
+test_auto_use_custom_node_version_filename() {
     local actual
     actual=$(
         cd "$__FIXTURE_AUTO_DIR" || exit

@@ -3,7 +3,7 @@
 source test/support/setup-shunit2.sh
 source test/support/setup-default-chnode.sh
 
-test_populates_nodes_var() {
+test_populate_nodes_var() {
     local expected_paths=(
         "$CHNODE_NODES_DIR/iojs-3.3.1" \
         "$CHNODE_NODES_DIR/node-10.11.0" \
