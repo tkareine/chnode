@@ -5,8 +5,8 @@ SHELLCHECK_DOCKER_IMAGE := koalaman/shellcheck:stable
 
 TEST_RUNNER := test/support/runner.sh
 TEST_FILES := $(wildcard test/*-test.sh)
-TEST_BASH_DOCKER_IMAGES := bash!5 bash!4.4 bash!3.2
-TEST_ZSH_DOCKER_IMAGES := zshusers/zsh!5.8 zshusers/zsh!5.6.2 zshusers/zsh!5.3
+TEST_BASH_DOCKER_IMAGES := bash!5 bash!4 bash!3.2
+TEST_ZSH_DOCKER_IMAGES := zshusers/zsh!5.9 zshusers/zsh!5.8 zshusers/zsh!5.6.2 zshusers/zsh!5.3
 
 BM_FILES := $(wildcard benchmark/*-bm.sh)
 
