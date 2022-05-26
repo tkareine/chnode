@@ -62,7 +62,6 @@ chnode_use() {
 
 chnode_match() {
     local dir node given=$1
-    shift
     for dir in "${CHNODE_NODES[@]}"; do
         dir="${dir%%/}"
         node="${dir##*/}"
