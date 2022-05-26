@@ -271,10 +271,11 @@ To use the feature, edit your shell's init script:
 1. Source `chnode.sh` and `auto.sh` (in this order).
 
 2. Optionally set the `CHNODE_AUTO_VERSION_FILENAME` shell variable to
-   name the files used in detecting automatic version switching. The
+   name the file used in detecting automatic version switching. The
    default value of the variable is `.node-version`. If this is ok, you
-   don't need to set the variable explicitly. To use the `.nvmrc` files
-   of [nvm][nvmrc], set `CHNODE_AUTO_VERSION_FILENAME=.nvmrc`.
+   don't need to set the variable explicitly. For example, to use the
+   `.nvmrc` files of [nvm][nvmrc], set
+   `CHNODE_AUTO_VERSION_FILENAME=.nvmrc`.
 
 3. Configure the `chnode_auto` function to be called in
    [PROMPT_COMMAND][Bash Controlling the Prompt] (for Bash) or in the
@@ -286,7 +287,7 @@ For example:
 source chnode.sh
 source auto.sh
 
-# Uncomment to set the filename for the version files for something else
+# Uncomment to set the filename for the version file for something else
 # than `.node-version`.
 #CHNODE_AUTO_VERSION_FILENAME=.nvmrc
 
@@ -329,8 +330,8 @@ Note that you might already have commands to be evaluated in
 We don't recommend to call `chnode_auto` via shell's DEBUG trap, because
 it makes the shell to call the function too often. For example, Bash
 executes the DEBUG trap for each command in a command group. In
-addition, the trap might already be utilized by other shell
-extensions. To demonstrate the problem with command groups:
+addition, the trap might already be utilized by other shell extensions.
+To demonstrate the problem with command groups:
 
 ``` bash
 # WARNING: Don't install chnode_auto like this, because the function gets called too often
@@ -357,21 +358,31 @@ version. The function invokes `chnode $version`, where `$version` is the
 first line from the file. This means that fuzzy matching is
 supported. If no version matches, an error is reported.
 
-Detailed specifications for the `.node-version` file:
-
-1. The version string must be in the first line. The line must end with
-   the newline character (`\n`). The line may have leading and trailing
-   whitespace, which get trimmed out.
-
-2. The lines following the first are ignored.
-
-3. If rule 1 is not satisfied, the file is ignored. No error is
-   reported.
-
 You can set the default node version by adding a `.node-version` file to
 the root of your home directory. The version you specify in the file
 will be used unless any of your Node.js projects, located somewhere
 under your home directory, has their own `.node-version` file.
+
+## Supported `.node-version` file format
+
+Specifications for the `chnode_auto` function parsing the version string
+from the `.node-version` file are:
+
+1. The file must be a regular file or a symbolic link, and the current
+   user must have read access to it.
+
+2. The version string must be in the first line. The line may have
+   leading and trailing whitespace, which get trimmed out. Trailing
+   newline character is not required. Both Unix (`\n`) and Windows
+   (`\r\n`) style line endings are supported.
+
+3. If the version string starts with the `v` character followed by a
+   digit, then the `v` character gets trimmed out.
+
+4. The lines following the first are ignored.
+
+5. If the first line cannot be parsed (no version string is found), then
+   the file is ignored. No error is reported.
 
 ## Display current Node.js in shell prompt
 
