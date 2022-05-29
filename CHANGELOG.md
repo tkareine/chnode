@@ -4,6 +4,15 @@ This project adheres to [Semantic Versioning].
 
 ## [Unreleased]
 
+## [v0.4.1] - 2022-05-29
+
+### Changed
+
+* Change parsing of the `.node-version` file in the `chnode_auto`
+  function to be more forgiving (allow missing trailing newline, allow
+  Windows style line endings, trim the leading `v` character if followed
+  by a digit). Issue #5 by John Gee (@shadowspawn).
+
 ## [v0.4.0] - 2021-05-03
 
 ### Added
@@ -55,7 +64,8 @@ This project adheres to [Semantic Versioning].
 * First release.
 
 [Semantic Versioning]: https://semver.org/spec/v2.0.0.html
-[Unreleased]: https://github.com/tkareine/chnode/compare/v0.4.0...HEAD
+[Unreleased]: https://github.com/tkareine/chnode/compare/v0.4.1...HEAD
+[v0.4.1]: https://github.com/tkareine/chnode/compare/v0.4.0...v0.4.1
 [v0.4.0]: https://github.com/tkareine/chnode/compare/v0.3.1...v0.4.0
 [v0.3.1]: https://github.com/tkareine/chnode/compare/v0.3.0...v0.3.1
 [v0.3.0]: https://github.com/tkareine/chnode/compare/v0.2.0...v0.3.0
