@@ -39,7 +39,7 @@ END
     assertEquals "$expected_output" "$actual_output"
 }
 
-test_reloading_keeps_selected_node() {
+test_reload_keeps_selected_node() {
     chnode node-8
 
     assertEquals 0 $?
@@ -67,7 +67,7 @@ END
     assertEquals "$CHNODE_NODES_DIR/node-8.1.0" "$CHNODE_ROOT"
 }
 
-test_reloading_forgets_selection_for_deleted_node() {
+test_reload_forgets_selection_for_deleted_node() {
     chnode node-8
 
     assertEquals 0 $?
