@@ -142,23 +142,41 @@ source chnode.sh
 CHNODE_NODES+=(/opt/node-10.11.0)
 ```
 
+`chnode` treats a directory with an executable at the `bin/node`
+relative path as a Node.js installation. For example,
+`~/.nodes/node-10.11.0` or `/opt/node-10.11.0` is a Node.js installation
+if the directory has the `bin` subdirectory, under which the `node`
+executable file is located.
+
 ### Installing Node.js versions
 
-You can use [node-build] to install Node.js binaries.
+Use any tool you like to install Node.js binaries.
 
-Installing to `~/.nodes`:
+One good option is [node-build]. Installing to `~/.nodes`:
 
 ``` shell
 node-build 10.11.0 ~/.nodes/node-10.11.0
 ```
 
-Alternatively, download binaries from Node.js [download
+Alternatively, download binaries from the Node.js [download
 page][nodejs-download] and extract them to `~/.nodes`:
 
 ``` shell
 mkdir -p ~/.nodes/node-10.12.0 \
     && tar xzvf ~/Downloads/node-v10.12.0-darwin-x64.tar.gz --strip-components 1 -C ~/.nodes/node-10.12.0
 ```
+
+You can also use Homebrew to install a Node.js version:
+
+``` shell
+brew install node@16
+ln -s /usr/local/opt/node@16 ~/.nodes/node-16
+```
+
+The previous approach relies on Homebrew providing you the symlink at
+`/usr/local/opt/node@16`, which points to the actual installation path.
+Homebrew will update that symlink whenever you upgrade the `node@16`
+formula with Homebrew.
 
 ### Default Node.js version (without auto switching)
 
