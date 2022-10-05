@@ -4,6 +4,9 @@ This project adheres to [Semantic Versioning].
 
 ## [Unreleased]
 
+* Fix not attempting to populate the `CHNODE_NODES` shell array variable
+  when the `CHNODE_NODES_DIR` contains just dotfiles.
+
 ## [v0.4.1] - 2022-05-29
 
 ### Changed
