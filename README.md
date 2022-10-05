@@ -38,13 +38,13 @@ To read more about the design rationale and a comparison to [nvm] and
 * After switching Node.js version, calls `hash -r` to clear the hash
   table for program locations.
 * Best candidate ("fuzzy") matching of Node.js versions at switching.
-* The path to the selected Node.js version is available in `CHNODE_ROOT`
-  environment variable. This makes it easy to display the selected
-  version in shell prompt.
+* The path to the selected Node.js version is available in the
+  `CHNODE_ROOT` environment variable. This makes it easy to display the
+  selected version in your shell prompt.
 * Locates installed Node.js versions in the `~/.nodes` directory, or
   from a custom directory read from `CHNODE_NODES_DIR` shell variable.
-* Add additional Node.js versions by appending to `CHNODE_NODES` array
-  shell variable.
+* Add additional Node.js versions by appending Node.js installation
+  paths to the `CHNODE_NODES` array shell variable.
 * Works with Bash's `set -euo pipefail` shell options ("strict mode").
 * Good test coverage.
 
@@ -96,13 +96,14 @@ Execute the `source` command to load chnode functions:
 source chnode.sh
 ```
 
-You may append the command above into your Bash init script,
-`~/.bashrc`, to load chnode for your interactive shell usage.
+You may append the command above into your shell's init script
+(`~/.bashrc` for Bash, `~/.zshrc` for Zsh) to load chnode for your
+interactive shell usage.
 
 Automatic Node.js version switching requires additional setup, read
 below for more.
 
-### Sourcing .bashrc on macOS
+### Sourcing `.bashrc` on macOS
 
 macOS does not execute `~/.bashrc` automatically when opening a
 terminal. You might want to add the following line to `~/.bash_profile`
@@ -114,7 +115,7 @@ to fix it:
 
 ## Available Node.js versions
 
-When shell loads `chnode` with the `source` command, the script
+When shell loads chnode with the `source` command, the script
 auto-detects Node.js versions installed in the `~/.nodes` directory.
 
 You may override the `~/.nodes` directory by setting the
@@ -126,27 +127,54 @@ CHNODE_NODES_DIR=/opt/nodes
 source chnode.sh
 ```
 
-Sourcing `chnode.sh` populates the `CHNODE_NODES` shell array variable
-with paths to subdirectories in `CHNODE_NODES_DIR`. `CHNODE_NODES`
-contains the Node.js versions you can select with the `chnode
-NODE_VERSION` command.
+The value of the `CHNODE_NODES_DIR` shell variable should point to a
+directory where you have Node.js installations. For example, if
+`CHNODE_NODES_DIR=~/.nodes` (the default):
 
-After installing new Node.js versions or removing them, run `chnode -R`
-to populate `CHNODE_NODES` again.
+``` shell
+ls -l ~/.nodes
+```
+
+Output (truncated):
+
+``` shell
+… node-16 -> /usr/local/opt/node@16
+… node-18.10.0
+```
+
+The first directory entry, `node-16`, is a symbolic link that ultimately
+points to the actual Node.js installation path. The second directory
+entry, `node-18.10.0`, is a regular directory that contains another
+Node.js installation.
+
+Sourcing `chnode.sh` populates the `CHNODE_NODES` shell array variable
+with paths to all the entries under the `CHNODE_NODES_DIR` directory.
+`CHNODE_NODES` contains the Node.js versions you can select with the
+`chnode NODE_VERSION` command.
+
+After installing new Node.js versions or removing them, affecting the
+contents of the `CHNODE_NODES_DIR` directory, run `chnode --reload` to
+populate `CHNODE_NODES` again.
 
 For Node.js versions installed in other locations, add their paths to
-`CHNODE_NODES` after the `source` or `chnode -R` commands. For example:
+`CHNODE_NODES` after the `source chnode.sh` or `chnode --reload`
+commands. For example:
 
 ``` bash
 source chnode.sh
-CHNODE_NODES+=(/opt/node-10.11.0)
+CHNODE_NODES+=(/opt/node-10.11.0 /usr/local/opt/node@16)
 ```
 
-`chnode` treats a directory with an executable at the `bin/node`
-relative path as a Node.js installation. For example,
-`~/.nodes/node-10.11.0` or `/opt/node-10.11.0` is a Node.js installation
-if the directory has the `bin` subdirectory, under which the `node`
-executable file is located.
+When selecting a Node.js version with the `chnode NODE_VERSION` command,
+chnode attempts to match the `NODE_VERSION` user input to a path in the
+`CHNODE_NODES` shell array variable. Matching is done against the
+basename of the path (the last path component). Upon finding a match,
+chnode performs a check that the path is a valid Node.js installation:
+the path must contain an executable at the `bin/node` relative path.
+Continuing the example above, when selecting Node.js v18.10.0 with the
+`chnode 18` command, chnode checks that `~/.nodes/node-18.10.0/bin/node`
+is an executable file. If the check fails, chnode prints an error
+message.
 
 ### Installing Node.js versions
 
@@ -230,7 +258,7 @@ $ echo "$CHNODE_ROOT"
 ```
 
 While in the shell, install another Node.js version and **reload**
-chnode (`chnode -R`):
+chnode (`chnode --reload`):
 
 ```
 $ node-build 8.9.4 ~/.nodes/node-8.9.4
@@ -239,7 +267,7 @@ $ chnode
  * node-10.11.0
    node-8.11.4
 
-$ chnode -R  # or --reload
+$ chnode --reload  # or -R
 
 $ chnode
  * node-10.11.0
@@ -247,11 +275,11 @@ $ chnode
    node-8.9.4
 ```
 
-**Reset** the version (`chnode -r`), clearing the path that was set in
-the `PATH` environment variable:
+**Reset** the version (`chnode --reset`), clearing the path that was set
+in the `PATH` environment variable:
 
 ```
-$ chnode -r  # or --reset
+$ chnode --reset  # or -r
 
 $ chnode
    node-10.11.0
@@ -265,13 +293,13 @@ $ echo "$PATH"
 Show **usage**:
 
 ```
-$ chnode -h  # or --help
+$ chnode --help  # or -h
 ```
 
 Show **version**:
 
 ```
-$ chnode -V  # or --version
+$ chnode --version  # or -V
 ```
 
 ## Automatic version switching
