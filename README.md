@@ -105,6 +105,8 @@ below for more.
 
 ### Sourcing `.bashrc` on macOS
 
+(Applies to the Bash shell only.)
+
 macOS does not execute `~/.bashrc` automatically when opening a
 terminal. You might want to add the following line to `~/.bash_profile`
 to fix it:
@@ -131,33 +133,33 @@ The value of the `CHNODE_NODES_DIR` shell variable should point to a
 directory where you have Node.js installations. For example, if
 `CHNODE_NODES_DIR=~/.nodes` (the default):
 
-``` shell
+``` bash
 ls -l ~/.nodes
 ```
 
 Output (truncated):
 
-``` shell
+```
 … node-16 -> /usr/local/opt/node@16
 … node-18.10.0
 ```
 
 The first directory entry, `node-16`, is a symbolic link that ultimately
 points to the actual Node.js installation path. The second directory
-entry, `node-18.10.0`, is a regular directory that contains another
-Node.js installation.
+entry, `node-18.10.0`, is a regular directory containing another Node.js
+installation.
 
 Sourcing `chnode.sh` populates the `CHNODE_NODES` shell array variable
-with paths to all the entries under the `CHNODE_NODES_DIR` directory.
-`CHNODE_NODES` contains the Node.js versions you can select with the
-`chnode NODE_VERSION` command.
+with paths to all the entries in the `CHNODE_NODES_DIR` directory. These
+paths are the Node.js versions you can select with the `chnode
+NODE_VERSION` command.
 
 After installing new Node.js versions or removing them, affecting the
 contents of the `CHNODE_NODES_DIR` directory, run `chnode --reload` to
 populate `CHNODE_NODES` again.
 
-For Node.js versions installed in other locations, add their paths to
-`CHNODE_NODES` after the `source chnode.sh` or `chnode --reload`
+For Node.js versions installed elsewhere, add their paths to
+`CHNODE_NODES` after running the `source chnode.sh` or `chnode --reload`
 commands. For example:
 
 ``` bash
@@ -169,12 +171,12 @@ When selecting a Node.js version with the `chnode NODE_VERSION` command,
 chnode attempts to match the `NODE_VERSION` user input to a path in the
 `CHNODE_NODES` shell array variable. Matching is done against the
 basename of the path (the last path component). Upon finding a match,
-chnode performs a check that the path is a valid Node.js installation:
-the path must contain an executable at the `bin/node` relative path.
-Continuing the example above, when selecting Node.js v18.10.0 with the
-`chnode 18` command, chnode checks that `~/.nodes/node-18.10.0/bin/node`
-is an executable file. If the check fails, chnode prints an error
-message.
+chnode checks that the path is a valid Node.js installation: the path
+must contain an executable at the `bin/node` relative path. Continuing
+the example above, when selecting Node.js v18.10.0 with the `chnode 18`
+command, chnode checks that `~/.nodes/node-18.10.0/bin/node` is an
+executable file. If the check fails, chnode prints an error message and
+returns 1 as the exit code.
 
 ### Installing Node.js versions
 
@@ -194,16 +196,16 @@ mkdir -p ~/.nodes/node-10.12.0 \
     && tar xzvf ~/Downloads/node-v10.12.0-darwin-x64.tar.gz --strip-components 1 -C ~/.nodes/node-10.12.0
 ```
 
-You can also use Homebrew to install a Node.js version:
+You can also use [Homebrew] to install a Node.js version:
 
 ``` shell
 brew install node@16
 ln -s /usr/local/opt/node@16 ~/.nodes/node-16
 ```
 
-The previous approach relies on Homebrew providing you the symlink at
-`/usr/local/opt/node@16`, which points to the actual installation path.
-Homebrew will update that symlink whenever you upgrade the `node@16`
+The previous approach relies on Homebrew providing you the symbolic link
+at `/usr/local/opt/node@16`, which points to the actual installation
+path. Homebrew will update that link whenever you upgrade the `node@16`
 formula with Homebrew.
 
 ### Default Node.js version (without auto switching)
@@ -368,7 +370,7 @@ Note that you might already have commands to be evaluated in
 3. Use [Bash-Preexec] or a similar tool to simulate `precmd_functions`
    of Zsh in Bash. For example, with Bash-Preexec:
 
-   ``` shell
+   ``` bash
    source bash-preexec.sh
    precmd_functions+=(chnode_auto)
    ```
