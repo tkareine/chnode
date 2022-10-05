@@ -44,6 +44,44 @@ test_empty_nodes_var_when_nonexisting_nodes_dir() {
     assertEquals "0,0" "$num_nodes"
 }
 
+test_empty_nodes_var_when_nonempty_nodes_dir_with_just_dotfiles() {
+    # shellcheck disable=SC2031
+    touch "$CHNODE_NODES_DIR"/.node-empty
+    local num_nodes
+    num_nodes=$(
+        source chnode.sh
+        echo "$?,${#CHNODE_NODES[@]}"
+    )
+    assertEquals "0,0" "$num_nodes"
+}
+
+test_no_dotfiles_in_nodes_var() {
+    # shellcheck disable=SC2031
+    touch "$CHNODE_NODES_DIR"/.node-empty
+    # shellcheck disable=SC2031
+    fixture_make_nodes "$CHNODE_NODES_DIR" .node-dotfile
+    # shellcheck disable=SC2031
+    fixture_make_nodes "$CHNODE_NODES_DIR" node-regular
+
+    local expected_output
+    expected_output=$(cat <<END
+0,1
+   node-regular
+END
+)
+
+    local actual_output
+    actual_output=$(
+        source chnode.sh
+        echo "$?,${#CHNODE_NODES[@]}"
+        # shellcheck disable=SC2119
+        chnode
+    )
+
+    assertEquals 0 $?
+    assertEquals "$expected_output" "$actual_output"
+}
+
 test_use_ls_external_utility_to_check_nodes_dir() {
     local ls_fun_out=$__test_out_dir/.ls_fun
     local num_nodes
