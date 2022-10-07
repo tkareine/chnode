@@ -103,6 +103,19 @@ interactive shell usage.
 Automatic Node.js version switching requires additional setup, read
 below for more.
 
+### Configure the prefix path for `npm`
+
+Consider configuring the [prefix path][npm-config-folders-prefix] for
+`npm` in the per-user [npmrc][npm-npmrc] file. It defines the
+installation location for global npm packages, ensuring sharing the
+package installations for the Node.js versions you've installed.
+
+An example `~/.npmrc`:
+
+```
+prefix=/usr/local
+```
+
 ### Sourcing `.bashrc` on macOS
 
 (Applies to the Bash shell only.)
@@ -467,6 +480,8 @@ Copyright 2008-2018 Kate Ward. Released under the Apache 2.0 license.
 [node-build]: https://github.com/nodenv/node-build
 [nodejs-download]: https://nodejs.org/en/download/current/
 [nodenv]: https://github.com/nodenv/nodenv
+[npm-config-folders-prefix]: https://docs.npmjs.com/cli/v8/configuring-npm/folders#prefix-configuration
+[npm-npmrc]: https://docs.npmjs.com/cli/v8/configuring-npm/npmrc
 [nvm]: https://github.com/nvm-sh/nvm
 [nvmrc]: https://github.com/nvm-sh/nvm#nvmrc
 [set-prompt.sh]: https://raw.githubusercontent.com/tkareine/chnode/master/contrib/set-prompt.sh
