@@ -6,8 +6,13 @@ This project adheres to [Semantic Versioning].
 
 ## [v0.4.2] - 2022-10-07
 
+### Changed
+
 * Fix not attempting to populate the `CHNODE_NODES` shell array variable
   when the `CHNODE_NODES_DIR` contains just dotfiles.
+
+### Added
+
 * Readme: more details about how to install Node.js versions
 * Readme: instruct configuring the prefix path for `npm`
 
