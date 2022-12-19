@@ -64,7 +64,7 @@ This project adheres to [Semantic Versioning].
 
 ### Changed
 
-* Breaking change: rename `chnode reset` to `chnode -r`. Rationale:
+* **Breaking:** rename `chnode reset` to `chnode -r`. Rationale:
   disallow word commands in order to avoid clashes with Node.js
   versions, selectable with `chnode NODE_VERSION`.
 * Code refactor.
