@@ -5,7 +5,7 @@ source test/support/setup-default-chnode.sh
 source auto.sh
 
 setUp() {
-    chnode -r
+    chnode --reset
     fixture_make_auto_dir
 }
 

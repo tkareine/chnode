@@ -18,7 +18,7 @@ test_reload_changed_nodes() {
     fixture_make_nodes "$CHNODE_NODES_DIR" node-6.0.0
     rm -rf "$CHNODE_NODES_DIR/node-10.11.0"
 
-    chnode -R
+    chnode --reload
 
     assertEquals 0 $?
 
@@ -46,7 +46,7 @@ test_reload_keeps_selected_node() {
 
     rm -rf "$CHNODE_NODES_DIR/node-10.11.0"
 
-    chnode -R
+    chnode --reload
 
     assertEquals 0 $?
 
@@ -74,7 +74,7 @@ test_reload_forgets_selection_for_deleted_node() {
 
     rm -rf "$CHNODE_NODES_DIR/node-8.1.0"
 
-    chnode -R
+    chnode --reload
 
     assertEquals 0 $?
 
@@ -103,7 +103,7 @@ test_error_when_reloading_node_and_selected_node_is_not_executable() {
     chmod a-x "$CHNODE_NODES_DIR/node-8.1.0/bin/node"
 
     local message
-    message=$(chnode -R 2>&1)
+    message=$(chnode --reload 2>&1)
 
     assertEquals 1 $?
     assertEquals "chnode: $CHNODE_NODES_DIR/node-8.1.0/bin/node not executable" "$message"

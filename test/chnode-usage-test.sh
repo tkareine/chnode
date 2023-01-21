@@ -5,7 +5,7 @@ source test/support/setup-default-chnode.sh
 
 setUp() {
     CHNODE_NODES=("${__ORG_CHNODE_NODES[@]}")
-    chnode -r
+    chnode --reset
 }
 
 test_chnode_use_and_reset() {
@@ -33,7 +33,7 @@ END
     assertEquals "$expected_output" "$actual_output"
     assertEquals "$CHNODE_NODES_DIR/node-8.1.0" "$CHNODE_ROOT"
 
-    chnode -r
+    chnode --reset
 
     assertEquals 0 $?
 
@@ -102,7 +102,7 @@ test_reset_clears_hash() {
 
     __populate_hash
 
-    chnode -r
+    chnode --reset
 
     assertEquals 0 $?
 

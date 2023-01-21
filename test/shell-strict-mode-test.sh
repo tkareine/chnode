@@ -34,7 +34,7 @@ test_reset_in_shell_strict_mode() {
     __with_shell >/dev/null <<END
 set -euo pipefail
 source chnode.sh
-chnode -r
+chnode --reset
 END
     assertEquals 0 $?
 }
@@ -44,7 +44,7 @@ test_reload_in_shell_strict_mode() {
 set -euo pipefail
 source chnode.sh
 chnode node-8
-chnode -R
+chnode --reload
 END
     assertEquals 0 $?
 }
