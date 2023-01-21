@@ -305,6 +305,9 @@ $ echo "$PATH"
 /usr/local/bin:/usr/bin:…
 ```
 
+Use `--reset` to use your system's Node.js installation (usually
+`/usr/local/bin/node` or `/usr/bin/node`).
+
 Show **usage**:
 
 ```
