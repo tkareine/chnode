@@ -36,7 +36,7 @@ test_empty_nodes_var_when_null_nodes_dir() {
 test_empty_nodes_var_when_nonexisting_nodes_dir() {
     local num_nodes
     num_nodes=$(
-        # shellcheck disable=SC2030 disable=SC2034
+        # shellcheck disable=SC2030
         CHNODE_NODES_DIR=/tmp/chnode-nosuch-dir
         source chnode.sh
         echo "$?,${#CHNODE_NODES[@]}"

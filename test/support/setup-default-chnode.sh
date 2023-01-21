@@ -8,7 +8,6 @@ fixture_make_default_nodes "$CHNODE_NODES_DIR"
 
 source chnode.sh
 
-# shellcheck disable=SC2034
 __ORG_CHNODE_NODES=("${CHNODE_NODES[@]}")
 
 oneTimeTearDown() {
