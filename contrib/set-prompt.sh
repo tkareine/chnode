@@ -12,7 +12,10 @@ set_prompt() {
     fi
 
     local node_version=''
-    [[ -n $CHNODE_ROOT ]] && node_version="($(echo "${CHNODE_ROOT##*/}" | tr - :))"
+    if [[ -n $CHNODE_ROOT ]]; then
+        node_version=${CHNODE_ROOT##*/}
+        node_version=${node_version/-/:}
+    fi
 
     PS1="${user_and_host}${cwd}${node_version}\\n${end}"
 }
