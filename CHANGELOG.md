@@ -4,6 +4,11 @@ This project adheres to [Semantic Versioning].
 
 ## [Unreleased]
 
+### Changed
+
+* Make displaying the selected Node.js version in shell prompt faster in
+  `contrib/set-prompt.sh`
+
 ## [v0.4.2] - 2022-10-07
 
 ### Changed
