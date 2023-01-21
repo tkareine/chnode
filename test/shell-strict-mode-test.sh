@@ -49,6 +49,24 @@ END
     assertEquals 0 $?
 }
 
+test_version_in_shell_strict_mode() {
+    __with_shell >/dev/null <<END
+set -euo pipefail
+source chnode.sh
+chnode --version
+END
+    assertEquals 0 $?
+}
+
+test_help_in_shell_strict_mode() {
+    __with_shell >/dev/null <<END
+set -euo pipefail
+source chnode.sh
+chnode --help
+END
+    assertEquals 0 $?
+}
+
 test_auto_in_shell_strict_mode() {
     __with_shell >/dev/null <<END
 set -euo pipefail

@@ -37,4 +37,20 @@ END
     assertEquals "$expected_output" "$actual_output"
 }
 
+test_chnode_show_version() {
+    local actual_output
+    actual_output=$(chnode --version)
+
+    assertEquals 0 $?
+    assertEquals "chnode: $CHNODE_VERSION" "$actual_output"
+}
+
+test_chnode_show_help() {
+    local actual_output
+    actual_output=$(chnode --help)
+
+    assertEquals 0 $?
+    assertEquals "Usage: chnode [-h|-r|-R|-V|NODE_VERSION]" "$actual_output"
+}
+
 SHUNIT_PARENT=$0 source "$SHUNIT2"
