@@ -1,6 +1,7 @@
 name: CI
 
-on: [push]
+on:
+  - push
 
 jobs:
   test:
@@ -8,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout git repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 1
       - name: Run linter
