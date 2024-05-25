@@ -466,7 +466,7 @@ $
 MIT. See [LICENSE.txt].
 
 [shUnit2], located as a git submodule in the `test/shunit2` directory:
-Copyright 2008-2018 Kate Ward. Released under the Apache 2.0 license.
+Copyright 2008-2021 Kate Ward. Released under the Apache 2.0 license.
 
 [Bash Controlling the Prompt]: https://www.gnu.org/software/bash/manual/html_node/Controlling-the-Prompt.html
 [Bash-Preexec]: https://github.com/rcaloras/bash-preexec
