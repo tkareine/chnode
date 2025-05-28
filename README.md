@@ -116,6 +116,38 @@ An example `~/.npmrc`:
 prefix=/usr/local
 ```
 
+### Rename `npm` shipped with Node.js after updating `npm` globally
+
+When you install `npm` as a global npm package, the `npm` command
+shipped with Node.js takes precedence over the globally installed npm
+package if the `PATH` environment variable includes the path to the
+former before the path to the latter.
+
+Currently, `chnode` always adds the installation directory of the
+selected Node.js version (`chnode NODE_VERSION`) to the beginning of
+`PATH`. Behavior could be improved by having `chnode` to preserve the
+location of the path to the currently selected Node.js in `PATH` when
+the user changes selection; this isn't implemented at present.
+Regardless of the improvement, the user would still need to add the npm
+prefix path (see the previous section) to `PATH` after using `chnode
+NODE_VERSION` the first time.
+
+To guarantee that the `npm` and `npx` commands of the npm package
+shipped with Node.js won't interfere with the commands from the globally
+installed npm package, you can rename the symlinks of the commands
+shipped with Node.js. For example:
+
+``` shell
+# Update npm by installing it as a global npm package
+npm install -g npm@latest
+
+# Rename command symlinks of the npm package shipped with the selected
+# Node.js version
+cd "$CHNODE_ROOT/bin"
+mv npm{,.shipped}
+mv npx{,.shipped}
+```
+
 ### Sourcing `.bashrc` on macOS
 
 (Applies to the Bash shell only.)
