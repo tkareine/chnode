@@ -3,6 +3,25 @@
 CHNODE_VERSION=0.4.2
 : "${CHNODE_NODES_DIR=$HOME/.nodes}"
 
+chnode_replace_path() {
+    local last_root=$1 new_root=${2:-}
+
+    local new_path=:$PATH:
+    local replacement_new_root
+
+    if [[ -n $new_root ]]; then
+        replacement_new_root=:$new_root/bin:
+    else
+        replacement_new_root=:
+    fi
+
+    new_path=${new_path//:$last_root\/bin:/"$replacement_new_root"}
+    new_path=${new_path#:}
+    new_path=${new_path%:}
+
+    PATH=$new_path
+}
+
 chnode_reload() {
     local last_root=${CHNODE_ROOT:-}
 
@@ -35,11 +54,7 @@ chnode_reset() {
 
     [[ -z $last_root ]] && return
 
-    local new_path=:$PATH:
-    new_path=${new_path//:$last_root\/bin:/:}
-    new_path=${new_path#:}
-    new_path=${new_path%:}
-    PATH=$new_path
+    chnode_replace_path "$last_root"
 
     hash -r
 }
@@ -52,10 +67,14 @@ chnode_use() {
         return 1
     fi
 
-    [[ -n ${CHNODE_ROOT:-} ]] && chnode_reset
+    if [[ -n ${CHNODE_ROOT:-} ]]; then
+        chnode_replace_path "$CHNODE_ROOT" "$new_root"
+    else
+        PATH=$new_root/bin:$PATH
+    fi
 
     export CHNODE_ROOT=$new_root
-    export PATH=$CHNODE_ROOT/bin${PATH:+:$PATH}
+    export PATH
 
     hash -r
 }

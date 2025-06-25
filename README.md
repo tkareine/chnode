@@ -123,14 +123,13 @@ shipped with Node.js takes precedence over the globally installed npm
 package if the `PATH` environment variable includes the path to the
 former before the path to the latter.
 
-Currently, `chnode` always adds the installation directory of the
-selected Node.js version (`chnode NODE_VERSION`) to the beginning of
-`PATH`. Behavior could be improved by having `chnode` to preserve the
-location of the path to the currently selected Node.js in `PATH` when
-the user changes selection; this isn't implemented at present.
-Regardless of the improvement, the user would still need to add the npm
-prefix path (see the previous section) to `PATH` after using `chnode
-NODE_VERSION` the first time.
+After selecting a Node.js version with `chnode NODE_VERSION` (see the
+Usage section below), `chnode` adds the installation directory of the
+selected Node.js version to the beginning of `PATH`. Later invocations
+of `chnode NODE_VERSION` will change the installation directory of the
+selected Node.js version in `PATH` in place. Nevertheless, the user
+would still need to append the npm prefix path (see the previous
+section) to `PATH` after using `chnode NODE_VERSION` the first time.
 
 To guarantee that the `npm` and `npx` commands of the npm package
 shipped with Node.js won't interfere with the commands from the globally
@@ -144,8 +143,8 @@ npm install -g npm@latest
 # Rename command symlinks of the npm package shipped with the selected
 # Node.js version
 cd "$CHNODE_ROOT/bin"
-mv npm{,.shipped}
-mv npx{,.shipped}
+mv npm{,@shipped}
+mv npx{,@shipped}
 ```
 
 ### Sourcing `.bashrc` on macOS

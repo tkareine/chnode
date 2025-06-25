@@ -12,7 +12,7 @@ test_chnode_use_and_reset() {
     chnode node-8
 
     assertEquals 0 $?
-    assertEquals "$CHNODE_NODES_DIR/node-8.1.0/bin" "$(__get_first_path_component)"
+    assertEquals "$CHNODE_NODES_DIR/node-8.1.0/bin" "$(__get_nth_path_component 0)"
     assertEquals "$CHNODE_NODES_DIR/node-8.1.0" "$CHNODE_ROOT"
     assertEquals "use: node-8.1.0" "$(node)"
 
@@ -97,6 +97,37 @@ test_use_exports_chnode_root_and_path_vars() {
     [[ $(printenv PATH) == "$CHNODE_ROOT"/bin* ]] || fail "\$PATH should start with \$CHNODE_ROOT/bin, \$PATH=$PATH"
 }
 
+test_chnode_use_preserves_path_order_when_changing_nodes() {
+    local actual_paths
+
+    # shellcheck disable=SC2030
+    actual_paths=$(
+        PATH=/suffix:$PATH
+
+        chnode node-8
+        echo "0,$?,$CHNODE_ROOT,$(__get_nth_path_component 0),$(__get_nth_path_component 1)"
+
+        PATH=/prefix:$PATH
+
+        chnode node-10
+        echo "1,$?,$CHNODE_ROOT,$(__get_nth_path_component 0),$(__get_nth_path_component 1),$(__get_nth_path_component 2)"
+
+        chnode --reset
+        echo "2,$?,$CHNODE_ROOT,$(__get_nth_path_component 0),$(__get_nth_path_component 1)"
+    )
+
+    local expected_paths
+    expected_paths=$(
+        cat <<END
+0,0,$CHNODE_NODES_DIR/node-8.1.0,$CHNODE_NODES_DIR/node-8.1.0/bin,/suffix
+1,0,$CHNODE_NODES_DIR/node-10.11.0,/prefix,$CHNODE_NODES_DIR/node-10.11.0/bin,/suffix
+2,0,,/prefix,/suffix
+END
+    )
+
+    assertEquals "$expected_paths" "$actual_paths"
+}
+
 test_reset_clears_hash() {
     chnode node-8
 
@@ -135,10 +166,10 @@ test_use_clears_hash() {
     assertEquals "$expected_output" "$(hash)"
 }
 
-__get_first_path_component() {
-    local path_comp
-    read -r -d : path_comp <<<"$PATH"
-    echo "$path_comp"
+__get_nth_path_component() {
+    local n=${1:-0}
+    # shellcheck disable=SC2031
+    awk -F: "{ print \$($n+1) }" <<<"$PATH"
 }
 
 __populate_hash() {

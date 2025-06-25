@@ -21,10 +21,13 @@ END
 }
 
 test_use_in_shell_strict_mode() {
+    # First use node-8, followed by using node-10; this checks
+    # first-time use and then changing selected node
     __with_shell >/dev/null <<END
 set -euo pipefail
 source chnode.sh
 chnode node-8
+chnode node-10
 chnode
 END
     assertEquals 0 $?
