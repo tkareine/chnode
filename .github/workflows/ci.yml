@@ -12,7 +12,9 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 1
-      - name: Run linter
-        run: make lint-docker
+      - name: Run shfmt
+        run: make shfmt-docker
+      - name: Run ShellCheck
+        run: make shellcheck-docker
       - name: Run tests
         run: make test-docker

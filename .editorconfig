@@ -1,0 +1,10 @@
+[*.sh]
+indent_style = space
+indent_size = 4
+trim_trailing_whitespace = true
+
+# shfmt specific, see `man shfmt`
+shell_variant = bash
+binary_next_line = true
+switch_case_indent = true
+function_next_line = false

@@ -20,7 +20,8 @@ test_use_node_added_to_nodes_var() {
     assertEquals 0 $?
 
     local expected_output
-    expected_output=$(cat <<END
+    expected_output=$(
+        cat <<END
    iojs-3.3.1
    node-10.11.0
    node-8.1.0
@@ -28,7 +29,7 @@ test_use_node_added_to_nodes_var() {
    node-9.11.2-rc1
  * node-6.0.0
 END
-)
+    )
 
     local actual_output
     actual_output=$(chnode)

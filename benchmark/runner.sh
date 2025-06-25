@@ -18,7 +18,7 @@ fixture_make_default_nodes "$CHNODE_NODES_DIR"
 : "${N:=1000}"
 
 for bm_file in "$@"; do
-    for (( r=1; r <= RUNS; r+=1 )); do
+    for ((r = 1; r <= RUNS; r += 1)); do
         echo
         env -i \
             TIMEFORMAT=$'real: %3R sec(s)\nuser: %3U sec(s)\nsys:  %3S sec(s)' \

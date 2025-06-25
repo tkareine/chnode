@@ -64,11 +64,12 @@ test_no_dotfiles_in_nodes_var() {
     fixture_make_nodes "$CHNODE_NODES_DIR" node-regular
 
     local expected_output
-    expected_output=$(cat <<END
+    expected_output=$(
+        cat <<END
 0,1
    node-regular
 END
-)
+    )
 
     local actual_output
     actual_output=$(

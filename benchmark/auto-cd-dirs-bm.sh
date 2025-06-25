@@ -11,7 +11,7 @@ mkdir -p "$__FIXTURE_AUTO_DIR"/project
 echo "$NODE_VERSION" >"$__FIXTURE_AUTO_DIR"/project/.node-version
 
 time (
-    for (( i=0; i < N; i+=1 )); do
+    for ((i = 0; i < N; i += 1)); do
         # shellcheck disable=SC2164
         cd "$__FIXTURE_AUTO_DIR"/project
         chnode_auto

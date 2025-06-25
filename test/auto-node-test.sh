@@ -44,14 +44,15 @@ test_auto_cd_dirs() {
     )
 
     local expected_roots
-    expected_roots=$(cat <<END
+    expected_roots=$(
+        cat <<END
 0,$__FIXTURE_AUTO_DIR,0,
 1,$__FIXTURE_AUTO_DIR/sub1,0,$CHNODE_NODES_DIR/node-8.1.0
 2,$__FIXTURE_AUTO_DIR/sub1/sub2,0,$CHNODE_NODES_DIR/node-8.1.0
 3,$__FIXTURE_AUTO_DIR/sub3,0,$CHNODE_NODES_DIR/node-10.11.0
 4,$__FIXTURE_AUTO_DIR,0,
 END
-)
+    )
 
     assertEquals "$expected_roots" "$actual_roots"
 }
@@ -82,14 +83,15 @@ test_auto_when_modifying_node_version_file() {
     )
 
     local expected_roots
-    expected_roots=$(cat <<END
+    expected_roots=$(
+        cat <<END
 0,0,
 1,0,$CHNODE_NODES_DIR/node-8.1.0
 2,1,$CHNODE_NODES_DIR/node-8.1.0
 3,0,
 4,0,
 END
-)
+    )
 
     assertEquals "$expected_roots" "$actual_roots"
 }
@@ -114,7 +116,7 @@ test_auto_support_fuzzy_matching_in_version_file() {
     actual+=$'\n'
 
     local idx expected=''
-    for (( idx=0; idx <= 2; idx+=1 )); do
+    for ((idx = 0; idx <= 2; idx += 1)); do
         expected+="$idx,0,$CHNODE_NODES_DIR/node-8.1.0"$'\n'
     done
 
@@ -169,7 +171,7 @@ test_auto_parse_first_line_of_version_file() {
     actual+=$'\n'
 
     local idx expected=''
-    for (( idx=0; idx <= 9; idx+=1 )); do
+    for ((idx = 0; idx <= 9; idx += 1)); do
         expected+="$idx,0,$CHNODE_NODES_DIR/node-8.1.0"$'\n'
     done
 
@@ -199,7 +201,8 @@ test_auto_trim_leading_v_only_if_followed_by_digit_when_parsing_version_file() {
     )
 
     local expected
-    expected=$(cat <<END
+    expected=$(
+        cat <<END
 chnode: unknown Node.js: vnode-8
 0,1,
 
@@ -210,7 +213,7 @@ chnode: unknown Node.js: v
 
 3,0,$CHNODE_NODES_DIR/node-8.1.0
 END
-)
+    )
 
     assertEquals "$expected" "$actual"
 }
@@ -247,7 +250,7 @@ test_auto_ignore_version_file_when_first_line_is_empty() {
     actual+=$'\n'
 
     local idx expected=''
-    for (( idx=0; idx <= 5; idx+=1 )); do
+    for ((idx = 0; idx <= 5; idx += 1)); do
         expected+="$idx,0,"$'\n'
     done
 
@@ -309,12 +312,13 @@ test_auto_reset_when_chnode_is_called_before_chnode_auto() {
     )
 
     local expected
-    expected=$(cat <<END
+    expected=$(
+        cat <<END
 0,0,$CHNODE_NODES_DIR/node-10.11.0
 1,0,$CHNODE_NODES_DIR/node-8.1.0
 2,0,
 END
-)
+    )
 
     assertEquals "$expected" "$actual"
 }
@@ -333,13 +337,14 @@ test_auto_print_error_once_when_unknown_node_version() {
     )
 
     local expected
-    expected=$(cat <<END
+    expected=$(
+        cat <<END
 chnode: unknown Node.js: nosuch
 0,1,
 
 1,0,
 END
-)
+    )
 
     assertEquals "$expected" "$actual"
 }

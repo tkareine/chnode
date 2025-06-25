@@ -1,5 +1,8 @@
 export SHELL
 
+SHFMT_OPTS := --diff
+SHFMT_DOCKER_IMAGE := mvdan/shfmt:v3-alpine
+
 SHELLCHECK_OPTS := -s bash -e SC1090
 SHELLCHECK_DOCKER_IMAGE := koalaman/shellcheck:stable
 
@@ -22,14 +25,30 @@ help: SHELL := bash
 help:
 	@echo -e "$(subst $(newline),\n,$(usage_text))"
 
-.PHONY: lint
-lint: SHELL := bash
-lint:
-	shellcheck $$(< .shellcheck-files)
+.PHONY: shfmt
+shfmt: SHELL := bash
+shfmt:
+	shfmt $(SHFMT_OPTS) $$(< .sh-files)
 
-.PHONY: lint-docker
-lint-docker: SHELL := bash
-lint-docker:
+.PHONY: shfmt-docker
+shfmt-docker: SHELL := bash
+shfmt-docker:
+	docker run \
+	    --rm \
+	    -t \
+	    -v "$(CURDIR):/chnode:ro" \
+	    -w /chnode \
+	    $(SHFMT_DOCKER_IMAGE) $(SHFMT_OPTS) \
+	    $$(< .sh-files)
+
+.PHONY: shellcheck
+shellcheck: SHELL := bash
+shellcheck:
+	shellcheck $$(< .sh-files)
+
+.PHONY: shellcheck-docker
+shellcheck-docker: SHELL := bash
+shellcheck-docker:
 	docker run \
 	    --rm \
 	    -t \
@@ -37,7 +56,7 @@ lint-docker:
 	    -w /chnode \
 	    -e SHELLCHECK_OPTS="$(SHELLCHECK_OPTS)" \
 	    $(SHELLCHECK_DOCKER_IMAGE) \
-	    $$(< .shellcheck-files)
+	    $$(< .sh-files)
 
 test/shunit2/shunit2:
 	$(git-submodule-reset)
@@ -105,8 +124,11 @@ Targets:
 
   help              Show this guide
 
-  lint              Run ShellCheck on source files
-  lint-docker       Run ShellCheck on source files in a Docker container
+  shfmt             Run shfmt on source files
+  shfmt-docker      Run shfmt on source files in a Docker container
+
+  shellcheck        Run ShellCheck on source files
+  shellcheck-docker Run ShellCheck on source files in a Docker container
 
   test              Run tests with SHELL you choose (usage: \`make test SHELL=bash\`) (select: TEST_FILES=test/*-test.sh)
   test-docker       Run tests with various Bash and Zsh versions in Docker containers

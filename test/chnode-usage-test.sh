@@ -17,14 +17,15 @@ test_chnode_use_and_reset() {
     assertEquals "use: node-8.1.0" "$(node)"
 
     local expected_output
-    expected_output=$(cat <<END
+    expected_output=$(
+        cat <<END
    iojs-3.3.1
    node-10.11.0
  * node-8.1.0
    node-9.11.2
    node-9.11.2-rc1
 END
-)
+    )
 
     local actual_output
     actual_output=$(chnode)
@@ -39,14 +40,15 @@ END
 
     [[ "$PATH" != *node-8* ]] || fail "\$PATH shouldn't contain node-8"
 
-    expected_output=$(cat <<END
+    expected_output=$(
+        cat <<END
    iojs-3.3.1
    node-10.11.0
    node-8.1.0
    node-9.11.2
    node-9.11.2-rc1
 END
-)
+    )
 
     actual_output=$(chnode)
 

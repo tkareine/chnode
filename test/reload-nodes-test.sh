@@ -23,14 +23,15 @@ test_reload_changed_nodes() {
     assertEquals 0 $?
 
     local expected_output
-    expected_output=$(cat <<END
+    expected_output=$(
+        cat <<END
    iojs-3.3.1
    node-6.0.0
    node-8.1.0
    node-9.11.2
    node-9.11.2-rc1
 END
-)
+    )
 
     local actual_output
     actual_output=$(chnode)
@@ -51,13 +52,14 @@ test_reload_keeps_selected_node() {
     assertEquals 0 $?
 
     local expected_output
-    expected_output=$(cat <<END
+    expected_output=$(
+        cat <<END
    iojs-3.3.1
  * node-8.1.0
    node-9.11.2
    node-9.11.2-rc1
 END
-)
+    )
 
     local actual_output
     actual_output=$(chnode)
@@ -79,13 +81,14 @@ test_reload_forgets_selection_for_deleted_node() {
     assertEquals 0 $?
 
     local expected_output
-    expected_output=$(cat <<END
+    expected_output=$(
+        cat <<END
    iojs-3.3.1
    node-10.11.0
    node-9.11.2
    node-9.11.2-rc1
 END
-)
+    )
 
     local actual_output
     actual_output=$(chnode)

@@ -32,10 +32,11 @@ test_preserve_custom_node_version_filename_when_source_auto() {
 
     local expected
     # shellcheck disable=SC2031
-    expected=$(cat <<END
+    expected=$(
+        cat <<END
 0,$CHNODE_NODES_DIR/node-8.1.0
 END
-)
+    )
 
     assertEquals "$expected" "$actual"
 }

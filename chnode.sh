@@ -92,16 +92,16 @@ chnode_list() {
 
 chnode() {
     case ${1:-} in
-        -h|--help)
+        -h | --help)
             echo "Usage: chnode [-h|-r|-R|-V|NODE_VERSION]"
             ;;
-        -r|--reset)
+        -r | --reset)
             chnode_reset
             ;;
-        -R|--reload)
+        -R | --reload)
             chnode_reload
             ;;
-        -V|--version)
+        -V | --version)
             echo "chnode: $CHNODE_VERSION"
             ;;
         "")
