@@ -79,7 +79,7 @@ test_error_when_selecting_unknown_node() {
     assertEquals "chnode: unknown Node.js: nosuch" "$message"
 }
 
-test_error_when_selecting_node_without_executable() {
+test_error_when_selecting_node_having_no_executable() {
     CHNODE_NODES+=("$CHNODE_NODES_DIR/nosuchdir")
 
     local message
