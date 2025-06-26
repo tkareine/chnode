@@ -2,10 +2,11 @@
 
 1. Check that [CI] is green.
 
-2. Double check that code linter and tests pass:
+2. Double check that code format check, linter, and tests pass:
 
     ``` shell
-    make lint-docker
+    make shfmt-docker
+    make shellcheck-docker
     make test SHELL=bash  # if on macOS
     make test SHELL=zsh   # if on macOS
     make test-docker
