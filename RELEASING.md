@@ -35,5 +35,5 @@
 
 6. Update [Homebrew tap][Homebrew-tap-chnode].
 
-[CI]: https://github.com/tkareine/chnode/actions?workflow=CI
+[CI]: https://github.com/tkareine/chnode/actions/workflows/ci.yml
 [Homebrew-tap-chnode]: https://github.com/tkareine/homebrew-chnode

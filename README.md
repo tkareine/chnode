@@ -1,6 +1,6 @@
 # chnode
 
-[![CI](https://github.com/tkareine/chnode/workflows/CI/badge.svg)][chnode-CI]
+[![CI](https://github.com/tkareine/chnode/actions/workflows/ci.yml/badge.svg)][chnode-CI]
 
 Changes shell's current Node.js version by updating `$PATH`.
 
@@ -509,7 +509,7 @@ Copyright 2008-2021 Kate Ward. Released under the Apache 2.0 license.
 [Zsh Hook Functions]: http://zsh.sourceforge.net/Doc/Release/Functions.html#Hook-Functions
 [Zsh]: https://www.zsh.org/
 [auto.sh]: https://raw.githubusercontent.com/tkareine/chnode/master/auto.sh
-[chnode-CI]: https://github.com/tkareine/chnode/actions?workflow=CI
+[chnode-CI]: https://github.com/tkareine/chnode/actions/workflows/ci.yml
 [chnode.sh]: https://raw.githubusercontent.com/tkareine/chnode/master/chnode.sh
 [chruby]: https://github.com/postmodern/chruby
 [node-build]: https://github.com/nodenv/node-build
