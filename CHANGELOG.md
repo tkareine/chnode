@@ -4,10 +4,19 @@ This project adheres to [Semantic Versioning].
 
 ## [Unreleased]
 
+## [v0.4.3] - 2025-06-26
+
 ### Changed
 
 * Make displaying the selected Node.js version in shell prompt faster in
   `contrib/set-prompt.sh`
+
+### Fixed
+
+* After the first use, `chnode NODE_VERSION` changes the installation
+  directory of the selected Node.js version in `$PATH` in place. This
+  prevents `chnode` from adding the installation directory to the
+  beginning of `PATH` when changing Node.js versions.
 
 ## [v0.4.2] - 2022-10-07
 
@@ -81,7 +90,8 @@ This project adheres to [Semantic Versioning].
 * First release.
 
 [Semantic Versioning]: https://semver.org/spec/v2.0.0.html
-[Unreleased]: https://github.com/tkareine/chnode/compare/v0.4.2...HEAD
+[Unreleased]: https://github.com/tkareine/chnode/compare/v0.4.3...HEAD
+[v0.4.3]: https://github.com/tkareine/chnode/compare/v0.4.2...v0.4.3
 [v0.4.2]: https://github.com/tkareine/chnode/compare/v0.4.1...v0.4.2
 [v0.4.1]: https://github.com/tkareine/chnode/compare/v0.4.0...v0.4.1
 [v0.4.0]: https://github.com/tkareine/chnode/compare/v0.3.1...v0.4.0
