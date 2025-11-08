@@ -255,12 +255,13 @@ page][nodejs-download], verify their checksum (see [Node.js specific
 instructions][nodejs-verifying-binaries]), and extract them to
 `~/.nodes`.
 
-Note that macOS performs Malware check on manually downloaded files by
-default. You can bypass the check by removing Apple's extended file
-attribute for the binary installation package. Before you do this, you
-should verify the checksum of the package. If the checksum matches, then
-proceed to extract the package. Example of removing the quarantine
-extended attribute from the package and extracting it:
+Note that macOS performs malware check on manually downloaded files by
+default. You can bypass the check by removing Apple's quarantine
+extended file attribute for the binary installation package. Before you
+do this, you should verify the checksum of the package. If the checksum
+matches, then proceed to remove the extended file attribute and extract
+the package. An example of removing the attribute from the package and
+extracting the package:
 
 ``` shell
 xattr -d com.apple.quarantine ~/Downloads/node-v25.1.0-darwin-arm64.tar.gz
