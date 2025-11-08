@@ -110,6 +110,12 @@ Consider configuring the [prefix path][npm-config-folders-prefix] for
 installation location for global npm packages, ensuring sharing the
 package installations for the Node.js versions you've installed.
 
+You can check the current prefix path with:
+
+``` shell
+npm config get prefix -g
+```
+
 An example `~/.npmrc`:
 
 ```
@@ -184,13 +190,13 @@ ls -l ~/.nodes
 Output (truncated):
 
 ```
-… node-16 -> /usr/local/opt/node@16
-… node-18.10.0
+… node-24 -> /opt/homebrew/opt/node@24
+… node-25.1.0
 ```
 
-The first directory entry, `node-16`, is a symbolic link that ultimately
+The first directory entry, `node-24`, is a symbolic link that ultimately
 points to the actual Node.js installation path. The second directory
-entry, `node-18.10.0`, is a regular directory containing another Node.js
+entry, `node-25.1.0`, is a regular directory containing another Node.js
 installation.
 
 Sourcing `chnode.sh` populates the `CHNODE_NODES` shell array variable
@@ -208,7 +214,7 @@ commands. For example:
 
 ``` bash
 source chnode.sh
-CHNODE_NODES+=(/opt/node-10.11.0 /usr/local/opt/node@16)
+CHNODE_NODES+=(/opt/node-22.21.1 /opt/homebrew/opt/node@24)
 ```
 
 When selecting a Node.js version with the `chnode NODE_VERSION` command,
@@ -217,8 +223,8 @@ chnode attempts to match the `NODE_VERSION` user input to a path in the
 basename of the path (the last path component). Upon finding a match,
 chnode checks that the path is a valid Node.js installation: the path
 must contain an executable at the `bin/node` relative path. Continuing
-the example above, when selecting Node.js v18.10.0 with the `chnode 18`
-command, chnode checks that `~/.nodes/node-18.10.0/bin/node` is an
+the example above, when selecting Node.js v25.1.0 with the `chnode 25`
+command, chnode checks that `~/.nodes/node-25.1.0/bin/node` is an
 executable file. If the check fails, chnode prints an error message and
 returns 1 as the exit code.
 
@@ -229,28 +235,38 @@ Use any tool you like to install Node.js binaries.
 One good option is [node-build]. Installing to `~/.nodes`:
 
 ``` shell
-node-build 10.11.0 ~/.nodes/node-10.11.0
+node-build 22.21.1 ~/.nodes/node-22.21.1
 ```
 
-Alternatively, download binaries from the Node.js [download
-page][nodejs-download] and extract them to `~/.nodes`:
+Or you can use [Homebrew] to install a Node.js version:
 
 ``` shell
-mkdir -p ~/.nodes/node-10.12.0 \
-    && tar xzvf ~/Downloads/node-v10.12.0-darwin-x64.tar.gz --strip-components 1 -C ~/.nodes/node-10.12.0
-```
-
-You can also use [Homebrew] to install a Node.js version:
-
-``` shell
-brew install node@16
-ln -s /usr/local/opt/node@16 ~/.nodes/node-16
+brew install node@24
+ln -s /opt/homebrew/opt/node@24 ~/.nodes/node-24
 ```
 
 The previous approach relies on Homebrew providing you the symbolic link
-at `/usr/local/opt/node@16`, which points to the actual installation
-path. Homebrew will update that link whenever you upgrade the `node@16`
+at `/opt/homebrew/opt/node@24`, which points to the actual installation
+path. Homebrew will update that link whenever you upgrade the `node@24`
 formula with Homebrew.
+
+Alternatively, download binaries from the Node.js [download
+page][nodejs-download], verify their checksum (see [Node.js specific
+instructions][nodejs-verifying-binaries]), and extract them to
+`~/.nodes`.
+
+Note that macOS performs Malware check on manually downloaded files by
+default. You can bypass the check by removing Apple's extended file
+attribute for the binary installation package. Before you do this, you
+should verify the checksum of the package. If the checksum matches, then
+proceed to extract the package. Example of removing the quarantine
+extended attribute from the package and extracting it:
+
+``` shell
+xattr -d com.apple.quarantine ~/Downloads/node-v25.1.0-darwin-arm64.tar.gz
+mkdir -p ~/.nodes/node-25.1.0 \
+    && tar xzvf ~/Downloads/node-v25.1.0-darwin-arm64.tar.gz --strip-components 1 -C ~/.nodes/node-25.1.0
+```
 
 ### Default Node.js version (without auto switching)
 
@@ -513,6 +529,7 @@ Copyright 2008-2021 Kate Ward. Released under the Apache 2.0 license.
 [chruby]: https://github.com/postmodern/chruby
 [node-build]: https://github.com/nodenv/node-build
 [nodejs-download]: https://nodejs.org/en/download/current/
+[nodejs-verifying-binaries]: https://github.com/nodejs/node#verifying-binaries
 [nodenv]: https://github.com/nodenv/nodenv
 [npm-config-folders-prefix]: https://docs.npmjs.com/cli/v8/configuring-npm/folders#prefix-configuration
 [npm-npmrc]: https://docs.npmjs.com/cli/v8/configuring-npm/npmrc
