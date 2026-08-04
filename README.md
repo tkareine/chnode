@@ -25,28 +25,28 @@ To read more about the design rationale and a comparison to [nvm] and
 
 ## Features
 
-* Selects Node.js version for a shell session by updating the `PATH`
+- Selects Node.js version for a shell session by updating the `PATH`
   environment variable. Version switching is independent per shell
   session.
-* Optional automatic Node.js version switching based on the contents of
+- Optional automatic Node.js version switching based on the contents of
   the `.node-version` file in your project directory, or from another
   file, specified in the `CHNODE_AUTO_VERSION_FILENAME` shell variable.
-* Small feature set by design, making the tool very fast to load.
-* Each Node.js version has its own set of global npm packages.
-* Allows accessing man pages for the selected Node.js version and its
+- Small feature set by design, making the tool very fast to load.
+- Each Node.js version has its own set of global npm packages.
+- Allows accessing man pages for the selected Node.js version and its
   global npm packages.
-* After switching Node.js version, calls `hash -r` to clear the hash
+- After switching Node.js version, calls `hash -r` to clear the hash
   table for program locations.
-* Best candidate ("fuzzy") matching of Node.js versions at switching.
-* The path to the selected Node.js version is available in the
+- Best candidate ("fuzzy") matching of Node.js versions at switching.
+- The path to the selected Node.js version is available in the
   `CHNODE_ROOT` environment variable. This makes it easy to display the
   selected version in your shell prompt.
-* Locates installed Node.js versions in the `~/.nodes` directory, or
+- Locates installed Node.js versions in the `~/.nodes` directory, or
   from a custom directory read from `CHNODE_NODES_DIR` shell variable.
-* Add additional Node.js versions by appending Node.js installation
+- Add additional Node.js versions by appending Node.js installation
   paths to the `CHNODE_NODES` array shell variable.
-* Works with Bash's `set -euo pipefail` shell options ("strict mode").
-* Good test coverage.
+- Works with Bash's `set -euo pipefail` shell options ("strict mode").
+- Good test coverage.
 
 ## Requirements
 
@@ -59,7 +59,7 @@ To read more about the design rationale and a comparison to [nvm] and
 The manual method just downloads the latest revision of [chnode.sh]
 script:
 
-``` shell
+```shell
 curl -L 'https://raw.githubusercontent.com/tkareine/chnode/master/chnode.sh' > chnode.sh
 ```
 
@@ -69,7 +69,7 @@ It's up to you to download the script again to update.
 
 [Homebrew] [tap][Homebrew-tap-chnode] is available for macOS users:
 
-``` shell
+```shell
 brew tap tkareine/chnode
 brew install tkareine/chnode/chnode
 ```
@@ -81,7 +81,7 @@ documentation, and to keep the script up-to-date.
 
 Alternatively, clone the git repository:
 
-``` shell
+```shell
 git clone --depth 1 git@github.com:tkareine/chnode.git
 ```
 
@@ -92,7 +92,7 @@ project files.
 
 Execute the `source` command to load chnode functions:
 
-``` bash
+```bash
 source chnode.sh
 ```
 
@@ -112,7 +112,7 @@ package installations for the Node.js versions you've installed.
 
 You can check the current prefix path with:
 
-``` shell
+```shell
 npm config get prefix -g
 ```
 
@@ -142,7 +142,7 @@ shipped with Node.js won't interfere with the commands from the globally
 installed npm package, you can rename the symlinks of the commands
 shipped with Node.js. For example:
 
-``` shell
+```shell
 # Update npm by installing it as a global npm package
 npm install -g npm@latest
 
@@ -161,7 +161,7 @@ macOS does not execute `~/.bashrc` automatically when opening a
 terminal. You might want to add the following line to `~/.bash_profile`
 to fix it:
 
-``` bash
+```bash
 [[ -r ~/.bashrc ]] && source ~/.bashrc
 ```
 
@@ -174,7 +174,7 @@ You may override the `~/.nodes` directory by setting the
 `CHNODE_NODES_DIR` shell variable to point to another directory. Do this
 before executing the `source` command. For example:
 
-``` bash
+```bash
 CHNODE_NODES_DIR=/opt/nodes
 source chnode.sh
 ```
@@ -183,7 +183,7 @@ The value of the `CHNODE_NODES_DIR` shell variable should point to a
 directory where you have Node.js installations. For example, if
 `CHNODE_NODES_DIR=~/.nodes` (the default):
 
-``` bash
+```bash
 ls -l ~/.nodes
 ```
 
@@ -212,7 +212,7 @@ For Node.js versions installed elsewhere, add their paths to
 `CHNODE_NODES` after running the `source chnode.sh` or `chnode --reload`
 commands. For example:
 
-``` bash
+```bash
 source chnode.sh
 CHNODE_NODES+=(/opt/node-22.21.1 /opt/homebrew/opt/node@24)
 ```
@@ -234,13 +234,13 @@ Use any tool you like to install Node.js binaries.
 
 One good option is [node-build]. Installing to `~/.nodes`:
 
-``` shell
+```shell
 node-build 22.21.1 ~/.nodes/node-22.21.1
 ```
 
 Or you can use [Homebrew] to install a Node.js version:
 
-``` shell
+```shell
 brew install node@24
 ln -s /opt/homebrew/opt/node@24 ~/.nodes/node-24
 ```
@@ -263,7 +263,7 @@ matches, then proceed to remove the extended file attribute and extract
 the package. An example of removing the attribute from the package and
 extracting the package:
 
-``` shell
+```shell
 xattr -d com.apple.quarantine ~/Downloads/node-v25.1.0-darwin-arm64.tar.gz
 mkdir -p ~/.nodes/node-25.1.0 \
     && tar xzvf ~/Downloads/node-v25.1.0-darwin-arm64.tar.gz --strip-components 1 -C ~/.nodes/node-25.1.0
@@ -274,7 +274,7 @@ mkdir -p ~/.nodes/node-25.1.0 \
 Choose the default Node.js version in your shell's init script, here a
 10.x series:
 
-``` bash
+```bash
 source chnode.sh
 chnode node-10
 ```
@@ -395,7 +395,7 @@ To use the feature, edit your shell's init script:
 
 For example:
 
-``` bash
+```bash
 source chnode.sh
 source auto.sh
 
@@ -414,7 +414,7 @@ Note that you might already have commands to be evaluated in
    from inside the function, and set the value of `PROMPT_COMMAND` to be
    the name of the function:
 
-   ``` bash
+   ```bash
    my_prompt_function() {
        chnode_auto
 
@@ -427,14 +427,14 @@ Note that you might already have commands to be evaluated in
 2. Include `chnode_auto` to be called in `PROMPT_COMMAND`, separating
    other commands with a semicolon:
 
-   ``` bash
+   ```bash
    PROMPT_COMMAND="chnode_auto; $PROMPT_COMMAND"
    ```
 
 3. Use [Bash-Preexec] or a similar tool to simulate `precmd_functions`
    of Zsh in Bash. For example, with Bash-Preexec:
 
-   ``` bash
+   ```bash
    source bash-preexec.sh
    precmd_functions+=(chnode_auto)
    ```
@@ -445,7 +445,7 @@ executes the DEBUG trap for each command in a command group. In
 addition, the trap might already be utilized by other shell extensions.
 To demonstrate the problem with command groups:
 
-``` bash
+```bash
 # WARNING: Don't install chnode_auto like this, because the function gets called too often
 trap '[[ $BASH_COMMAND != "${PROMPT_COMMAND:-}" ]] && echo CALLED && chnode_auto' DEBUG
 
@@ -460,7 +460,7 @@ bal
 To set a default node version for a project, create a `.node-version`
 file in the root directory of the project:
 
-``` bash
+```bash
 echo node-8.1.0 > node-project/.node-version
 ```
 
