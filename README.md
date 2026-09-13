@@ -70,7 +70,7 @@ It's up to you to download the script again to update.
 [Homebrew] [tap][Homebrew-tap-chnode] is available for macOS users:
 
 ```shell
-brew tap tkareine/chnode
+brew trust --formula tkareine/chnode/chnode
 brew install tkareine/chnode/chnode
 ```
 
